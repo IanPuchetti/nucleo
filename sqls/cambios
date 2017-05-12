@@ -1,0 +1,3 @@
+CAMPANIA
+
+SELECT * FROM (SELECT grupos_casos.id_campania, grupos_casos.id_caso FROM grupos_casos INNER JOIN grupos_usuarios ON grupos_casos.id_grupo = grupos_usuarios.id_grupo WHERE grupos_usuarios.id_usuario = '17' AND grupos_casos.gestionado = 0 ORDER BY RAND()) as i GROUP BY id_campania;

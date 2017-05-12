@@ -1,0 +1,71 @@
+<html>
+<head>
+<script src="/.js/angular.1.5.min.js"></script>
+<script src="/.js/Chart.min.js"></script>
+<script src="/.js/angular-chart.min.js"></script>
+</head>
+<body>
+<div ng-app="app">
+<div ng-controller="LineCtrl">
+<canvas id="line" class="chart chart-line" chart-data="data"
+chart-labels="labels" chart-series="series" chart-options="options"
+chart-dataset-override="datasetOverride" chart-click="onClick">
+</canvas>
+{{fechas}}<br>
+{{campania}}<br>
+{{periodo}}
+</div>
+</div>
+<script>
+function dateTransform(a,b){if(a===Array){a=a.split('-');a=a[2]+'/'+a[1]+'/'+a[0];}else{if(a[0][b]){for(var i in a){a[i][b]=a[i][b].split('-');a[i][b]=a[i][b][2]+'/'+a[i][b][1]+'/'+a[i][b][0];}}}return a;}
+
+angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope, $http) {
+
+  $http.post('php/contar-fechas.php', {id_campania: 1 , fecha: '2017-04-11'}).then(function (res){
+      $scope.estadistica=[];
+      $scope.campania = res.data.campania;
+      $scope.fechas = res.data.fechas;
+      dateTransform($scope.fechas,'fecha');
+      $scope.periodo = res.data.periodo;
+      for (var i in $scope.periodo){
+        for (var e in $scope.fechas){
+          if($scope.fechas['fecha']==$scope.periodo[i]){
+            $scope.estadistica.push($scope.fechas['cantidad']);
+          }
+        }
+      }
+      $scope.data = [];
+      $scope.data.push($scope.estadistica);
+      $scope.labels = $scope.periodo;
+  });
+
+  
+  $scope.series = ['Real', 'Ideal'];
+
+  $scope.onClick = function (points, evt) {
+    console.log(points, evt);
+  };
+  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+  $scope.options = {
+    scales: {
+      yAxes: [
+        {
+          id: 'y-axis-1',
+          type: 'linear',
+          display: true,
+          position: 'left'
+        },
+        {
+          id: 'y-axis-2',
+          type: 'linear',
+          display: true,
+          position: 'right'
+        }
+      ]
+    }
+  };
+});
+    
+</script>
+</body>
+</html>

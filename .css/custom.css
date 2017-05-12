@@ -1,0 +1,15 @@
+.borde-inferior{
+	border-bottom:1px #eee solid;
+}
+
+.resaltado{
+	color:#27e;
+	font-weight:500;
+}
+
+.achicar{
+	font-size:12px;
+	color:#27e;
+}
+
+

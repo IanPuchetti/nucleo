@@ -1,0 +1,8 @@
+The hosts file exists in the SYSTEM32\DRIVERS\ETC directory under the Windows root directory (i.e., \WINDOWS or \WINNT). Edit this file and add a line like the following:
+
+192.168.1.15 testserver test.domain.com
+
+This would map two names to the ip address 192.168.1.15, testserver and test.domain.com
+
+For most installations of Windows including XP, Vista, and Windows 7, the location of the hosts file is the following:
+C:\windows\system32\drivers\etc\hosts

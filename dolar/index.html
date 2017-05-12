@@ -1,0 +1,30 @@
+<html>
+<head>
+	<link rel="stylesheet" href="/.css/bootstrap.min.css"/>
+	<script src="/.js/angular.1.5.min.js"></script>
+	<script>
+	var app = angular.module('app', []);
+	app.controller('ctrl', function($http, $scope) {
+		$http.post('http://ws.geeklab.com.ar/dolar/get-dolar-json.php')
+		.then(function (res){
+			$scope.dolar = res.data;
+			$http.post('php/dolar.php').then(function (res){ $scope.dolar.actual = res.data;})
+		})
+	});
+	</script>
+
+</head>
+<body ng-app="app" oncontextmenu="return false;">
+	<div ng-controller="ctrl" style="width:100%;max-width:400px;margin:auto;margin-top:25px;">
+		<div class="input-group">
+			<span class="input-group-addon">Dolar Oficial</span><span class="form-control">${{dolar.libre}}</span>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">Dolar Blue&nbsp;&nbsp;&nbsp;</span><span class="form-control">${{dolar.blue}}</span>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">Dolar actual en el sistema&nbsp;&nbsp;&nbsp;</span><span class="form-control">${{dolar.actual}}</span>
+		</div>
+	</div>
+</body>
+</html>

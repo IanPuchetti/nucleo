@@ -1,0 +1,234 @@
+
+.izquierda{
+			position:fixed;
+			top:51px;
+			left:0px;
+			width:50%;
+			height:100%;
+			background-color:#fff;
+			background:url('/.img/fondo.jpg');
+			border-right: 1px solid #eee;
+}
+
+.derecha{
+			position:fixed;
+			top:51px;
+			right:-50%;
+			width:50%;
+			height:100%;
+			background:#eee;
+			color:#444;
+}
+.derecha-fixed{
+			position:fixed;
+			top:51px;
+			right:0%;
+			width:50%;
+			height:100%;
+			background:#eee;
+			color:#444;
+}
+
+.derecha div{
+			width:100%;
+			font-size:17px;
+			text-align: center;
+}
+
+.derecha-fixed div{
+			font-size:17px;
+			text-align: center;
+}
+
+.botones{	border-bottom:1px solid #ccd;
+			background:#fff;
+}
+
+label{
+			font-weight:200;
+}
+
+.borde-abajo{
+			background: #eee;
+}
+
+.borde-abajo a{
+			cursor:pointer;
+			font-size:10px;			
+}
+
+.tabla{		font-size:10px;
+			position:absolute;
+			width:100%;
+			height:70%;
+			overflow-y:auto;
+}
+
+.comp{
+			font-size:12px;
+}
+
+input, select, button{
+		max-width:80%;
+		margin:auto;
+}
+
+.control{
+	position:fixed;
+	width:40%;
+	height:20px;
+	bottom:5px;
+	right:-5px;
+	color:#77e;
+}
+
+.accion{	margin-left:25px;
+			color:#e77;
+}
+.accion:hover{
+			color:#e44;
+}
+
+.table-head{
+	background:#fff;
+	font-size:12px;
+	color:#aaf;
+}
+
+.table-head a{
+	font-size:12px;
+	color:#77f;
+}
+
+.table-body{
+	font-weight: 200;
+	font-size:10px;
+}
+
+.table-body td{
+	width:75px;
+}
+
+.encabezado{
+	background:#fff;
+	font-size:12px;
+	color:#77f;
+}
+
+.encabezado{
+	background:#fff;
+	font-size:12px;
+	color:#77f;
+}
+
+table tr td{
+	padding:5px;
+}
+
+.grupo .btn-left{
+	border-radius:0px;
+}
+.btn-center{
+	border-radius:0px;
+}
+.grupo .btn-right{
+	border-radius:0px;
+}
+
+.btn-left{
+	border-radius:0px;
+}
+.btn-right{
+	border-radius:0px;
+}
+
+
+.grupo{
+	width:100%;
+	margin:auto;
+}
+.grupo .encabezado{
+	text-align:center;background:#337ab7;width:100%;color:#fff;border-radius:5px 5px 0px 0px;padding:10px;
+}
+
+.boton-s{
+	background:#337ab7;color:#fff;width:45%;
+}
+.boton-s:hover, .boton-c:hover{
+	color:#ddd;
+}
+.input-s{
+	border:1px solid #ddd;text-align:left;width:55%;margin-top:1px;
+}
+
+.boton-c{
+	background:#337ab7;color:#fff;width:45%;
+}
+.input-c{
+	border:1px solid #ddd;text-align:left;width:45%;margin-top:1px;
+}
+
+.symbol{
+	background: #ddd;text-align:left;width:10%;text-align:center;
+}
+.margen-top{
+	margin-top:3px;
+}
+.input-date-s{
+	border:1px solid #ddd;text-align:left;width:55%;font-size:12px;margin-top:1px;
+}
+
+.nb-left{
+	border-left:0px;
+}
+.nb-right{
+	border-right:0px;
+}
+
+.nb-both{
+		border-left:0px;
+		border-right:0px;
+}
+
+.nav-tabs .btn{
+	font-size: 10px;
+}
+
+@media (max-width: 700px) {
+.boton-c{
+	width:40%;
+}
+}
+
+.btn-down{
+	width:100%;border-radius:0px;
+}
+
+
+.deudores{
+	background:rgba(0,0,0,0.5);
+	color:#fff;
+}
+
+.btn{
+	border-radius:0px;
+}
+
+table thead tr{
+    display:block;
+}
+
+table thead tr th{
+	width:50%;
+}
+
+table td{
+    width:50%;
+}
+
+
+table  tbody{
+  display:block;
+  height:400px;
+  overflow:auto;
+}

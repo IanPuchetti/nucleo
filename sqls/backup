@@ -1,0 +1,7 @@
+Backup:
+
+mysqldump -u [user] -p [database] > [file.sql]
+
+Restore:
+
+mysql -u [user] -p [database] < [file.sql]
