@@ -139,10 +139,8 @@ background-size:125%;
   opacity: .8;
 }
 
-
-</style>
+  </style>
   </head>
-
   <body>
   <div class="sombra"></div>
   <div class="login">
