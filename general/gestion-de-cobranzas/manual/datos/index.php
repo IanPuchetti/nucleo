@@ -202,6 +202,12 @@ margin-top:-40px;
     -webkit-text-fill-color: transparent;
 }
 
+.alert-gr{
+  background: -webkit-linear-gradient(#95c33d, #f4a600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .back-gr{
   background: -webkit-linear-gradient(#07963d, #89bd25);
   color:white;
@@ -379,7 +385,6 @@ tbody tr:hover{
 
 /* What you need: */
 table td {
-    width: 30px;
     height:18px;
     overflow: hidden;
     display: inline-block;
@@ -446,7 +451,7 @@ table.with-ellipsis td {
         <span class="button noselect">
           <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Correo electronico" data-placement="bottom">@</span>
         <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.email" placeholder="Correo electronico..."></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar()"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.email()"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
@@ -490,7 +495,7 @@ table.with-ellipsis td {
         <td style="width:100px"></td>
         <td style="width:94px"></td>
       </tr>
-      <tr  ng-if="i<limite" ng-repeat="(i, gestion) in ::caso.historia" class="caso" id="{{gestion.documento}}" ng-click="elegir(gestion.comentario)">
+      <tr  ng-if="i<limite" ng-repeat="(i, gestion) in ::caso.historia" class="caso" id="{{gestion.documento}}" ng-click="elegir(gestion)">
         <td style="width:80px;">{{gestion.fecha | date:'dd/MM/yyyy'}}{{gestion.fecha.length > 25 ? "..." : ""}}</td>
         <td style="width:60px;">{{gestion.hora |limitTo: 27}}{{gestion.hora.length > 25 ? "..." : ""}}</td>
         <td style="width:300px;" ><span style="width:100%;" data-toggle="tooltip" title="{{gestion.comentario}}" data-placement="bottom">{{gestion.comentario |limitTo: 50}}{{gestion.comentario.length > 25 ? "..." : ""}}</span></td>
@@ -527,36 +532,56 @@ table.with-ellipsis td {
         </tr>
     </table>
   </div>
-  <div style="margin:15px;padding:10px;height:70px;overflow-y:auto;border-radius:5px;border:1px solid #ddd;background:#fafafa">
-    {{visualizar}}
+  <div style="margin:15px;height:100px;overflow-y:auto;border-radius:5px;border:1px solid #ddd;background:#fafafa">
+    <div style="padding:10px;">{{visualizar.comentario}}</div>
+    <div style="padding:10px;float:right;color:#aaa;">{{visualizar.fecha | date:'dd/MM/yyyy'}} - {{visualizar.hora | date: 'HH:mm'}}</div>
   </div>
 </div>
 
   <div ng-show="ver=='telefonos'" style="padding:20px;">
       <div style="text-align:center;">
         <span class="button noselect">
-          <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Telefono {{i}}" data-placement="bottom"><img src="/.img/phone.png" style="width:15px;height:15px;margin-left:2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;width:150px;" ng-model="nuevo.numero" placeholder="Nuevo numero..."></span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;width:170px;" ng-model="nuevo.comentario" placeholder="Comentario..."></span>
-        <span style="border-left:1px solid #ddd;padding:0px 5px 2px 5px;font-size:17px;" class="color-gr" ng-click="agregar()"  data-toggle="tooltip" title="Agregar" data-placement="bottom"><b>+</b></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+          <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Nuevo numero" data-placement="bottom"><img src="/.img/phone.png" style="width:15px;height:15px;margin-left:2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;width:150px;" ng-model="nuevo.telefono.numero" placeholder="Nuevo numero..."></span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;width:170px;" ng-model="nuevo.telefono.comentario" placeholder="Comentario..."></span>
+        <span style="border-left:1px solid #ddd;padding:0px 5px 2px 5px;font-size:17px;" class="color-gr" ng-click="agregar.telefono()"  data-toggle="tooltip" title="Agregar" data-placement="bottom"><b>+</b></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" class="color-gr" ng-show="nuevo.telefono.modificando==1"  data-toggle="tooltip" title="Agregando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="nuevo.telefono.modificado==1"  data-toggle="tooltip" title="Agregado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
       </div>
-      <hr>
+      <div style="text-align:center;padding:6px;margin-top:10px;" class="alert-gr">
+        <span ng-show="nuevo.telefono.alert"><img src="/.img/alert.png" style="width:12px;margin-top:-4px;">&nbsp; La cantidad de dígitos no es suficiente para ser un telefono.</span>
+      </div>
+      <div style="height:240px;overflow-y:auto;width:103%;border-top:1px solid #ddd;">
       <div style="margin-top:10px;" ng-repeat="(i, telefono) in caso.telefonos">
         <span class="button noselect">
           <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Telefono {{i+1}}" data-placement="bottom"><img src="/.img/phone.png" style="width:15px;height:15px;margin-left:2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px 10px 2px 10px;margin-right:-2px;">{{telefono.numero}}</span>
         <span style="border-left:1px solid #ddd;padding:2px 2px 2px 10px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;" ng-model="telefono.comentario" placeholder="Comentario..."></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar()"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.telefono(telefono.numero, telefono.comentario, i)"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
       </div>
-
+</div>
       </div>
-
+      <div ng-show="ver=='productos'">
+        <div>
+        <table ng-repeat="banco in caso.productos | groupBy: 'banco'" style="width:700px;float:left;margin-top:-2px;">
+          <thead>
+      <tr style="background:white;font-size:10px;"><td colspan="3" style="height:18px;width:100%;">{{banco[0].dbanco}}</span>
+          </thead>
+          <tbody>
+      <tr ng-repeat="producto in banco" class="table-body producto" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
+        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.producto}}</td>
+        <td ng-if="producto.dolar==0" style="height:18px;width:33.3%;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">${{producto.deuda}}</td>
+        <td  style="height:18px;width:33.3%;" data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" ng-if="producto.dolar==1">US${{producto.deuda}}</td>
+        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
+      </tr>
+          </tbody>
+    </table>
+  </div>
+      </div>
   </div>
 
 
@@ -565,7 +590,6 @@ table.with-ellipsis td {
   </div>
 <script>
 var $_GET={};var url=document.URL.split("/")[2];document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g,function(){function decode(s) {return decodeURIComponent(s.split("+").join(" "));}$_GET[decode(arguments[1])] = decode(arguments[2]);});
-var quit=false;
 angular
   .module("gestion", ['infinite-scroll','btford.socket-io','angular.filter'])
 
@@ -579,14 +603,20 @@ angular
     _.getNumber=function(n){return new Array(n);};
     _.bajar=function(){_.limite=_.limite+1;};
     _.elegir=function (c){_.visualizar=c};
-    _.datos=function (){    $http.post('../php/deudor-domicilios.php',{documento:_.d}).then(function(res){_.caso.deudor=res.data[0];});
-                            $http.post('../php/telefonos.php',{documento:_.d}).then(function(res){_.caso.telefonos=res.data;});
-                            $http.post('../php/gestion.php',{documento:_.d}).then(function(res){_.refresh=1;_.caso.historia=res.data;$timeout(function(){_.refresh=0;$timeout(function(){$('[data-toggle="tooltip"]').tooltip();});});});
-                          };
-    _.modificar=function (){_.caso.deudor.modificado=0;_.caso.deudor.modificando=1;quit=true;
-                            $http.post('../php/modificar-deudor.php',_.caso.deudor).then(function(res){_.caso.deudor.modificando=0;_.caso.deudor.modificado=1;});
+    _.tooltip= function (){$timeout(function(){$('[data-toggle="tooltip"]').tooltip();});};
+    _.obtener={ telefonos:function(){$http.post('../php/telefonos.php',{documento:_.d}).then(function(res){_.caso.telefonos=res.data;})},
+               deudor:function (){$http.post('../php/deudor-domicilios.php',{documento:_.d}).then(function(res){_.caso.deudor=res.data[0];})},
+               historia:function(){$http.post('../php/gestion.php',{documento:_.d}).then(function(res){_.refresh=1;_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
+               productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});}
+             };
+    _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.tooltip()};
+    _.modificar={email:function (){_.caso.deudor.modificado=0;_.caso.deudor.modificando=1;$http.post('../php/modificar-deudor.php',_.caso.deudor).then(function(res){_.caso.deudor.modificando=0;_.caso.deudor.modificado=1;});},
+                 telefono: function (n,c,i){_.caso.telefonos[i].modificado=0;_.caso.telefonos[i].modificando=1;$http.post('../php/modificar-telefono.php',{numero:n,comentario:c}).then(function(){_.caso.telefonos[i].modificando=0;_.caso.telefonos[i].modificado=1;})}
+               };
+    _.agregar={
+                telefono:function(){if(_.nuevo.telefono.numero.length<6){_.nuevo.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.nuevo.telefono['documento']=_.d;_.nuevo.telefono.numero=sacar011(_.nuevo.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../php/agregar-telefono.php',_.nuevo.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();});}}
     };
-    _.datos();
+    _.refrescar();
 
 });
 var hoy = new Date(), quit=false;
@@ -607,6 +637,14 @@ if(quit==false)
     event.preventDefault();
     return false;
   },false);
+
+
+  function sacar011 (string){
+  if(string[0]=='0' && string[1] == '1' && string[2] == '1'){
+    string=string.slice(3);
+  }
+  return string;
+}
 </script>
 </body>
 </html>

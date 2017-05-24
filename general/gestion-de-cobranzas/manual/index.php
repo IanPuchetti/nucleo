@@ -452,7 +452,6 @@ angular
     _.caso={};
     _.limite=5;
     _.enter =function(e){if(e.which === 13){_.buscar();}};
-    _.getNumber=function(n){return new Array(n);};
     _.buscar=function(){_.refresh=1;_.listado=[];$http.post('php/buscar-rapido.php', _.busqueda).then(function(res){_.limite=5;_.listado=res.data;$timeout(function(){_.refresh=0;_.deudor=0;});});}
     _.bajar=function(){_.limite=_.limite+1;};
     _.elegir={click:function (d){$("tr").css('background','white');
