@@ -646,6 +646,20 @@ if(quit==false)
   }
   return string;
 }
+                        
+ var window2 = window.open('gestion/?d=40770061', '40770061','height=400, width=300, left=1, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+
+var oldX = window.screenX,
+    oldY = window.screenY;
+
+var interval = setInterval(function(){
+  if(oldX != window.screenX || oldY != window.screenY){
+    window2.moveTo(window.screenX, window.screenY);
+  }
+
+  oldX = window.screenX;
+  oldY = window.screenY;
+}, 500);
 </script>
 </body>
 </html>
