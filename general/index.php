@@ -21,7 +21,7 @@ else{
 header("Location: /");
 }
 
-echo "<script>var id_usuario = ".$_SESSION["id"]."</script>"
+echo "<script>var id_usuario = ".$_SESSION["id"].";</script>"
 ?>
 <html lang="es">
 <head>
@@ -215,11 +215,6 @@ body{
   left:0px;
 }
 
-*[title]{
- 
-  content: attr(title);
-   color:red;
-}
 
 .side{
   z-index:0;background:white;position:fixed;top:40px;left:150px;width:850px; height:90%;padding:10px;font-size:17px;overflow-y:auto;overflow-x:hidden;
@@ -229,7 +224,6 @@ body{
   padding:20px;
   border-radius:15px;
   border:1px solid #ddd;
-  width:310px;
 }
 
 .dias{
@@ -288,7 +282,7 @@ select{
 
 <div style="width:100%;height:100%;top:40px;">
   <div style="border-right:0px;background: -webkit-linear-gradient(#07963d, #89bd25);width:120px;float:left;height:100%;">
-    <div  class="circle" style="margin:auto;margin-top:5px;"><span data-toggle="tooltip" title="Gestor" data-placement="bottom">g</span></div>
+    <div  class="circle" style="margin:auto;margin-top:5px;"><span data-toggle="tooltip" title="Gestor" data-placement="bottom"><img src="/.img/gestor.png" style="width:35px;margin-top:12.5px;margin-left:-7px;"></span></div>
     <div class="boton-menu" ng-click="show='estadisticas'" ng-init="show='estadisticas'">Estadisticas</div>
     <div class="boton-menu" ng-click="show='agendas'">Agendas</div>
     <div class="boton-menu" ng-click="show='campanias'">Campañas</div>
@@ -297,17 +291,27 @@ select{
   </div>
   <div class="side" ng-show="show=='estadisticas'">
     <h2 class="color-gr" style="margin-top:-5px;padding-left:20px;">Estadisticas</h2>
-        <p>Un breve resumen de tu <select style="border:0px;border-bottom:1px solid #89bd25" ng-model="periodo" ng-options="periodo as periodo for periodo in estadisticas.periodo" ng-init="periodo='semana'"></select></p>
+        <p>Un breve resumen de tu <select style="border:0px;border-bottom:1px solid #89bd25" ng-model="periodo" ng-change="estadisticas.graficar()" ng-options="periodo as periodo for periodo in estadisticas.periodo" ng-init="periodo='dia'"></select></p>
+         <div style="width:400px">
+          <canvas id="line" class="chart chart-line" chart-data="estadisticas.cont" chart-labels="estadisticas.labels" chart-series="['Gestiones']" chart-options="options" chart-colors="['#89bd25', '#ff6384', '#ff8e72']" chart-dataset-override="datasetOverride" chart-click="onClick" height="120"></canvas>
+         </div>
   </div>
   <div class="side" ng-show="show=='agendas'">
     <h2 class="color-gr" style="margin-top:-5px;padding-left:20px;display:inline-block;">Agendas</h2>
         <p>Una lista con tus agendas del mes</p>
-        <div class="caja"  style="float:left;">
+        <div class="row">
+        <div class="col-md-4">
+          <div class="caja"  style="width:250px;">
         <h4 style="text-transform:uppercase;">{{mes[0] | date:'MMMM'}}   {{mes[0] | date: 'yyyy'}}</h4>
-        <div style="width:300px;margin-left:-10px;font-size:12px">
+        <div style="width:250px;margin-left:-10px;font-size:12px">
           <div ng-repeat="dia in mes" class="dias" id="dia{{dia | date: 'dd'}}">{{dia | date: 'dd'}}</span>
         </div>
         </div>
+        </div>
+      </div>
+        <div class="col-md-8" style="border-left:1px solid #abdf47">
+        </div>
+      </div>
   </div>
   <div style="float:right;width:60%;">
         
@@ -330,21 +334,43 @@ select{
 angular
   .module("inicio", ["chart.js"])
   .controller("inicio", function ($scope, $http, $timeout) {
-  $scope.block=false;
-  $scope.mes = getDaysInMonth(hoy.getMonth(), hoy.getFullYear());
-  $scope.hoy = hoy.getDate();
-  $scope.estadisticas = { datos : null,
-                          periodo : ['dia','semana','mes'],
-                          graficar : function (){
-                            $http.post('php/estadisticas.php', {operador:id_usuario, periodo:$scope.periodo})
+  var _=$scope;
+  _.block=false;
+  _.mes = getDaysInMonth(hoy.getMonth(), hoy.getFullYear());
+  _.hoy = hoy.getDate();
+
+  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+  $scope.options = {
+    scales: {
+      yAxes: [
+        {
+          id: 'y-axis-1',
+          type: 'linear',
+          display: true,
+          position: 'left'
+        }
+      ]
+    }
+  };
+  _.estadisticas = { datos : null,
+                     labels:[],
+                     cont:[],
+                     periodo : ['dia','semana','mes'],
+                     graficar : function (){
+                            $http.post('php/estadisticas.php',{operador:id_usuario, periodo:_.periodo})
                             .then(function(res){
-                              $scope.estadisticas.datos = res.data;
+                              _.estadisticas.datos = res.data;
+                              if(_.periodo=='dia'){
+                               _.estadisticas.labels=arreglarlabel(_.estadisticas.datos,'hora');
+                               _.estadisticas.cont=arreglardata(_.estadisticas.datos, 'gestiones');
+
+                              }
                             });
-                          }
-                           };
+                    }};
+
   $timeout(function () {
     $(".dias#dia"+$scope.hoy).css({color:"#07963d", 'border-color':'#07963d'});
-    $scope.estadisticas.graficar();
+    _.estadisticas.graficar();
   });
 
 });
@@ -353,7 +379,9 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
 });
 
-function getDaysInMonth(month, year) {
+function arreglardata (o, p){a=[[]];for(var i in o){a[0].push(o[i][p])}return a;}
+function arreglarlabel (o, p){a=[];for(var i in o){a.push(o[i][p])}return a;}
+function getDaysInMonth(month, year){
          // Since no month has fewer than 28 days
          var date = new Date(year, month, 1);
          var days = [];

@@ -82,7 +82,7 @@ button.input:hover{
 @media only screen and (min-width: 600px) {
   body{
   background:url('/.img/background.jpg');
-  background-size:125%;
+  background-size:100%;
   
 }
 }
@@ -160,6 +160,17 @@ background-size:125%;
         </div>
       </form>
     </div>
-    <span onclick="parent.cerrar();" style="position:fixed;right:0px;top:0px;cursor:pointer;font-size:15px;padding-right:5px;">✕</span>
+    <span onclick="cerrar();" style="position:fixed;right:0px;top:0px;cursor:pointer;font-size:15px;padding-right:5px;">✕</span>
   </body>
+  <script>
+    global.shared={close:null, server:null}
+  const remote = require('electron').remote;
+  var resize = remote.require('./main').resize;
+  resize(900,500);
+  var window = remote.getCurrentWindow();
+function cerrar() {
+       remote.getGlobal('shared').close = true;
+       window.close();
+  }
+    </script>
 </html>

@@ -55,14 +55,14 @@ button.input:hover{
 @media only screen and (min-width: 600px) {
 	body{
 	background:url('/.img/background.jpg');
-	background-size:200%;
+	background-size:cover;
 	
 }
 }
 @media only screen and (max-width: 600px) {
 body{
 	background:url('/.img/background.jpg');
-background-size:150%;
+background-size:cover;
 
 }
 	}
