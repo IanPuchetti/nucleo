@@ -25,6 +25,22 @@ else{
 margin-top:-40px;
 }
 
+.bar{
+  position:fixed;
+  width:100%;
+  height:20px;
+  top:0px; 
+  background: #fff;
+}
+
+.drag{
+  -webkit-app-region:drag;
+  width:95%;
+  height:20px;
+  position:fixed;
+  top:0px;left:0px;
+}
+
 
 @font-face {
     font-family: Benton-Sans;
@@ -79,6 +95,13 @@ button.input:hover{
   box-shadow: 0px 0px 69px -1px rgba(0,0,0,0.75);
 }
 
+body{
+  position:fixed;
+  width:100%;
+  height:100%;
+  border:1px solid #aaaaaa;
+}
+
 @media only screen and (min-width: 600px) {
   body{
   background:url('/.img/background.jpg');
@@ -122,6 +145,11 @@ background-size:125%;
   cursor:pointer;
 }
 
+.color-gr:hover{background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;}
+
+
 .olvido:hover{
   background: -webkit-linear-gradient(#07963d, #89bd25);
     -webkit-background-clip: text;
@@ -138,6 +166,7 @@ background-size:125%;
   background-size: cover;
   opacity: .8;
 }
+
 
   </style>
   </head>
@@ -160,13 +189,15 @@ background-size:125%;
         </div>
       </form>
     </div>
-    <span onclick="cerrar();" style="position:fixed;right:0px;top:0px;cursor:pointer;font-size:15px;padding-right:5px;">✕</span>
+    <div class="bar"></div>
+    <div class="drag"></div>
+    <span onclick="cerrar();" style="position:fixed;right:0px;top:0px;cursor:pointer;font-size:15px;padding-right:5px;color:#aaa;" class="color-gr">✕</span>
   </body>
   <script>
     global.shared={close:null, server:null}
   const remote = require('electron').remote;
   var resize = remote.require('./main').resize;
-  resize(900,500);
+  resize(600,400);
   var window = remote.getCurrentWindow();
 function cerrar() {
        remote.getGlobal('shared').close = true;

@@ -22,7 +22,7 @@ $nombre_producto=$request -> nombre_producto;
 $proxima_accion=$request -> proxima_accion;
 $mysqli = new mysqli("localhost", "ian", "p", "nucleo");
 $mysqli->set_charset("utf8");
-$result2 = $mysqli->query("UPDATE productos SET deuda = '$deuda', fecha_deuda = '$fecha_deuda', fecha_mora = '$fecha_mora',  fecha_ult_cobro = '$fecha_ult_cobro', pase_legales = '$pase_legales', estado = '$estado', sub_estado = '$sub_estado', banco = '$banco', nombre_producto = '$nombre_producto', proxima_accion = '$proxima_accion', producto = '$producto' WHERE numero_operacion = '$id' LIMIT 1");
+$result2 = $mysqli->query("UPDATE productos SET deuda = '$deuda', fecha_deuda = '$fecha_deuda', fecha_mora = '$fecha_mora',  fecha_ult_cobro = '$fecha_ult_cobro', estado = '$estado', sub_estado = '$sub_estado', banco = '$banco', nombre_producto = '$nombre_producto', producto = '$producto' WHERE numero_operacion = '$id' LIMIT 1");
 
 $result = $mysqli->query("UPDATE carpeta SET caratula = '$caratula', comentario = '$comentario', sucursal = '$sucursal', dias_adic = '$dias_adic', legajo = '$legajo', numero_gestion = '$numero_gestion', numero_lote = '$numero_lote' WHERE numero_operacion = '$id' LIMIT 1");
 

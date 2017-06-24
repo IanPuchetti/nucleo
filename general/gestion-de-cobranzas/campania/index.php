@@ -1,23 +1,30 @@
 <?php
 session_start();
-$operador= $_SESSION['id'];
-$usuario = $_SESSION['user'];
 if(isset($_SESSION['user'])){
 if($_SESSION['puesto']=='adm'){
-header("Location: ../admin/");
+header("Location: ../administracion/");
+}else{
+if($_SESSION['puesto']=='ger'){
+header("Location: ../gerencia/");
+}else{
+if($_SESSION['puesto']=='sup'){
+header("Location: ../supervision/");
+}else{
+if($_SESSION['puesto']=='gen'){
+}else{
+}
+}
+}
 }
 }
 else{
-header("Location: ../");
+header("Location: /");
 }
-$date = getdate();
-echo "<script>var id_usuario = ".$_SESSION["id"].";var operador = ".$_SESSION["id"].";var usuario = '".$_SESSION["user"]."';</script>"
 
+echo "<script>var id_usuario = ".$_SESSION["id"]."</script>"
 ?>
-<!DOCTYPE html>
 <html lang="es">
-
-  <head>
+<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,345 +32,461 @@ echo "<script>var id_usuario = ".$_SESSION["id"].";var operador = ".$_SESSION["i
 	<meta name="author" content="">
 	<link rel="icon" href="/icon.png">
 	<title>Nucleo</title>
-	<link rel="stylesheet" href="css/tooltip-view.css"/>
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="/.css/signin.css"/>
+  <link rel="stylesheet" href="/.css/bootstrap.min.css"/>
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script type="text/javascript" src="/.js/jquery.min.js"></script>
 	<script type="text/javascript" src="/.js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/.js/FileSaver.min.js"></script>
-	<script type="text/javascript" src="/.js/angular.1.5.min.js"></script>
+  <script type="text/javascript" src="/.js/angular.min.js"></script>
   <script type="text/javascript" src="/.js/ng-infinite-scroll.js"></script>
   <script type="text/javascript" src="/.js/angular-filter.min.js"></script>
   <script type="text/javascript" src="/.js/socket.io.js"></script>
   <script type="text/javascript" src="/.js/ngsocket.io.js"></script>
-	<script type="text/javascript" src="/.js/tooltip-viewport.js"></script>
+  <script src="/.js/angular-es.js"></script>
 <style>
 .navbar-static-top{
 margin-top:-40px;
 }
 
-table tr td{
-  text-align: left;
-  margin:5px;
+body{
 }
 
-input, .btn, .input-group-addon, .form-control{
+.noselect{
+  -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none;
+}
+.header{
+  width:100%;
+  height:40px;
+  background:white;
+  padding-top:12px;
+  font-size:12px;
+  border-bottom:1px solid #ddd;
+  /*-webkit-box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);
+  -moz-box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);
+  box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);*/
+}
+
+.boton, .logout, .logout a{
+  padding:5px 10px 5px 10px;
+  cursor:pointer;
+  text-decoration: none;
+  color:#666;
+}
+
+.boton:hover, .boton span:hover, .logout a:hover{
+  color:#333;
+}
+
+.dropdown-menu{
+  margin-top:6px;
   border-radius:0px;
+  font-size:11px;
 }
 
-.fila{
-  cursor:pointer;border-bottom:1px solid #aaa;padding-bottom:2px;
-}
-.fila:hover{
-  background:#888;
+.no-top{
+    border-top:0px;
 }
 
-.filita{
-  cursor:pointer;border-bottom:1px solid #aaa;padding-bottom:2px;background:#555;
-}
-.filita:hover{
-  background:#888;
+
+@font-face {
+    font-family: Product-Sans;
+    src: url('/fonts/Product Sans Regular.ttf');
 }
 
+@font-face {
+    font-family: Product-Sans-Bold;
+    src: url('/fonts/Product Sans Bold.ttf');
+}
+
+@font-face {
+    font-family: Benton-Sans-Light;
+    src: url('/fonts/Benton-Sans-Light.ttf');
+}
+
+*{
+  font-family: Product-Sans;
+  color:#666;
+}
+
+.drag{
+  -webkit-app-region:drag;
+}
+
+.bar{
+  width:100%;
+  height:15px;
+  position:fixed;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: 0px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+}
+
+.trgl{
+  color:#aaa;
+}
+
+
+.boton-menu, .boton-menu a{
+  font-size:15px;
+  padding:10px;
+  text-align:center;
+  color:white;
+  cursor:pointer;
+}
+
+.boton-menu:hover, .boton-menu a:hover{
+  color:#ddd;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px; 
+  text-align: center;
+  font-size:35px;
+  background:white;
+}
+
+.circle span{
+    margin-top:-5px;
+    margin-left:-10px;
+    position:absolute;
+    background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Product-Sans-Bold;
+}
+
+.color-gr{
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.back-gr{
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+  color:white;
+}
+
+body{
+  border:1px solid #ccc;
+  overflow:hidden;
+}
+
+#reload:hover{
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+
+#reload{
+  width:22px;margin-top:4px;-webkit-transition: -webkit-transform .4s ease-in-out;transition:transform .4s ease-in-out;cursor:pointer;
+}
+
+.block{
+  width:100%;
+  height:40px;
+  position:fixed;
+  top:0px;
+  left:0px;
+}
+
+
+.side{
+  z-index:0;background:white;position:fixed;top:40px;left:150px;width:850px; height:90%;padding:10px;font-size:17px;overflow-y:auto;overflow-x:hidden;
+}
+
+.caja{
+  padding:20px;
+  border-radius:15px;
+  border:1px solid #ddd;
+  width:310px;
+}
+
+.dias{
+  padding:3px;margin:1px;border-radius:5px;border:1px solid #ddd;cursor:pointer;display:inline-block;width:30px;text-align: center;
+}
+
+.dias:hover{
+  background:#eee;
+}
+
+select{
+  background:none;
+}
+
+.boton a{
+  text-decoration: none;
+  color:#777;
+}
+
+.buscador{
+    margin-top:0px;
+    padding-top:3px;
+}
+
+
+input{
+  border:0px;
+  font-size:12px;
+}
+
+input:focus{
+    outline: none;
+}
+
+table{
+  font-size:14px;
+  width:100%;
+  float:right;
+  cursor:pointer;
+  margin-bottom: 1px;
+}
+
+td{
+  border:1px solid #aaa;
+  padding:0px 4px 0px 4px;
+}
+
+.busqueda{
+  height: 305px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  border-bottom:1px solid #ddd;
+}
+
+tbody tr td{
+  font-size:12px;
+}
+
+thead tr td{
+  background:#efd;
+}
+
+tbody tr:hover{
+  background:#eafada !important;
+}
+
+.left{
+  width:10%;position:absolute;top:83px;border-top:1px solid #eee;padding-top:5px;
+}
+
+.button{
+  cursor:pointer;
+}
+.button:hover>#change{
+  background:#fafefa;
+}
+
+.down{
+  position:absolute;
+  top:285px;
+  border-top:1px #ddd solid;
+  width:100%;
+  padding:5px;
+}
+
+.tooltip-inner {
+  background-color: #0b3 !important;
+  /*!important is not necessary if you place custom.css at the end of your css calls. For the purpose of this demo, it seems to be required in SO snippet*/
+  color: #fff;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #0b3;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #0b3;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  border-bottom-color: #0b3;
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color: #0b3;
+}
+
+.titulo{
+  cursor:pointer;
+  background:#fff !important;
+}
+.titulo:hover{
+  text-decoration: underline;
+  background: #fafefa !important;
+}
 </style>
-	<script src="js/a.js"></script>
-  <?php echo "<script> var usuario = '$usuario' , operador = '$operador'</script>"; ?>
   </head>
 
-<body ng-app="myApp">
-<nav class="navbar  navbar-static-top navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
+  <body oncontextmenu="return false;" ng-app="gestion" ng-controller="manual" class="noselect">
+    <div class="bar drag">
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/inicio">Inicio</a></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestión de Cobranzas<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/general/gestion-de-cobranzas/manual">Manual</a></li>
-                <li><a href="/general/gestion-de-cobranzas/campania">Campaña</a></li>   
-                <li><a href="/general/gestion-de-cobranzas/consultas">Consultas</a></li>              
-              </ul>
-        </li>
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Administración de Cartera <span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-spanledby="dropdownMenu">
-              <li><a href="/general/carga/comparacion">Comparación</a></li>
+<div class="header" style="">
+  <div style="position:absolute;width:600px;">
+  <span class="dropdown boton">
+   <a href="/" disable>Inicio</a>
+  </span>
+  <span class="dropdown boton">
+    <span class="dropdown-toggle" data-toggle="dropdown">Gestión de cobranzas <span class="trgl">&#x25BE;</span></span>
+    <ul class="dropdown-menu no-top">
+      <li><a href="/general/gestion-de-cobranzas/manual/">Manual</a></li>
+      <li><a href="/general/gestion-de-cobranzas/campania/">Campaña</a></li>
+    </ul>
+  </span>
+  <span class="dropdown boton">
+            <span data-toggle="dropdown">Administración de Cartera <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/general/carga/comparacion" class="ventana">Comparación</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Carga</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="/general/carga/masiva">Masiva</a></li>
-                  <li><a tabindex="-1" href="/general/carga/manual">Manual</a></li>
+                  <li><a tabindex="-1" href="/general/carga/masiva" class="ventana">Masiva</a></li>
+                  <li><a tabindex="-1" href="/general/carga/manual" class="ventana">Manual</a></li>
                 </ul>
               </li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Enriquecimiento</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1"href="/general/carga/enriquecer">Telefonos / Mails</a></li>
-                  <li><a href="/general/carga/reportes">data.datos Enriquecidos</a></li>
+                  <li><a tabindex="-1"href="/general/carga/enriquecer" class="ventana">Telefonos / Mails</a></li>
+                  <li><a href="/general/carga/reportes" class="ventana">Datos Enriquecidos</a></li>
                 </ul>
               </li>
             </ul>
-        </li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Exportar<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/general/exportar/casos">Casos</a></li> 
-                <li><a href="/general/exportar/telefonos">Telefonos</a></li> 
-              </ul>
-              </li>      
-        <li id="logout"><a href="/.php/logout.php">Salir</a></li>
-      
-    </div>
-  </div>
-</nav>
-<div style="width:50%;height:300px;border-top:0px;margin-top:-20px;" ng-controller="campanias">
-  <div id="accordion1" class="panel-group" ng-hide="data.gestionando==1">
-      
-      <div  class="panel panel-default" style="margin-top:-1px;">
-        <div class="panel-heading titulo" style="background:white;" data-toggle="collapse" data-parent="#accordion1" href="#collapsecampania" style="cursor:pointer;">
-          <div class="panel-title" style="text-align:left;font-size:14px;">
-            Tus campañas {{data.opcion}}
-          </div>
-        </div>
-        <div id="collapsecampania" class="panel-collapse collapse">
+    </span>
+    <span class="dropdown boton logout">
+    <a href="/.php/logout.php">Salir</a>
+  </span>
+</div>
+</div>
+<div class="block" ng-if="block==true"></div> 
+        <div style="text-align:left;margin:15px 0px 0px 15px;font-size:17px;"> <img src="/.img/flag.png" style="width:35px;height:35px;margin-top:-10px;"> TUS CAMPAÑAS </div>
+        <div class="panel-collapse">
           <div class="panel-body">
             <div id="accordion" class="panel-group">
             <div  class="panel panel-default" ng-repeat="campania in campanias" style="margin-top:-1px;">
-        <div class="panel-heading titulo" style="background:white;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{campania.id_campania}}" style="cursor:pointer;"  ng-click="data.opcion='campania'">
+        <div class="panel-heading titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse{{campania.id_campania}}"  ng-click="data.opcion='campania'">
           <div class="panel-title" style="text-align:left;font-size:14px;">
-            {{campania.nombre}}
+            <img src="/.img/campaign.png" style="width:30px;margin-right:20px;">{{campania.nombre}}
           </div>
         </div>
-        <div id="collapse{{campania.id_campania}}" class="panel-collapse collapse">
-          <div class="panel-body" ng-click="data.seleccionar(campania.documento,campania.id_campania);data.id_campania=campania.id_campania;data.numero_operacion=campania.numero_operacion;">
-            <table style="font-size:10px;">
-              <tr id="campania{{campania.id_campania}}">
-                <td style="width:25%;">{{campania.apellido}}</td>
-                <td style="width:25%;">{{campania.documento}}</td>
-                <td style="width:25%;">{{campania.estado}}</td>
-                <td style="width:25%;">{{campania.banco}}</td>
-              </tr>
-            </table>
+        <div id="collapse{{campania.id_campania}}" class="panel-collapse collapse" style="text-align:center;">
+          <div class="panel-body" ng-dblclick="elegir.dblclick(campania.documento)">
+            <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button">
+            <span data-toggle="tooltip" title="Titular" data-placement="bottom"><img src="/.img/deudor.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">
+            {{campania.apellido}}
+            </span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  id="change">
+            {{campania.documento}}
+            </span>
+            <span data-toggle="tooltip" title="Estado" data-placement="bottom" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/estado.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">
+            {{campania.estado}}
+            </span>
+            <span data-toggle="tooltip" title="Banco" data-placement="bottom" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/bank.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">
+            {{campania.banco}}
+            </span>
+            </span>
           </div>
         </div>
-      </div>
-    </div>
-          </div>
-        </div>
-      </div>
-      <div  class="panel panel-default" style="margin-top:-1px;">
-        <div class="panel-heading titulo" style="background:white;" data-toggle="collapse" data-parent="#accordion1" href="#collapseagenda" style="cursor:pointer;">
-          <div class="panel-title" style="text-align:left;font-size:14px;">
-            Tu agenda
-          </div>
-        </div>
-        <div id="collapseagenda" class="panel-collapse collapse"  ng-click="data.opcion='agenda'">
-          <div class="panel-body">
-            <div id="accordion" class="panel-group">
-           <table style="font-size:10px;">
-              <tr ng-repeat="agenda in agendas" ng-click="data.seleccionar(agenda.documento,agenda.id)" style="border:1px #ddd solid;cursor:pointer;">
-                <td style="width:20%;padding:15px;">{{agenda.apellido}}</td>
-                <td style="width:20%;padding:15px;">{{agenda.documento}}</td>
-                <td style="width:20%;padding:15px;">{{agenda.estado}}</td>
-                <td style="width:20%;padding:15px;">{{agenda.banco}}</td>
-                <td style="width:20%;padding:15px;">{{agenda.fecha | date: 'dd/MM/yyyy'}}</td>
-              </tr>
-            </table>    </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-<div style="width:50%;float:right;margin-top:-302px;background:#eee;margin-bottom:-40px;heigth:500px;" id="derecha">
-<div  ng-controller="deudor" >
-  <div ng-show="data.datos">
-    <span class="btn btn-default" style="font-size:10px;padding:2px 20px 2px 20px;border-top:none;" ng-click="data.datos='deudor'">Deudor</span><span  ng-click="data.datos='domicilios'" class="btn btn-default" style="font-size:10px;padding:2px 20px 2px 20px;border-top:none;">Domicilios</span><span class="btn btn-default" style="font-size:10px;padding:2px 20px 2px 20px;border-top:none;" ng-click="data.datos='telefonos'">Telefonos</span><span style="font-size:10px;padding:2px 20px 2px 20px;border-top:none;color:#4574a9;" class="btn btn-default" ng-click="data.datos='productos'">Productos</span><span  style="font-size:10px;padding:2px 20px 2px 20px;border-top:none;" class="btn btn-default" ng-show="data.deudor.link"><a target="_blank" href="{{data.deudor.link}}" class="accion">Reporte</a></span>
+<div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
+    <img src="/.img/loading.gif" style="position:absolute;top:40%;left:49%;width:30px;opacity:0.3;">
   </div>
-  <div ng-show="data.datos=='deudor'" style="padding:10px;">
-  <div class="input-group"><span class="input-group-addon">Apellido y nombre</span><input class="form-control" ng-model="data.deudor.apellido=data.deudor.apellido"></div>
-  <div class="input-group"><span class="input-group-addon">Documento</span><input class="form-control" ng-model="data.deudor.documento=data.deudor.documento"></div>
-  <div class="input-group"><span class="input-group-addon">Tipo documento</span><input class="form-control" ng-model="data.deudor.tipo_documento=data.deudor.tipo_documento"></div>
-  <div class="input-group"><span class="input-group-addon">Email</span><input class="form-control" ng-model="data.deudor.email=data.deudor.email"></div>
-  <div class="input-group"><span class="input-group-addon">Empresa</span><input class="form-control" ng-model="data.deudor.empresa=data.deudor.empresa"></div>
-  <div class="input-group"><span class="input-group-addon">Responsable</span><input class="form-control" ng-model="data.deudor.responsable=data.deudor.responsable"></div>
-  </div>
-  <div  ng-show="data.datos=='domicilios'"  style="padding:10px;">
-  <div class="input-group"><span class="input-group-addon">Direccion particular 1</span><input class="form-control" ng-model="data.deudor.direccion_particular=data.deudor.direccion_particular"></div>
-  <div class="input-group"><span class="input-group-addon">Direccion particular 2</span><input class="form-control" ng-model="data.deudor.direccion_particular2=data.deudor.direccion_particular2"></div>
-  <div class="input-group"><span class="input-group-addon">Direccion particular 3</span><input class="form-control" ng-model="data.deudor.direccion_particular3=data.deudor.direccion_particular3"></div>
-  <div class="input-group"><span class="input-group-addon">Direccion laboral 1</span><input class="form-control" ng-model="data.deudor.direccion_laboral1=data.deudor.direccion_laboral1"></div>
-  <div class="input-group"><span class="input-group-addon">Direccion laboral 2</span><input class="form-control" ng-model="data.deudor.direccion_laboral2=data.deudor.direccion_laboral2"></div>
-  <div class="input-group"><span class="input-group-addon">Provincia</span><input class="form-control" ng-model="data.deudor.provincia=data.deudor.provincia"></div>
-  <div class="input-group"><span class="input-group-addon">Localidad</span><input class="form-control" ng-model="data.deudor.localidad=data.deudor.localidad"></div>
-  <div class="input-group"><span class="input-group-addon">Codigo postal</span><input class="form-control" ng-model="data.deudor.codigo_postal=data.deudor.codigo_postal"></div>
-  </div>
-  <div ng-show="data.datos=='telefonos'"  style="padding:10px;">
-      <div class="input-group" style="margin-bottom:5px;padding:10px;">
-        <input type="text" ng-model="data.telefono_nuevo.numero" style="width:50%;font-size:10px;" placeholder="Nuevo numero..." class="form-control">
-        <input type="text" ng-model="data.telefono_nuevo.comentario" placeholder="Comentario..." style="width:50%;font-size:10px;" class="form-control">
-        <span class="input-group-addon btn" style="background:#6f9841;color:white;"  ng-click="data.agregar_telefono()" ng-hide="data.telefono_nuevo.numero.length < 5" ng-init="data.telefono_nuevo.numero=' '">Agregar telefono</span><span class="input-group-addon btn" style="background:#6f9841;color:white;"  ng-click="data.agregar_telefono()" ng-show="data.telefono_nuevo.numero.length < 5" disabled>Agregar telefono</span>
-        </div>
-      <div ng-repeat="(n,telefono) in data.telefonos" class="input-group">
-        <span class="input-group-addon" style="background:#666;color:white;">Telefono {{n+1}}</span><input class="form-control" ng-model="telefono.numero=telefono.numero">
-        <span class="input-group-addon">Comentario</span><input class="form-control" ng-model="data.telefonos[n].comentario">
-        <span class="input-group-addon btn btn-default" style="background:white;" ng-click="modificar_telefono(n)">Modificar</span>
-      </div>
-  </div>
-</div>
-  <div ng-controller="productos" ng-show="data.datos=='productos' || data.datos=='producto'" style="height:142.5px;overflow-y:auto;">
-    <table ng-repeat="banco in data.productos | groupBy: 'banco'" style="width:100%">
-      <tr style="background:white;font-size:10px;height:15px;width:100%;"><td colspan="3" style="padding:5px">{{banco[0].dbanco}} <span style="float:right"><span ng-click="gestion();data.gestion.banco = banco[0].dbanco; data.gestion.cbanco = banco[0].banco" class="btn btn-default" style="font-size:10px;padding:2px 10px 2px 10px;margin:0px;background:#4574a9;color:white;border-color:#4574a9;">Gestionar</span><span ng-click="data.descargar_carpeta(banco[0].banco);" class="btn btn-default" style="font-size:10px;padding:2px 10px 2px 10px;margin:0px;">Descargar carpeta</span><span class="btn btn-default" ng-click="data.ver_propuesta(banco[0].banco);" style="font-size:10px;padding:2px 10px 2px 10px;margin:0px;">Propuesta</span></span></span>
-      <tr ng-repeat="producto in banco" class="table-body producto" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="padding:5px;">{{producto.producto}}</td>
-        <td ng-if="producto.dolar==0" style="padding:5px;">${{producto.deuda}}</td><td  style="padding:5px;" ng-if="producto.dolar==1">US${{producto.deuda}}</td>
-        <td style="padding:5px;">{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
-      </tr>
-    </table>
-  </div>
-  <div ng-controller="producto" ng-show="data.datos=='producto'" style="border-top:1px solid #ddd;">
-    <div style="padding:5px;margin:10px;max-height:142.5px;overflow-y:auto;">
-      <div class="input-group"><span class="input-group-addon">Numero Operacion</span><input class="form-control" ng-model="data.producto.numero_operacion=data.producto.numero_operacion"></div>      
-      <div class="input-group"><span class="input-group-addon">Caratula</span><input class="form-control" ng-model="data.producto.caratula=data.producto.caratula"></div>
-      <div class="input-group"><span class="input-group-addon">Sucursal</span><input class="form-control" ng-model="data.producto.sucursal=data.producto.sucursal"></div>
-      <div class="input-group"><span class="input-group-addon">Legajo</span><input class="form-control" ng-model="data.producto.legajo=data.producto.legajo"></div>
-      <div class="input-group"><span class="input-group-addon">Numero gestión</span><input class="form-control" ng-model="data.producto.numero_gestion=data.producto.numero_gestion"></div>
-      <div class="input-group"><span class="input-group-addon">Producto</span><input class="form-control" ng-model="data.producto.producto=data.producto.producto"></div>
-      <div class="input-group"><span class="input-group-addon">Deuda</span><span class="input-group-addon" ng-show="data.producto.dolar==1">US$</span><span class="input-group-addon" ng-show="data.producto.dolar!=1">$</span><input class="form-control" ng-model="data.producto.deuda=data.producto.deuda"></div>
-    <div class="input-group"><span class="input-group-addon">Fecha ingreso</span><span class="form-control"> {{data.producto.fecha_deuda | date:"dd/MM/yyyy"}}</span></div>
-      <div class="input-group"><span class="input-group-addon">Fecha mora</span><span class="form-control"> {{data.producto.fecha_mora | date:"dd/MM/yyyy"}}</span></div>
-      <div class="input-group"><span class="input-group-addon">Fecha ult. cobro</span><span class="form-control"> {{data.producto.fecha_ult_cobro == '0000-00-00' ? '-' : (data.producto.fecha_ult_cobro | date: 'dd/MM/yyyy')}}</span></div>
-      <div class="input-group"><span class="input-group-addon">Estado</span><select class="form-control" ng-model="data.producto.estado=data.producto.estado" ng-options="estado.id as estado.estado for estado in data.estados" style="font-size:10px"></select></div>
-    <div class="input-group"><span class="input-group-addon">Sub estado</span><select class="form-control" ng-model="data.producto.sub_estado=data.producto.sub_estado" ng-options="sub_estado.id as sub_estado.sub_estado for sub_estado in data.sub_estados" style="font-size:10px"></select></div>
-      <div class="input-group"><span class="input-group-addon">Banco</span><select class="form-control" ng-model="data.producto.banco=data.producto.banco" ng-options="banco.cbanco as banco.dbanco for banco in data.bancos" style="font-size:10px"></select></div>
-      <div class="input-group"><span class="input-group-addon">Agenda</span><span class="form-control"> {{data.producto.agenda | date:"dd/MM/yyyy"}}</span></div>
-    </div>
-  </div>
-  </div>
-</div>
-<div ng-controller="gestion" style="width:100%;height:300px;margin-top:10px;font-size:10px;margin-bottom:-100px;padding-top:15px;">
-
-    <table style="width:100%;position:absolute;font-size:10px;">
-        <tr style="background:white;">
-          <td  style="width:10%;padding:5px;">TELEFONO</td>
-          <td  style="width:70%;padding:5px;">DESCRIPCION</td>
-          <td  style="width:10%;padding:5px;">FECHA</td>
-          <td  style="width:10%;padding:5px;">OPERADOR</td>
-        </tr>
-    </table>
-    <div style="width:100%;height:200px;overflow-y:auto;margin-top:25px;border-bottom:1px solid #ccc">
-    <table style="width:100%;font-size:10px;"> 
-        <tr ng-repeat="gestion in data.gestiones" class="filita" style="color:white;">
-          <td style="width:10%;padding:5px;border-right:1px solid #aaa;">{{gestion.telefono}}</td>
-          <td style="width:70%;padding:5px;border-right:1px solid #aaa;">{{gestion.comentario}}</td>
-          <td style="width:10%;padding:5px;border-right:1px solid #aaa;">{{gestion.fecha | date: "dd/MM/yyyy"}}</td>
-          <td style="width:10%;padding:5px;border-right:1px solid #aaa;">{{gestion.operador}}</td>
-      </tr>
-    </table>
-  </div>
-  
-</div>
-
-
-
-
-<div style="width:50%;float:right;background:#eee;margin-top:-510px;height:325px;overflow-y:auto;" id="gestion" ng-controller="gestion" ng-show="data.gestionando==1;">
-  <div class="input-group">
-    <span class="input-group-addon" style="color:white;background:{{color}};">{{gestion.horas}}:{{gestion.minutos}}:{{gestion.segundos}}</span>
-  </div>
-  
-    <div ng-show="!comenzar_gestion">
-        <span class="btn btn-primary form-control" style="font-size:10px;" ng-click="comenzar_gestion=1;hora();gestion= {horas:0,minutos:0,segundos:0};avanzar();" ng-show="data.gestion.banco">Comenzar gestión</span>
-    </div>
-    <div ng-if="comenzar_gestion" class="gestion" ng-init="gestion.sub_estado = data.productos[0].sub_estado;">
-        <div class="input-group">
-        <span class="input-group-addon" style="background:{{color}};color:white;">Tipo de gestión</span><select class="form-control"  ng-model="gestion.tipo_gestion" ng-options="tipo as tipo.tipo for tipo in data.tipo_gestion" ng-init="gestion.tipo_gestion=data.tipo_gestion[0]" style="font-size:10px;"></select>
-        </div>
-        <div class="input-group">
-        <span class="input-group-addon" style="background:{{color}};color:white;">Teléfono</span><select class="form-control" id="telefonos" style="font-size:10px;" ng-model="gestion.telefono" ng-options="telefono as telefono.numero for telefono in data.telefonos" ng-change="gestion.calificacion=gestion.telefono.calificacion;copiar_telefono=gestion.telefono.numero"><option></option></select><span class="copy input-group-addon" data-clipboard-action="copy" data-clipboard-target="#tocopy">Copiar</span><input id="tocopy" type="text" style="position:fixed;top:-300px;" ng-model="copiar_telefono">
-        </div>
-        <div ng-hide="gestion.telefono.numero"  class="input-group">
-        <span class="input-group-addon">Nuevo</span><input class="form-control" ng-model="data.telefono_nuevo.numero" placeholder="Nuevo numero..."><span class="input-group-addon" ng-click="data.agregar_telefono()" ng-hide="data.telefono_nuevo.numero.length < 5">Agregar</span><span class="input-group-addon" ng-click="data.agregar_telefono()" ng-show="data.telefono_nuevo.numero.length < 5" disabled>Agregar</span>
-        </div>
-        <textarea class="form-control" rows="3" placeholder="Descripción..." ng-model="gestion.comentario" style="max-width:100%;font-size:10px;"></textarea>
-        <div class="input-group">
-        <span  class="input-group-addon" style="background:{{color}};color:white;">Calificar teléfono</span><select class="form-control" ng-model="gestion.calificacion" ng-options="calificacion as calificacion.titulo for calificacion in data.calificacion_telefonos" ng-show="gestion.calificacion.id!=gestion.telefono.calificacion"  style="font-size:10px;"><option></option></select><select class="form-control" ng-model="gestion.calificacion" ng-options="calificacion as calificacion.titulo for calificacion in data.calificacion_telefonos" ng-hide="gestion.calificacion.id!=gestion.telefono.calificacion"  style="font-size:10px;" disabled ></select>
-      </div>
-      <div style="font-size:10px;margin-bottom:0px;" class="alert alert-danger" role="alert" ng-show="(!gestion.calificacion || gestion.calificacion==0)">
-          La calificacion del telefono es obligatoria. {{banco}}
-      </div>
-      <div class="input-group">
-      </div> 
-      <div style="font-size:14px;" class="alert alert-danger" role="alert" ng-show="(gestion.sub_estado.sub_estado=='NEGOCIACION' || gestion.sub_estado.sub_estado=='PROMETE PAGAR' || gestion.sub_estado.sub_estado=='INFORMO PAGO') && !gestion.agenda">
-          <strong>¡Atención!</strong> la agenda es obligatoria.
-      </div>
-      <div class="margen-top">
-        <span class="btn btn-primary form-control" ng-click="liquidar()" style="background:{{color}};border:0px;font-size:10px;">Liquidación</span>
-      </div>
-    <span ng-show="gestion.calificacion || gestion.tipo_gestion.tipo == 'COMENTARIO'" class="btn btn-default form-control"  style="width:100%;font-size:10px;" ng-click="comenzar_gestion=0;registrar();color='#337ab7';">Registrar</span>
-    </div>
-    <br>
-    <div class="input-group" style="width:100%" ng-show="comenzar_gestion!=1">
-      <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;border:1px solid #eea236;color:white;background:#eea236">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">Enviar SMS &#x25B4;</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:75.5px">
-          <li>
-            <div style="margin-top:-60.5px;">
-            <span class="btn input-group-addon" style="background:#eea236;color:white;" ng-click="sms()"  ng-show="enviar.telefono">Enviar SMS</span>
-            <span class="btn input-group-addon" style="background:#eea236;color:white;" ng-click="sms()"  ng-show="!enviar.telefono" disabled>Enviar SMS</span>
-      <select class="form-control" style="font-size:10px;" ng-model="enviar.telefono" ng-options="telefono as telefono.numero for telefono in data.telefonos" ng-change="enviar.calificacion=enviar.telefono.calificacion"></select> 
-      <select class="form-control" ng-model="enviar.calificacion" ng-options="calificacion.id as calificacion.titulo for calificacion in data.calificacion_telefonos" style="font-size:10px;" disabled></select>      
-                </div>
-          </li>
-        </ul>
-      </span>
-      <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;border:1px solid #4574a9;color:white;background:#4574a9">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">Enviar IVR &#x25B4;</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:75.5px">
-          <li>
-            <div style="margin-top:-60.5px;">
-            <span class="btn input-group-addon" style="background:#4574a9;color:white;" ng-click="ivr()"  ng-show="enviar.telefono">Enviar IVR</span><span class="btn input-group-addon" style="background:#4574a9;color:white;" ng-click="ivr()" ng-show="!enviar.telefono" disabled>Enviar IVR</span>
- <select class="form-control" style="font-size:10px;" ng-model="enviar.telefono" ng-options="telefono as telefono.numero for telefono in data.telefonos" ng-change="enviar.calificacion=enviar.telefono.calificacion"></select> 
-      <select class="form-control" ng-model="enviar.calificacion" ng-options="calificacion.id as calificacion.titulo for calificacion in data.calificacion_telefonos" style="font-size:10px;" disabled></select>      
-                  </div>
-          </li>
-        </ul>
-      </span>
-      <span class="btn input-group-addon" style="background:#6a9e60;color:white;font-size:11px;border-color:#6a9e60;" ng-click="mail()" ng-show="data.deudor.email">Enviar Mail</span><span class="btn input-group-addon" style="color:white;background:#6a9e60;border-radius:0px 0px 0px 0px;font-size:11px;border-color:#6a9e60;" ng-hide="data.deudor.email" disabled>Enviar Mail</span>
-    </div>
-    <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;border:1px solid #d43f3a;color:white;background:#d43f3a;" ng-show="comenzar_gestion!=1">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">ABANDONAR CASO</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:25.5px">
-          <li>
-            <div class="input-group">
-              <span class="input-group-addon" style="background:#d43f3a;color:white;">Agenda</span><input type="date" class="form-control" ng-model="gestion.agenda"><br>
-            </div>
-            <div class="input-group">
-              <span  class="input-group-addon" style="background:#d43f3a;color:white;">Sub estado</span><select type="text" ng-model="gestion.sub_estado" ng-options="sub_estado.id as sub_estado.sub_estado for sub_estado in data.sub_estados" class="form-control" style="font-size:10px;"></select>
-            </div>
-            <span class="btn btn-danger form-control" style="font-size:10px;" ng-click="abandonar();data.gestionando=0;" ng-show="gestion.agenda && gestion.sub_estado">ABANDONAR</span>
-          </li>
-        </ul>
-      </span>
-    <div ng-hide="(!gestion.sub_estado || gestion.sub_estado.sub_estado=='NEGOCIACION' || gestion.sub_estado.sub_estado=='PROMETE PAGAR' || gestion.sub_estado.sub_estado=='INFORMO PAGO') && !gestion.agenda">
-      
-    </div>
-  </div>
-</div>
-
-<script src="/.js/clipboard.min.js"></script>
 <script>
-$('.dont-go').on({
-    "click":function(e){
-      e.stopPropagation();
-    }
+const remote = require('electron').remote;
+var resize = remote.require('./main').resize;
+resize(700,400);
+
+
+angular
+  .module("gestion", ['infinite-scroll','btford.socket-io','angular.filter'])
+
+  .controller("manual", function ($scope, $http, $timeout) {
+    var _ = $scope;
+    _.listado=[];
+    _.caso={};
+    _.limite=5;
+    _.traer={campanias: function (){
+      $scope.campanias=[];
+      $http.post('php/campanias.php', {id: id_usuario}).then(function(res){
+      $scope.campanias=res.data;
+      });
+    }};
+    _.traer.campanias();
+    _.enter =function(e){if(e.which === 13){_.buscar();}};
+    _.buscar=function(){_.refresh=1;_.listado=[];$http.post('php/buscar-rapido.php', _.busqueda).then(function(res){_.limite=5;_.listado=res.data;$timeout(function(){_.refresh=0;_.deudor=0;});});}
+    _.bajar=function(){_.limite=_.limite+1;};
+    _.elegir={click:function (d){$("tr").css('background','white');
+                            $("#"+d).css('background','#dfc');
+                            $http.post('php/deudor-domicilios.php',{documento:d}).then(function(res){_.caso.deudor=res.data[0];});
+                          },
+              dblclick:function (d){$("tr").css('background','white');
+                            $("#"+d).css('background','#dfc');
+                                window.open('datos/?d='+d, d,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+$http.post('php/gestion.php',{documento:d}).then(function(res){_.caso.gestiones=res.data;});
+                          }
+              };
+
+
 });
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+document.addEventListener('dragover',function(event){
+    event.preventDefault();
+    return false;
+  },false);
+
+  document.addEventListener('drop',function(event){
+    event.preventDefault();
+    return false;
+  },false);
 </script>
 </body>
 </html>

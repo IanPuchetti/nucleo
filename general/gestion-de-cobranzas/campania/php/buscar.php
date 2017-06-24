@@ -1,17 +1,12 @@
 <?php
 $documento=$_POST["documento"];
-$apellido=$_POST["apellido"];
 $banco=$_POST["banco"];
 $mysqli = new mysqli("localhost", "ian", "p", "nucleo");
-$mysqli->set_charset("utf8");
-$result = $mysqli->query("SELECT deudores.documento, deudores.apellido, estados.estado, bancos.dbanco, reportes.link FROM  deudores INNER JOIN productos ON deudores.documento = productos.documento INNER JOIN bancos ON bancos.cbanco = productos.banco INNER JOIN estados ON productos.estado = estados.id LEFT OUTER JOIN reportes ON deudores.documento = reportes.documento WHERE deudores.documento LIKE '%$documento%' AND deudores.apellido LIKE '%$apellido%' AND productos.banco LIKE '%$banco%' ORDER BY deudores.apellido DESC");
+$result = $mysqli->query("SELECT propuestas.fecha_propuesta AS 'Fecha de propuesta', usuarios.user AS Operador, deudores.apellido, deudores.documento, propuestas.monto_total AS 'Monto total', propuestas.monto_primer_pago AS 'Monto primer pago',  propuestas.cuotas AS 'Cuotas', propuestas.fecha_pago AS 'Fecha pago', bancos.dbanco AS Banco, propuestas.asignacion, IF (propuestas.aprobado = 0, 'NO', 'SI') AS Aprobado FROM propuestas INNER JOIN deudores ON propuestas.deudor = deudores.documento INNER JOIN usuarios ON usuarios.id = propuestas.operador INNER JOIN bancos ON propuestas.banco = bancos.cbanco WHERE documento='$documento' AND propuestas.banco = '$banco'");
 $rows = array();
 while($r = mysqli_fetch_assoc($result)) {
     $rows[] = $r;
 }
-$rows=json_encode($rows);
-
-print_r($rows);
-
+echo json_encode($rows);
 $mysqli->close();
 ?>

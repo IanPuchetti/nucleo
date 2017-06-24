@@ -83,6 +83,14 @@ body{
     border-top:0px;
 }
 
+.drag{
+  -webkit-app-region:drag;
+  position:absolute;
+  top:0px;
+  right:20px;
+  width:100%;
+  height:20px;
+}
 
 @font-face {
     font-family: Product-Sans;
@@ -237,10 +245,21 @@ body{
 select{
   background:none;
 }
+
+.noselect {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
 </style>
   </head>
 
   <body oncontextmenu="return false;" ng-app="inicio" ng-controller="inicio">
+    <div class="noselect">
+<span class="drag"></span>
+</div>
 <div class="header">
   <div style="position:absolute;width:600px;">
   <span class="dropdown boton">
@@ -361,10 +380,20 @@ angular
                             .then(function(res){
                               _.estadisticas.datos = res.data;
                               if(_.periodo=='dia'){
-                               _.estadisticas.labels=arreglarlabel(_.estadisticas.datos,'hora');
+                               _.estadisticas.labels=arreglarlabel(_.estadisticas.datos,'horas');
                                _.estadisticas.cont=arreglardata(_.estadisticas.datos, 'gestiones');
-
+                              }else{
+                                if(_.periodo=='semana'){
+                               _.estadisticas.labels=arreglarlabel(_.estadisticas.datos,'fecha');
+                               _.estadisticas.cont=arreglardata(_.estadisticas.datos, 'gestiones');
+                              }else{
+                                if(_.periodo=='mes'){
+                               _.estadisticas.labels=arreglarlabel(_.estadisticas.datos,'fecha');
+                               _.estadisticas.cont=arreglardata(_.estadisticas.datos, 'gestiones');
                               }
+                              }
+                              }
+
                             });
                     }};
 
@@ -392,6 +421,11 @@ function getDaysInMonth(month, year){
          }
          return days;
     }
+
+  global.shared={close:null, server:null}
+  const remote = require('electron').remote;
+  var resize = remote.require('./main').resize;
+  resize(800,400);
 
 </script>
 </body>

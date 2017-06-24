@@ -264,26 +264,17 @@ select{
 
 .buscador{
     margin-top:0px;
-    padding-top:4px;
+    padding-top:3px;
 }
-.buscador span{
-  margin-top:0px;
-  padding:5px 35px 5px 24px;
-  background:#07963d;
-  color:white;
-  cursor:pointer;
-}
-.buscador input{
-  padding-left:4px;
-  margin-top:-5px;
-  margin-left:-4px;
-  height:25px;
-  border:1px solid #ddd;
+
+
+input{
+  border:0px;
+  font-size:12px;
 }
 
 input:focus{
     outline: none;
-    border:1px solid #abdf47;
 }
 
 table{
@@ -336,6 +327,28 @@ tbody tr:hover{
   width:100%;
   padding:5px;
 }
+
+.tooltip-inner {
+  background-color: #0b3 !important;
+  /*!important is not necessary if you place custom.css at the end of your css calls. For the purpose of this demo, it seems to be required in SO snippet*/
+  color: #fff;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #0b3;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #0b3;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  border-bottom-color: #0b3;
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color: #0b3;
+}
 </style>
   </head>
 
@@ -381,15 +394,31 @@ tbody tr:hover{
 </div>
 <div class="block" ng-if="block==true"></div> 
 <div class="header buscador" style="height:25px;">
+  <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
+  <span data-toggle="tooltip" title="Titular" data-placement="bottom"><img src="/.img/deudor.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+      <input type="text" ng-model="busqueda.apellido" placeholder="Apellido y nombre..."  ng-keypress="enter($event)">
+  </span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+  <input type="number" ng-model="busqueda.documento" placeholder="Numero de documento..."  ng-keypress="enter($event)">
+  </span>
+  <span data-toggle="tooltip" title="Telefono" data-placement="bottom" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/phone.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+  <input type="text" ng-model="busqueda.telefono" placeholder="Numero de telefono..."  ng-keypress="enter($event)">
+  </span>
+  <span data-toggle="tooltip" title="Buscar" data-placement="bottom" ng-click="buscar()" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/search.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  </span>
+
+  <!--
   <span ng-click="buscar()"><img src="/.img/buscar.png" style="width:15px;margin-top:-5px;margin-left:-20px;margin-right:15px;">Buscar</span>
-  <input type="text" ng-model="busqueda.apellido" placeholder="Apellido y nombre..." ng-keypress="enter($event)">
   <input type="number" ng-model="busqueda.documento" placeholder="Numero de documento..."  ng-keypress="enter($event)">
   <input type="text" ng-model="busqueda.telefono" placeholder="Numero de telefono..."  ng-keypress="enter($event)">
     <span ng-click="busqueda={}" style="margin-left:-5px;background:#fafafa;color:#666;border:1px solid #aaa;padding:-1px;">Borrar</span>
-
+-->
 </div>
 <div class="busqueda">
-  <table style="position:absolute;right:15px;width:98.2%">
+  <table style="position:absolute;right:15px;width:97.8%">
     <thead>
       <tr>
         <td style="width:25%">DOCUMENTO</td>
@@ -405,10 +434,10 @@ tbody tr:hover{
         <td style="height:18px"></td>
       </tr>
       <tr  ng-if="i<limite" ng-repeat="(i, caso) in ::listado" class="caso" id="{{caso.documento}}" ng-click="elegir.click(caso.documento)" ng-dblclick="elegir.dblclick(caso.documento)">
-        <td style="width:25%">{{caso.documento |limitTo: 30}}{{caso.documento.length > 25 ? "..." : ""}}</td>
-        <td style="width:25%">{{caso.apellido |limitTo: 27}}{{caso.apellido.length > 25 ? "..." : ""}}</td>
-        <td style="width:25%">{{caso.estado |limitTo: 30}}{{caso.estado.length > 25 ? "..." : ""}}</td>
-        <td style="width:25%" >{{caso.banco |limitTo: 30}}{{caso.banco.length > 25 ? "..." : ""}}</td>
+        <td style="width:25%">{{caso.documento |limitTo: 23}}{{caso.documento.length > 23 ? "..." : ""}}</td>
+        <td style="width:25%">{{caso.apellido |limitTo: 20}}{{caso.apellido.length > 20 ? "..." : ""}}</td>
+        <td style="width:25%">{{caso.estado |limitTo: 23}}{{caso.estado.length > 23 ? "..." : ""}}</td>
+        <td style="width:25%" >{{caso.banco |limitTo: 20}}{{caso.banco.length > 20 ? "..." : ""}}</td>
       </tr>
       <tr infinite-scroll="bajar()" infinite-scroll-container='".casos"' infinite-scroll-distance="5" infinite-scroll-disabled="!listado || limite>=listado.length"></tr>
     </tbody>
@@ -440,7 +469,7 @@ tbody tr:hover{
 <script>
 const remote = require('electron').remote;
 var resize = remote.require('./main').resize;
-resize(900,400);
+resize(700,400);
 
 
 angular
