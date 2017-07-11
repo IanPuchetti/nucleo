@@ -15,6 +15,8 @@ angular.module('exporte',['infinite-scroll',"chart.js"])
 		$http.post('php/calificacion-telefonos.php').then(function(res){_.calificacion_telefonos=res.data;});//Obtencion de las calificaciones
 		_.bajar=function(){
 			_.limite=_.limite+1;
+			_.largotabla.push(_.largotabla.length+1);
+      		_.largotabla.slice(1,_.limite-3);
 		};
 		_.enter = function (e){
 					if(e==13){
@@ -66,7 +68,7 @@ angular.module('exporte',['infinite-scroll',"chart.js"])
 		for (var i in _.tabla){
 			delete _.tabla[i]['$$hashKey']
 		}
-		exportar(_.tabla, _.nombre_archivo);
+		exportar(_.tabla, 'enviar_sms.xlsx');
 		$http.post('php/registrar.php', {tabla: _.tabla , hoy : hoy}).then(function (res){
 					_.volver=0;
 					_.tabla=[];

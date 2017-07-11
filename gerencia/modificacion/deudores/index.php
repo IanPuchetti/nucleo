@@ -18,6 +18,7 @@ header("Location: ../../");
 	<title>Nucleo</title>
 	<link rel="stylesheet" href="/.css/bootstrap.min.css"/>
 	<link href="/.css/signin.css" rel="stylesheet"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script type="text/javascript" src="/.js/jquery.min.js"></script>
 	<script type="text/javascript" src="/.js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/jsontable.js"></script>

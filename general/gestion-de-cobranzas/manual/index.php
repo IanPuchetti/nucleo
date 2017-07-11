@@ -421,10 +421,10 @@ tbody tr:hover{
   <table style="position:absolute;right:15px;width:97.8%">
     <thead>
       <tr>
-        <td style="width:25%">DOCUMENTO</td>
-        <td style="width:25%">APELLIDO</td>
-        <td style="width:25%">ESTADO</td>
-        <td style="width:25%">BANCO</td>
+        <td style="width:25%">Documento</td>
+        <td style="width:25%">Titular</td>
+        <td style="width:25%">Estado</td>
+        <td style="width:25%">Banco</td>
       </tr>
     <thead>
     </table>

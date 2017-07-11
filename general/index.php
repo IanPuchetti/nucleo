@@ -256,7 +256,7 @@ select{
 </style>
   </head>
 
-  <body oncontextmenu="return false;" ng-app="inicio" ng-controller="inicio">
+  <body oncontextmenu="return false;" ng-app="inicio" ng-controller="inicio" class="noselect">
     <div class="noselect">
 <span class="drag"></span>
 </div>
@@ -303,7 +303,7 @@ select{
   <div style="border-right:0px;background: -webkit-linear-gradient(#07963d, #89bd25);width:120px;float:left;height:100%;">
     <div  class="circle" style="margin:auto;margin-top:5px;"><span data-toggle="tooltip" title="Gestor" data-placement="bottom"><img src="/.img/gestor.png" style="width:35px;margin-top:12.5px;margin-left:-7px;"></span></div>
     <div class="boton-menu" ng-click="show='estadisticas'" ng-init="show='estadisticas'">Estadisticas</div>
-    <div class="boton-menu" ng-click="show='agendas'">Agendas</div>
+    <div class="boton-menu" ng-click="show='agendas'">Agendas <span ng-if="agenda.length!=0" style="color:white;">({{agenda.length}})</span></div>
     <div class="boton-menu" ng-click="show='campanias'">Campañas</div>
     <div class="boton-menu" ng-click="show='casos'">Mis casos</div>
     <div class="boton-menu"><a href="manual" target="_blank">Ayuda</a></div>
@@ -318,17 +318,16 @@ select{
   <div class="side" ng-show="show=='agendas'">
     <h2 class="color-gr" style="margin-top:-5px;padding-left:20px;display:inline-block;">Agendas</h2>
         <p>Una lista con tus agendas del mes</p>
-        <div class="row">
-        <div class="col-md-4">
           <div class="caja"  style="width:250px;">
         <h4 style="text-transform:uppercase;">{{mes[0] | date:'MMMM'}}   {{mes[0] | date: 'yyyy'}}</h4>
         <div style="width:250px;margin-left:-10px;font-size:12px">
-          <div ng-repeat="dia in mes" class="dias" id="dia{{dia | date: 'dd'}}">{{dia | date: 'dd'}}</span>
-        </div>
-        </div>
+          <div ng-repeat="(i,dia) in mes" class="dias" id="dia{{i}}" ng-click="agendas(dia)">{{dia | date: 'dd'}}</span>
         </div>
       </div>
-        <div class="col-md-8" style="border-left:1px solid #abdf47">
+      </div>
+      <div style="position:absolute;left:300px;width:300px;top:50px;font-size:12px;height:300px;overflow-y:auto;">
+        <div ng-repeat="caso in agenda">
+          <span style="color:#{{caso.gestion!=1 ? 934 : 394}};cursor:pointer;" ng-dblclick="gestionar(caso.documento, caso.id)">{{caso.apellido}} </span><img src="/.img/yes.png" style="width:15px;margin-top:-3px;" ng-if="caso.gestion!=0">
         </div>
       </div>
   </div>
@@ -396,10 +395,21 @@ angular
 
                             });
                     }};
-
+  _.gestionar=function (d, i){
+                                window.open('gestion-de-cobranzas/agenda/datos/?d='+d+'&i='+i, d,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+                              };
+  _.agendas=function (d){
+    _.d=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    $(".dias").css({color:"#666", 'border-color':'#ddd'});
+    $(".dias#dia"+(d.getDate()-1)).css({color:"#07963d", 'border-color':'#07963d'});
+    $http.post('php/agendas.php', {fecha:_.d}).then(function(res){
+      _.agenda=res.data;
+    });
+  };
+  _.agendas(hoy);
   $timeout(function () {
-    $(".dias#dia"+$scope.hoy).css({color:"#07963d", 'border-color':'#07963d'});
-    _.estadisticas.graficar();
+    $(".dias#dia"+(hoy.getDate()-1)).css({color:"#07963d", 'border-color':'#07963d'});
+   _.estadisticas.graficar();
   });
 
 });

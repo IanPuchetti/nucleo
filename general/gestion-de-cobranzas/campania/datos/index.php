@@ -631,7 +631,7 @@ angular
     _.ver='deudor';
     _.getNumber=function(n){return new Array(n);};
     _.gestionar= function (b){
-    window2=window.open('gestion/?d='+d+'&b='+b, 'call'+d,'height=330, width=300, left=-400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+    window2=window.open('gestion/?d='+d+'&b='+b, 'call'+d,'height=330, width=300, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
     };
     _.reporte=function(){window3 = window.open('reporte/?u='+_.caso.deudor.link, 'reporte'+d,'height=600, width=400, left=100, top=0, resizable=yes, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
 };

@@ -11,7 +11,8 @@ io.sockets.on('connection', function(socket) {
 	
 	socket.on('tiempo', function (data){
 				io.sockets.emit('panel', data);
+				
 	});
 });
 
-app.listen(3000);
+app.listen(3002);

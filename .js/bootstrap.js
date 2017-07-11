@@ -2376,9 +2376,6 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-$(document).on('click', '.dont-go', function (e) {
-  e.stopPropagation();
-});
 
 window.addEventListener("resize", function(){
         console.log("Resized");
