@@ -5,6 +5,7 @@ if($_SESSION['puesto']=='adm'){
 header("Location: ../administracion/");
 }else{
 if($_SESSION['puesto']=='ger'){
+header("Location: ../gerencia/");
 }else{
 if($_SESSION['puesto']=='sup'){
 header("Location: ../supervision/");
@@ -354,34 +355,99 @@ tbody tr:hover{
   <body oncontextmenu="return false;" ng-app="gestion" ng-controller="manual" class="noselect">
     <div class="bar drag">
     </div>
-<div class="header" style="">
-  <div style="position:absolute;width:600px;">
+<div class="header">
+  <div style="position:absolute;width:1000px;">
   <span class="dropdown boton">
-   <a href="/" disable>Inicio</a>
+    <a href="/">Inicio</a>
   </span>
   <span class="dropdown boton">
-    <span class="dropdown-toggle" data-toggle="dropdown">Gestión de cobranzas <span class="trgl">&#x25BE;</span></span>
+    <span class="dropdown-toggle" data-toggle="dropdown">Campañas <span class="trgl">&#x25BE;</span></span>
     <ul class="dropdown-menu no-top">
-      <li><a href="/general/gestion-de-cobranzas/manual/">Manual</a></li>
-      <li><a href="/general/gestion-de-cobranzas/campania/">Campaña</a></li>
+      <li><a href="/gerencia/campanias/ver">Ver</a></li>
+      <li><a href="/gerencia/campanias/generar/">Generar</a></li>
+      <li><a href="/gerencia/campanias/grupos/">Grupos</a></li>
+    </ul>
+  </span>
+  <span class="dropdown boton">
+    <span class="dropdown-toggle" data-toggle="dropdown">Panel <span class="trgl">&#x25BE;</span></span>
+    <ul class="dropdown-menu no-top">
+      <li><a href="/gerencia/panel/gestiones">Gestiones</a></li>
     </ul>
   </span>
   <span class="dropdown boton">
             <span data-toggle="dropdown">Administración de Cartera <span class="trgl">&#x25BE;</span></span>
         <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/general/carga/comparacion" class="ventana">Comparación</a></li>
+              <li><a href="/gerencia/carga/comparacion" class="ventana">Comparación</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Carga</a>
-                <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="/general/carga/masiva" class="ventana">Masiva</a></li>
-                  <li><a tabindex="-1" href="/general/carga/manual" class="ventana">Manual</a></li>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/carga/masiva" class="ventana">Masiva</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/manual" class="ventana">Manual</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Modificación masiva</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/modificacion/productos" class="ventana">Productos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/modificacion/deudores" class="ventana">Deudores</a></li>
                 </ul>
               </li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Enriquecimiento</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1"href="/gerencia/carga/enriquecer" class="ventana">Telefonos / Mails</a></li>
+                  <li><a href="/gerencia/carga/reportes" class="ventana">Datos Enriquecidos</a></li>
+                </ul>
+              </li>
+              <li><a href="/gerencia/baja/" class="ventana">Cambio de estado</a></li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Gestión de cobranzas <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/gestion-de-cobranzas/manual" class="ventana">Manual</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/campania" class="ventana">Campaña</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/consultas" class="ventana">Consultas</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Carga</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1"href="/general/carga/enriquecer" class="ventana">Telefonos / Mails</a></li>
-                  <li><a href="/general/carga/reportes" class="ventana">Datos Enriquecidos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/gestiones-automaticas" class="ventana">Gestiones automáticas</a></li>
+                </ul>
+              </li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Exportar <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/exportar/casos" class="ventana">Casos</a></li>
+              <li><a href="/gerencia/exportar/telefonos" class="ventana">Telefonos</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Para enviar</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/sms" class="ventana">SMS</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/mails" class="ventana">Mails</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/ivr" class="ventana">IVR</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Informes</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/propuestas" class="ventana">Propuestas</a></li>
+                </ul>
+              </li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Administración <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/administracion/responsables" class="ventana">Responsables</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">ABMS</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios" class="ventana">Operadores</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/bancos" class="ventana">Bancos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/liquidadores" class="ventana">Liquidadores</a></li>
+
                 </ul>
               </li>
             </ul>
@@ -420,10 +486,10 @@ tbody tr:hover{
   <table style="position:absolute;right:15px;width:97.8%">
     <thead>
       <tr>
-        <td style="width:25%">DOCUMENTO</td>
-        <td style="width:25%">APELLIDO</td>
-        <td style="width:25%">ESTADO</td>
-        <td style="width:25%">BANCO</td>
+        <td style="width:25%">Documento</td>
+        <td style="width:25%">Titular</td>
+        <td style="width:25%">Estado</td>
+        <td style="width:25%">Banco</td>
       </tr>
     <thead>
     </table>

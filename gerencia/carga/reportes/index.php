@@ -19,165 +19,466 @@ header("Location: ../../");
 	<meta name="author" content="">
 	<link rel="icon" href="/icon.png">
 	<title>Nucleo</title>
-	<link rel="stylesheet" href="/.css/bootstrap.min.css"/>
-	<link href="/.css/signin.css" rel="stylesheet"/>
-	<script type="text/javascript" src="/.js/jquery.min.js"></script>
-	<script type="text/javascript" src="/.js/bootstrap.js"></script>
-
+  <link rel="stylesheet" href="/.css/bootstrap.min.css"/>
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script type="text/javascript" src="/.js/jquery.min.js"></script>
+  <script type="text/javascript" src="/.js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/.js/angular.min.js"></script>
+  <script type="text/javascript" src="/.js/ng-infinite-scroll.js"></script>
+  <script type="text/javascript" src="/.js/angular-filter.min.js"></script>
+  <script type="text/javascript" src="/.js/socket.io.js"></script>
+  <script type="text/javascript" src="/.js/ngsocket.io.js"></script>
+  <script src="/.js/angular-es.js"></script>
 <style>
 .navbar-static-top{
 margin-top:-40px;
 }
 
-a{
-cursor:pointer;
-color:#b00;
+body{
 }
 
-a:hover{
-color:#700;
+.noselect{
+  -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none;
+}
+.header{
+  width:100%;
+  height:40px;
+  background:white;
+  padding-top:12px;
+  font-size:12px;
+  border-bottom:1px solid #ddd;
+  /*-webkit-box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);
+  -moz-box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);
+  box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);*/
+}
+
+.boton, .logout, .logout a{
+  padding:5px 10px 5px 10px;
+  cursor:pointer;
+  text-decoration: none;
+  color:#666;
+}
+
+.boton:hover, .boton span:hover, .logout a:hover{
+  color:#333;
+}
+
+.dropdown-menu{
+  margin-top:6px;
+  border-radius:0px;
+  font-size:11px;
+}
+
+.no-top{
+    border-top:0px;
+}
+
+
+@font-face {
+    font-family: Product-Sans;
+    src: url('/fonts/Product Sans Regular.ttf');
+}
+
+@font-face {
+    font-family: Product-Sans-Bold;
+    src: url('/fonts/Product Sans Bold.ttf');
+}
+
+@font-face {
+    font-family: Benton-Sans-Light;
+    src: url('/fonts/Benton-Sans-Light.ttf');
+}
+
+*{
+  font-family: Product-Sans;
+  color:#666;
+}
+
+.drag{
+  -webkit-app-region:drag;
+}
+
+.bar{
+  width:100%;
+  height:15px;
+  position:fixed;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: 0px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+}
+
+.trgl{
+  color:#aaa;
+}
+
+
+.boton-menu, .boton-menu a{
+  font-size:15px;
+  padding:10px;
+  text-align:center;
+  color:white;
+  cursor:pointer;
+}
+
+.boton-menu:hover, .boton-menu a:hover{
+  color:#ddd;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px; 
+  text-align: center;
+  font-size:35px;
+  background:white;
+}
+
+.circle span{
+    margin-top:-5px;
+    margin-left:-10px;
+    position:absolute;
+    background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Product-Sans-Bold;
+}
+
+.color-gr{
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.back-gr{
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+  color:white;
+}
+
+body{
+  border:1px solid #ccc;
+  overflow:hidden;
+}
+
+#reload:hover{
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+
+#reload{
+  width:22px;margin-top:4px;-webkit-transition: -webkit-transform .4s ease-in-out;transition:transform .4s ease-in-out;cursor:pointer;
+}
+
+.block{
+  width:100%;
+  height:40px;
+  position:fixed;
+  top:0px;
+  left:0px;
+}
+
+
+.side{
+  z-index:0;background:white;position:fixed;top:40px;left:150px;width:850px; height:90%;padding:10px;font-size:17px;overflow-y:auto;overflow-x:hidden;
+}
+
+.caja{
+  padding:20px;
+  border-radius:15px;
+  border:1px solid #ddd;
+  width:310px;
+}
+
+.dias{
+  padding:3px;margin:1px;border-radius:5px;border:1px solid #ddd;cursor:pointer;display:inline-block;width:30px;text-align: center;
+}
+
+.dias:hover{
+  background:#eee;
+}
+
+select{
+  background:none;
+}
+
+.boton a{
+  text-decoration: none;
+  color:#777;
+}
+
+.buscador{
+    margin-top:0px;
+    padding-top:3px;
+}
+
+
+input{
+  border:0px;
+  font-size:12px;
+}
+
+input:focus{
+    outline: none;
+}
+
+table{
+  font-size:14px;
+  width:100%;
+  float:right;
+  cursor:pointer;
+  margin-bottom: 1px;
+}
+
+td{
+  border:1px solid #aaa;
+  padding:0px 4px 0px 4px;
+}
+
+.busqueda{
+  height: 305px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  border-bottom:1px solid #ddd;
+}
+
+tbody tr td{
+  font-size:12px;
+}
+
+thead tr td{
+  background:#efd;
+}
+
+tbody tr:hover{
+  background:#eafada !important;
+}
+
+.left{
+  width:10%;position:absolute;top:83px;border-top:1px solid #eee;padding-top:5px;
+}
+
+.button{
+  cursor:pointer;
+}
+.button:hover>#change{
+  background:#fafefa;
+}
+
+.down{
+  position:absolute;
+  top:285px;
+  border-top:1px #ddd solid;
+  width:100%;
+  padding:5px;
+}
+
+.tooltip-inner {
+  background-color: #0b3 !important;
+  /*!important is not necessary if you place custom.css at the end of your css calls. For the purpose of this demo, it seems to be required in SO snippet*/
+  color: #fff;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #0b3;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #0b3;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  border-bottom-color: #0b3;
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color: #0b3;
+}
+
+.titulo{
+  cursor:pointer;
+  background:#fff !important;
+}
+.titulo:hover{
+  text-decoration: underline;
+  background: #fafefa !important;
+}
+
+.butn{
+  border-radius:5px;border:1px solid #ddd;padding:5px 8px 5px 8px;cursor:pointer;background: none;color:#666;font-size:14px;font-weight:100;
+}
+.butn:hover, .butn:hover > ul{
+  border-color:#95e53d;
 }
 
 </style>
-
-
   </head>
 
-  <body>
-<nav class="navbar navbar-default navbar-static-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
+  <body oncontextmenu="return false;" ng-app="gestion" ng-controller="manual" class="noselect">
+    <div class="bar drag">
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="/inicio">Inicio</a></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Campañas<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/gerencia/campanias/ver">Ver</a></li>
-                <li><a href="/gerencia/campanias/generar">Generar</a></li>
-                <li><a href="/gerencia/campanias/grupos">Grupos</a></li>              
-              </ul></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Panel<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/gerencia/panel/gestiones">Gestiones</a></li>
-                <li><a href="/gerencia/panel/estadisticas">Estadisticas</a></li>          
-              </ul>
-        </li>      
-        
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Administración de Cartera <span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/gerencia/carga/comparacion">Comparación</a></li>
+<div class="header">
+  <div style="position:absolute;width:1000px;">
+  <span class="dropdown boton">
+    <a href="/">Inicio</a>
+  </span>
+  <span class="dropdown boton">
+    <span class="dropdown-toggle" data-toggle="dropdown">Campañas <span class="trgl">&#x25BE;</span></span>
+    <ul class="dropdown-menu no-top">
+      <li><a href="/gerencia/campanias/ver">Ver</a></li>
+      <li><a href="/gerencia/campanias/generar/">Generar</a></li>
+      <li><a href="/gerencia/campanias/grupos/">Grupos</a></li>
+    </ul>
+  </span>
+  <span class="dropdown boton">
+    <span class="dropdown-toggle" data-toggle="dropdown">Panel <span class="trgl">&#x25BE;</span></span>
+    <ul class="dropdown-menu no-top">
+      <li><a href="/gerencia/panel/gestiones">Gestiones</a></li>
+    </ul>
+  </span>
+  <span class="dropdown boton">
+            <span data-toggle="dropdown">Administración de Cartera <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/carga/comparacion" class="ventana">Comparación</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Carga</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/carga/masiva" class="ventana">Masiva</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/manual" class="ventana">Manual</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Modificación masiva</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/modificacion/productos" class="ventana">Productos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/modificacion/deudores" class="ventana">Deudores</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Enriquecimiento</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1"href="/gerencia/carga/enriquecer" class="ventana">Telefonos / Mails</a></li>
+                  <li><a href="/gerencia/carga/reportes" class="ventana">Datos Enriquecidos</a></li>
+                </ul>
+              </li>
+              <li><a href="/gerencia/baja/" class="ventana">Cambio de estado</a></li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Gestión de cobranzas <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/gestion-de-cobranzas/manual" class="ventana">Manual</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/campania" class="ventana">Campaña</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/consultas" class="ventana">Consultas</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Carga</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="/gerencia/carga/masiva">Masiva</a></li>
-                  <li><a tabindex="-1" href="/gerencia/carga/manual">Manual</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Modificación Masiva</a>
-                <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="/gerencia/modificacion/productos">Productos</a></li>
-                  <li><a tabindex="-1" href="/gerencia/modificacion/deudores">Deudores</a></li>
-                </ul>
-              </li>
-              <li><a class="ventana" href="/gerencia/baja/">Cambio de Estado</a></li>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Enriquecimiento</a>
-                <ul class="dropdown-menu">
-                  <li><a tabindex="-1"href="/gerencia/carga/enriquecer">Telefonos / Emails</a></li>
-                  <li><a href="/gerencia/carga/reportes">Datos Enriquecidos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/gestiones-automaticas" class="ventana">Gestiones automáticas</a></li>
                 </ul>
               </li>
             </ul>
-        </li>
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Gestión de Cobranzas<span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/gerencia/gestion-de-cobranzas/manual">Manual</a></li>
-              <li><a href="/gerencia/gestion-de-cobranzas/campania">Campaña</a></li>
-              <li><a href="#">Automática</a></li>  
-              <li><a href="/gerencia/gestion-de-cobranzas/consultas">Consultas</a></li>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Cargar</a>
-                <ul class="dropdown-menu pull-left">
-                  <li><a tabindex="-1" href="/gerencia/carga/gestiones-automaticas">Gestiones Automáticas</a></li>
-                </ul>
-              </li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Exporte<span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/gerencia/exportar/casos">Casos</a></li>
-              <li><a href="/gerencia/exportar/telefonos">Telefonos</a></li>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Exportar <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/exportar/casos" class="ventana">Casos</a></li>
+              <li><a href="/gerencia/exportar/telefonos" class="ventana">Telefonos</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Para enviar</a>
-                <ul class="dropdown-menu pull-left">
-                  <li><a tabindex="-1" href="/gerencia/exportar/sms">SMS</a></li>
-                  <li><a tabindex="-1" href="/gerencia/exportar/mails">Mails</a></li>
-                  <li><a tabindex="-1" href="/gerencia/exportar/mails">IVR</a></li>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/sms" class="ventana">SMS</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/mails" class="ventana">Mails</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/ivr" class="ventana">IVR</a></li>
                 </ul>
               </li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Informes</a>
-                <ul class="dropdown-menu pull-left">
-                  <li><a tabindex="-1" href="/gerencia/exportar/propuestas">Propuestas</a></li>
-                  <li><a tabindex="-1" href="/gerencia/exportar/cuotas_cero">Cuotas Cero</a></li>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/propuestas" class="ventana">Propuestas</a></li>
                 </ul>
               </li>
             </ul>
-        </li>
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Administración<span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/gerencia/administracion/responsables">Responsables</a></li>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Administración <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/administracion/responsables" class="ventana">Responsables</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">ABMS</a>
-                <ul class="dropdown-menu pull-left">
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios">Operadores</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/bancos">Bancos</a></li>
-                  <!--<li><a tabindex="-1" href="/gerencia/administracion/abms/estados">Estados</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/sub-estados">Sub Estados</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/calificaciones">Calificaciones</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/motivos">Motivos</a></li>-->
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/liquidadores">Liquidadores</a></li>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios" class="ventana">Operadores</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/bancos" class="ventana">Bancos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/liquidadores" class="ventana">Liquidadores</a></li>
+
                 </ul>
               </li>
-        </ul>
-        </li>
-      <ul class="nav navbar-nav navbar-right">
-        <li id="logout"><a href="/.php/logout.php"><span class="glyphicon glyphicon-log-out"></span>Salir</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+            </ul>
+    </span>
+    <span class="dropdown boton logout">
+    <a href="/.php/logout.php">Salir</a>
+  </span>
+</div>
+</div>
 
     <div class="container">
+      <h2>Carga de reportes</h2>
 <form enctype="multipart/form-data" method="post" action="." >
-<label onclick=$("#subir").css("display","block")>Elegí el archivo .zip que contenga los reportes.<label class="btn btn-warning">Elegir <input type="file" name="zip_file" id="zip_file" class="button" style="display:none;"></label></label>
+<div >Seleccione el archivo .zip que contenga los reportes.</div>
+<label onclick='$("#subir").css("display","block")' class="butn">Archivo ZIP<input type="file" name="zip_file" id="zip_file" class="button" style="display:none;"></label>
 <br>
-<label class="alert alert-danger"><h4>ATENCIÓN</h4>Debe asegurarse que todos los archivos tengan el formato *numero de cuil*.html</label>
-<input type="submit" class="btn btn-danger" id="subir" style="display:none;" value="Subir"></button>
+<input type="submit" class="butn" id="subir" style="display:none;" value="Subir"></button>
 </form>
+<div style="position:absolute;right:50px;width:300px;top:75px;">
+<label class="alert alert-danger" style="font-weight:100;"><h4>ATENCIÓN</h4>Debe asegurarse que todos los archivos tengan el formato *numero de cuil*.html</label>
+</div>
 <script>
 var date= new Date();
 var hoy= date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
-
+const remote = require('electron').remote;
+var resize = remote.require('./main').resize;
+resize(700,400);
 </script>
 <?php 
 $hoy= '<script> document.write(hoy);</script>';

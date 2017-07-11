@@ -16,7 +16,7 @@ header("Location: ../../");
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<link rel="icon" href="/icon.png">
-	<title>Nucleo</title>
+<title>Nucleo</title>
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<link rel="stylesheet" href="/.css/bootstrap.min.css"/>
 	<script type="text/javascript" src="/.js/jquery.min.js"></script>
@@ -241,6 +241,7 @@ body{
 
 select{
   background:none;
+  width:200px !important;
 }
 
 .boton a{
@@ -301,9 +302,15 @@ tbody tr:hover{
 
 .button{
   cursor:pointer;
+  border:1px solid #ddd;border-radius:5px;
+  padding:2px;
 }
 .button:hover>#change{
   background:#eafada;
+}
+
+input{
+	background:none;
 }
 
 .down{
@@ -339,14 +346,46 @@ tbody tr:hover{
 select{
   background: none;
   border:0px;
-  width:100px;
+  width:175px !important;
 }
 select:hover, select:focus, select:active, select:checked{
   background: white !important;
 }
 
+.side-menu{
+	position:fixed;left:0px;width:100px;top:41px;z-index:2;height:100%;border-right:1px solid #ddd;text-align:center;background:#fff;
+}
+
+.side-menu div{
+	padding:10px;
+}
+
+.side-menu div:hover{
+	background:#fafafa;
+	    cursor:pointer;
+
+}
+
+.side-menu div a{
+	text-decoration: none;
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#registrar{
+  position:fixed;
+  bottom:5px;
+  left:15px;
+  z-index:2;
+}
+
 .selector{
   padding:5px;border-radius:5px;border:1px solid #ddd;
+  margin:auto;
+  width:400px;
+  text-align:center;
+  margin-top:10px;
 }
 
 .selector a{
@@ -365,6 +404,9 @@ select:hover, select:focus, select:active, select:checked{
   color:#abdf47;
 }
 
+.ocultar{
+  display:block;
+}
 </style>
 <script>
 function json_tabla (id_tabla, objeto){
@@ -387,34 +429,99 @@ function json_tabla (id_tabla, objeto){
   <body oncontextmenu="return false;">
     <div class="bar drag">
     </div>
-<div class="header" style="">
-  <div style="position:absolute;width:600px;">
+<div class="header">
+  <div style="position:absolute;width:1000px;">
   <span class="dropdown boton">
-   <a href="/" disable>Inicio</a>
+    <a href="/">Inicio</a>
   </span>
   <span class="dropdown boton">
-    <span class="dropdown-toggle" data-toggle="dropdown">Gestión de cobranzas <span class="trgl">&#x25BE;</span></span>
+    <span class="dropdown-toggle" data-toggle="dropdown">Campañas <span class="trgl">&#x25BE;</span></span>
     <ul class="dropdown-menu no-top">
-      <li><a href="/general/gestion-de-cobranzas/manual/">Manual</a></li>
-      <li><a href="/general/gestion-de-cobranzas/campania/">Campaña</a></li>
+      <li><a href="/gerencia/campanias/ver">Ver</a></li>
+      <li><a href="/gerencia/campanias/generar/">Generar</a></li>
+      <li><a href="/gerencia/campanias/grupos/">Grupos</a></li>
+    </ul>
+  </span>
+  <span class="dropdown boton">
+    <span class="dropdown-toggle" data-toggle="dropdown">Panel <span class="trgl">&#x25BE;</span></span>
+    <ul class="dropdown-menu no-top">
+      <li><a href="/gerencia/panel/gestiones">Gestiones</a></li>
     </ul>
   </span>
   <span class="dropdown boton">
             <span data-toggle="dropdown">Administración de Cartera <span class="trgl">&#x25BE;</span></span>
         <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/general/carga/comparacion" class="ventana">Comparación</a></li>
+              <li><a href="/gerencia/carga/comparacion" class="ventana">Comparación</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Carga</a>
-                <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="/general/carga/masiva" class="ventana">Masiva</a></li>
-                  <li><a tabindex="-1" href="/general/carga/manual" class="ventana">Manual</a></li>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/carga/masiva" class="ventana">Masiva</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/manual" class="ventana">Manual</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Modificación masiva</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/modificacion/productos" class="ventana">Productos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/modificacion/deudores" class="ventana">Deudores</a></li>
                 </ul>
               </li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Enriquecimiento</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1"href="/gerencia/carga/enriquecer" class="ventana">Telefonos / Mails</a></li>
+                  <li><a href="/gerencia/carga/reportes" class="ventana">Datos Enriquecidos</a></li>
+                </ul>
+              </li>
+              <li><a href="/gerencia/baja/" class="ventana">Cambio de estado</a></li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Gestión de cobranzas <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/gestion-de-cobranzas/manual" class="ventana">Manual</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/campania" class="ventana">Campaña</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/consultas" class="ventana">Consultas</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Carga</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1"href="/general/carga/enriquecer" class="ventana">Telefonos / Mails</a></li>
-                  <li><a href="/general/carga/reportes" class="ventana">Datos Enriquecidos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/gestiones-automaticas" class="ventana">Gestiones automáticas</a></li>
+                </ul>
+              </li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Exportar <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/exportar/casos" class="ventana">Casos</a></li>
+              <li><a href="/gerencia/exportar/telefonos" class="ventana">Telefonos</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Para enviar</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/sms" class="ventana">SMS</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/mails" class="ventana">Mails</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/ivr" class="ventana">IVR</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Informes</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/propuestas" class="ventana">Propuestas</a></li>
+                </ul>
+              </li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Administración <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/administracion/responsables" class="ventana">Responsables</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">ABMS</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios" class="ventana">Operadores</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/bancos" class="ventana">Bancos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/liquidadores" class="ventana">Liquidadores</a></li>
+
                 </ul>
               </li>
             </ul>
@@ -424,174 +531,214 @@ function json_tabla (id_tabla, objeto){
   </span>
 </div>
 </div>
-
-    <div class="container">
+<div class="selector noselect">
+        <a onclick="$('.ocultar').css('display','none');$('#carpeta').css('display','block');">Carpeta</a>
+        <a onclick="$('.ocultar').css('display','none');$('#deudores').css('display','block');">Deudor</a>
+        <a onclick="$('.ocultar').css('display','none');$('#domicilios').css('display','block');">Domicilios</a>
+        <a onclick="$('.ocultar').css('display','none');$('#productos').css('display','block');">Productos</a>
+</div>
+    <div style="height:300px;overflow-y:auto;">
 <div>
-      <div class="selector">
-        <a onclick="$('.ocultar').css('display','none');$('#carpeta').css('display','inline-block');">Carpeta</a>
-        <a onclick="$('.ocultar').css('display','none');$('#deudores').css('display','inline-block');">Deudor</a>
-        <a onclick="$('.ocultar').css('display','none');$('#domicilios').css('display','inline-block');">Domicilios</a>
-        <a onclick="$('.ocultar').css('display','none');$('#productos').css('display','inline-block');">Productos</a>
-      </div>
 
 	<div id="carpeta" class="ocultar">
-		<div class="row">
-			<div class="col-md-6">
-<div class="form-group">
-                <label for="caratula">Caratula</label>
-                <input type="text" class="form-control" id="caratula" placeholder="Caratula...">	
-	</div>
-<div class="form-group">
-                <label for="comentario">Comentario</label>
-                <input type="text" class="form-control" id="comentario" placeholder="Comentario...">	
-	</div>
-	<div class="form-group">
-                <label for="sucursal">Sucursal</label>
-                <input type="text" class="form-control" id="sucursal" placeholder="Sucursal...">	
-	</div>
-	<div class="form-group">
-                <label for="dias_adic">Días adicionales</label>
-                <input type="text" class="form-control" id="dias_adic" placeholder="Días adicionales...">	
-	</div>
-	</div>
-	<div class="col-md-6">
-	<div class="form-group">
-                <label for="legajo">Legajo</label>
-                <input type="number" class="form-control" id="legajo" placeholder="Legajo...">	
-   	</div>
-	<div class="form-group">
-                <label for="numero_gestion">Número de gestión</label>
-                <input type="number" class="form-control" id="numero_gestion" placeholder="Número de gestión...">	
-                	</div>         
-	<div class="form-group">
-                <label for="numero_lote">Número de lote</label>
-                <input type="number" class="form-control" id="numero_lote" placeholder="Número de lote...">	
-
-	</div>
-		</div>
-		</div>
-	
+    <div style="margin-top:25px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Caratula" data-placement="bottom"><img src="/.img/reporte.png" style="width:14px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="caratula" placeholder="Caratula..."></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Comentario" data-placement="bottom"><img src="/.img/comentario.png" style="width:17px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="comentario" placeholder="Comentario..."></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Sucursal" data-placement="bottom"><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="sucursal" placeholder="Sucursal..."></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Legajo" data-placement="bottom"><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="legajo" placeholder="Legajo..."></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Numero de gestión" data-placement="bottom"><img src="/.img/gestor.png" style="width:17px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="numero_gestion" placeholder="Numero de gestión..."></span>
+          </span>
+      </div>
 </div>
 	<div id="deudores" class="ocultar" style="display:none;">
-            <div class="row">
-			<div class="col-md-6">
-<div class="form-group">
-                <label for="documento">Documento</label>
-                <input type="number" class="form-control" id="documento" placeholder="Documento...">	
-	</div>
-<div class="form-group">
-                <label for="tipo_documento">Tipo de documento</label>
-                <input type="text" class="form-control" id="tipo_documento" placeholder="Tipo de documento...">	
-	</div>
-	<div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" class="form-control" id="apellido" placeholder="Apellido...">	
-	</div>
-	</div>
-	<div class="col-md-6">
-	<div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" placeholder="Email...">	
-   	</div>
-	<div class="form-group">
-                <label for="empresa">Empresa</label>
-                <input type="text" class="form-control" id="empresa" placeholder="Empresa...">	
-    </div>
-		</div>
-		</div>
+
+			<div style="margin-top:25px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:14px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="documento" placeholder="Numero de documento..."></span>
+        	</span>
+  		</div>
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Tipo de documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="tipo_documento" placeholder="Tipo de doumento..."></span>
+        	</span>
+  		</div>
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Apellido y nombre" data-placement="bottom"><img src="/.img/deudor.png" style="width:17px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="apellido" placeholder="Apellido y nombre..."></span>
+        	</span>
+  		</div>
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Correo electrónico" data-placement="bottom" class="color-gr">@</span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="email" placeholder="Correo electrónico..."></span>
+        	</span>
+  		</div>
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Empresa" data-placement="bottom"><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="empresa" placeholder="Empresa..."></span>
+        	</span>
+  		</div>
 	</div>
 	<div id="domicilios" class="ocultar" style="display:none;">
-	            <div class="row">
-			<div class="col-md-6">
-<div class="form-group">
-                <label for="direccion_laboral1">Dirección Laboral 1</label>
-                <input type="text" class="form-control" id="direccion_laboral" placeholder="Dirección laboral 1...">	
-	</div>
-	<div class="form-group">
-                <label for="direccion_laboral2">Dirección Laboral 2</label>
-                <input type="text" class="form-control" id="direccion_laboral2" placeholder="Dirección laboral 1...">	
-	</div><hr>
-	<div class="form-group">
-                <label for="direccion_particular1">Dirección Particular 1</label>
-                <input type="text" class="form-control" id="direccion_particular" placeholder="Dirección particular 1...">	
-	</div>
-	<div class="form-group">
-                <label for="direccion_particular2">Dirección Particular 2</label>
-                <input type="text" class="form-control" id="direccion_particular2" placeholder="Dirección particular 2...">	
-	</div>
-	<div class="form-group">
-                <label for="direccion_particular3">Dirección Particular 3</label>
-                <input type="text" class="form-control" id="direccion_particular3" placeholder="Dirección particular 2...">	
-	</div>
-	</div>
-	<div class="col-md-6">
-	<div class="form-group">
-                <label for="provincia">Provincia</label>
-                <input type="text" class="form-control" id="provincia" placeholder="Provincia...">	
-   	</div>
-	<div class="form-group">
-                <label for="localidad">Localidad</label>
-                <input type="text" class="form-control" id="localidad" placeholder="Localidad...">	
-    </div>
-    	<div class="form-group">
-                <label for="codigo_postal">Código postal</label>
-                <input type="number" class="form-control" id="codigo_postal" placeholder="Código postal...">	
-    </div><hr>
-    	<div class="form-group">
-                <label for="telefono1">Telefono 1</label>
-                <input type="number" class="form-control" id="telefono1" placeholder="Teléfono 1...">	
-    </div>
-        	<div class="form-group">
-                <label for="telefono2">Telefono 2</label>
-                <input type="number" class="form-control" id="telefono2" placeholder="Teléfono 2...">	
-    </div>
-        	<div class="form-group">
-                <label for="telefono3">Telefono 3</label>
-                <input type="number" class="form-control" id="telefono3" placeholder="Teléfono 3...">	
-    </div>
-    
-		</div>
-		</div>
-	</div>
-	<div id="productos" class="ocultar" style="display:none;">
-	
-	<div class="row">
-			<div class="col-md-6">
-			
-			
-			<div class="form-group">
-                <label for="numero_operacion">Numero de operacion</label>
-                <input type="text" class="form-control" id="numero_operacion" placeholder="Numero de operacion...">	
-			</div>
-			
-<div class="form-group">
-                <label for="producto">Producto</label>
-                <input type="text" class="form-control" id="producto" placeholder="Producto...">	
-	</div>
-	
-	<div class="form-group">
-                <label for="deuda">Deuda</label>
-                <input type="number" class="form-control" id="deuda" placeholder="Deuda...">	
-	</div>
-<div class="form-group">
-                <label for="fecha_deuda">Fecha de deuda</label>
-                <input type="date" class="form-control" id="fecha_deuda" placeholder="Fecha de deuda...">	
-	</div>
-	<div class="form-group">
-                <label for="fecha_mora">Fecha de mora</label>
-                <input type="date" class="form-control" id="fecha_mora" placeholder="Fecha de mora...">	
-	</div>
-	<div class="form-group">
-                <label for="fecha_ult_cobro">Fecha ultimo cobro</label>
-                <input type="date" class="form-control" id="fecha_ult_cobro" placeholder="Fecha ultimo cobro...">	
-	</div>
-	</div>
-	<div class="col-md-6">
+<div style="position:absolute;left:20px;width:250px;">
+<div style="margin-top:25px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Dirección particular" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="direccion_particular" placeholder="Dirección particular..."></span>
+        	</span>
+  		</div>
 
-	<div class="form-group">
-                <label for="estado">Estado</label>
-                <select type="text" class="form-control" id="estado"></select>	
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Dirección particular 2" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="direccion_particular2" placeholder="Dirección particular..."></span>
+        	</span>
+  		</div>
+
+  		<div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Dirección particular 3" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="direccion_particular3" placeholder="Dirección particular..."></span>
+          </span>
+      </div> 
+
+      <div style="margin-top:25px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Dirección laboral" data-placement="bottom"><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="direccion_laboral" placeholder="Dirección laboral..."></span>
+          </span>
+      </div> 
+
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Dirección laboral 2" data-placement="bottom"><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="direccion_laboral2" placeholder="Dirección laboral..."></span>
+          </span>
+      </div> 
+
+    </div>
+    <div style="position:absolute;left:250px;width:250px;margin-top:15px;">
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Provincia" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="provincia" placeholder="Provincia..."></span>
+        	</span>
+  		</div>
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Localidad" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="localidad" placeholder="Localidad..."></span>
+        	</span>
+  		</div>
+  		<div style="margin-top:10px;text-align:center;">
+        	<span class="button noselect">
+          		<span data-toggle="tooltip" title="Codigo postal" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
+        		<span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="codigo_postal" placeholder="Código postal..."></span>
+        	</span>
+  		</div>
+      <div style="margin-top:25px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Telefono 1" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="telefono1" placeholder="Telefono 1..."></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Telefono 2" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="telefono2" placeholder="Telefono 2..."></span>
+          </span>
+      </div><div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Telefono 3" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="telefono3" placeholder="Telefono 3..."></span>
+          </span>
+      </div>
+</div>
+
+	</div>
+
+      
+	<div id="productos" class="ocultar" style="display:none;">
+	    <div style="margin-top:25px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Numero de operación" data-placement="bottom" class="color-gr"><img src="/.img/reporte.png" style="width:13px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="numero_operacion" placeholder="Numero de operacion..."></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Producto" data-placement="bottom" class="color-gr"><img src="/.img/productos.png" style="width:17px;height:12px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="producto" placeholder="Producto..."></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom" class="color-gr" style="padding-left:5px;padding-right:5px;" id="pesos" onclick="cambiar('pesos','dolares')">$</span>
+              <span span data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" class="color-gr" style="padding-left:5px;padding-right:5px;font-size:12px;display:none;" id="dolares"
+ onclick="cambiar('dolares','pesos')" >U$D</span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="text" id="deuda" placeholder="Monto de deuda..."></span>
+          </span>
+          <span id="moneda" style="display:none;position:absolute;margin-top:3px;font-size:10px;margin-left:5px;" class="color-gr">¿<a href="#" onclick="cambiar('pesos','dolares')">Dólares</a> o <a href="#"  onclick="cambiar('dolares','pesos')">pesos</a>?</span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Ingreso</span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="date" id="fecha_ingreso" placeholder="Fecha de ingreso..." style="width:140px;"></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Fecha de mora" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Mora</span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="date" id="fecha_mora" placeholder="Fecha de mora..." style="width:150px;"></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Estado" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/estado.png" style="width:17px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select id="estado"></select></span>
+          </span>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+          <span class="button noselect">
+              <span data-toggle="tooltip" title="Banco" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/bank.png" style="width:17px;height:15px;margin-left:2px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select id="banco" > </select></span>
+          </span>
+      </div>
                 <script>
+
+                $('#deuda').focus( function() {
+  $("#moneda").css('display','inline-block');
+});
+
+$('#deuda').blur( function() {
+  setTimeout(function(){$("#moneda").css('display','none')});;
+});
                 $.ajax({
 		url:'php/estados.php',
 		type:'post',
@@ -600,14 +747,9 @@ function json_tabla (id_tabla, objeto){
 								for (var i in res){
 								$("#estado").append("<option id='"+res[i].id+"'>"+res[i].estado+"</option>");
 								}
+                $("#estado").val('PREJUDICIALES');
 								}
 						});
-                </script>
-    </div>
-    	<div class="form-group">
-                <label for="estado">Sub estado</label>
-                <select type="text" class="form-control" id="sub_estado"></select>	
-                <script>
                 $.ajax({
 		url:'php/sub_estados.php',
 		type:'post',
@@ -618,12 +760,7 @@ function json_tabla (id_tabla, objeto){
 								}
 								}
 						});
-                </script>
-    </div>
-    	<div class="form-group">
-                <label for="banco">Banco</label>
-                <select class="form-control" id="banco" >	</select>
-                <script>
+                
                 $.ajax({
 		url:'php/bancos.php',
 		type:'post',
@@ -635,28 +772,29 @@ function json_tabla (id_tabla, objeto){
 								}
 						});
                 </script>
-   </div>
-   	<div class="form-group">
-                <label for="nombre_producto">Nombre del producto</label>
-                <input type="text" class="form-control" id="nombre_producto" placeholder="Nombre del producto...">
-   	</div>
-   	<div class="form-group">
-                <label for="tipo_gestion">Tipo de gestión</label>
-                <input type="number" class="form-control" id="tipo_gestion" placeholder="Tipo de gestión...">
-   	</div>
-		</div>
 		</div>
 	
 	</div>
 	
 </div>
 <br>
+
+      <span class="butn" id="registrar">
+        Registrar
+      </span>
 	    <div style="text-align:center"> 
-            <button class="btn btn-danger" id="registrar">Registrar</button>
 			<script>
+			var dolar=0;
+function cambiar (q,a){
+	$("#"+q).css("display","none");$("#"+a).css("display","inline-block");
+	if(q=='dolares'){
+		dolar=0;
+	}else{
+		dolar=1;
+	}
+}
 			var datos={};
 			$("#registrar").click(function(){
-			
 			datos['carpeta']=JSON.stringify({
 						caratula: $("#caratula").val(),
 						comentario: $("#comentario").val(),
@@ -680,13 +818,14 @@ function json_tabla (id_tabla, objeto){
 						provincia: $("#provincia").val(),
 						localidad: $("#localidad").val(),
 						codigo_postal: $("#codigo_postal").val(),
-						telefono1: $("#telefono1").val(),
-						telefono2: $("#telefono2").val(),
-						telefono3: $("#telefono3").val()});
+						telefono1: $("#telefono1").val().replace(/[^0-9.]/g, ""),
+						telefono2: $("#telefono2").val().replace(/[^0-9.]/g, ""),
+						telefono3: $("#telefono3").val().replace(/[^0-9.]/g, "")});
 			datos['productos']=JSON.stringify({		
 						numero_operacion: $("#numero_operacion").val(),	
 						producto: $("#producto").val(),
-						deuda: $("#deuda").val(),						
+						deuda: $("#deuda").val(),
+						dolar: dolar,						
 						fecha_deuda: $("#fecha_deuda").val(),
 						fecha_mora: $("#fecha_mora").val(),
 						fecha_ult_cobro: $("#fecha_ult_cobro").val(),	
@@ -703,14 +842,31 @@ function json_tabla (id_tabla, objeto){
 					data:datos,
 					success: function (res){//res=JSON.parse(res);
 											alert(res);
-											}			
-			});
+											}
+										});
 			
 			});
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+document.addEventListener('dragover',function(event){
+    event.preventDefault();
+    return false;
+  },false);
+
+  document.addEventListener('drop',function(event){
+    event.preventDefault();
+    return false;
+  },false);
+
 			</script>
+
+
 </div>
        </div>
 
     </div>
+
   </body>
 </html>

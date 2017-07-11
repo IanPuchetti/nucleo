@@ -1,4 +1,5 @@
-<?php
++
+-6**6*9<?php
 $carpeta=json_decode($_POST['carpeta']);
 $deudor=json_decode($_POST['deudor']);
 $domicilios=json_decode($_POST['domicilios']);
@@ -9,7 +10,7 @@ $result = $mysqli->query("INSERT INTO deudores VALUES('".$deudor->documento."', 
 
 $result = $mysqli->query("INSERT INTO domicilios VALUES('".$deudor->documento."', '".$domicilios->direccion_laboral."', '".$domicilios->direccion_particular."', '".$domicilios->direccion_laboral2."', '".$domicilios->direccion_particular2."', '".$domicilios->direccion_particular3."', '".$domicilios->provincia."', '".$domicilios->localidad."', '".$domicilios->codigo_postal."' )");
 
-$result = $mysqli->query("INSERT INTO productos VALUES('".$productos->numero_operacion."', '".$deudor->documento."', '".$productos->producto."','".$productos->deuda."', '".$productos->fecha_deuda."', '".$productos->fecha_mora."', '".$productos->fecha_ult_cobro."', '".$productos->estado."', '".$productos->sub_estado."', '".$productos->banco."', '".$productos->nombre_producto."', '".$productos->tipo_gestion."', 0)");
+$result = $mysqli->query("INSERT INTO productos VALUES('".$productos->numero_operacion."', '".$deudor->documento."', '".$productos->producto."','".$productos->deuda."', '".$productos->dolar."', '".$productos->fecha_deuda."', '".$productos->fecha_mora."', '".$productos->fecha_ult_cobro."', '".$productos->estado."', '".$productos->sub_estado."', '".$productos->banco."', '".$productos->nombre_producto."', '".$productos->tipo_gestion."', 0)");
 
 $result = $mysqli->query("INSERT INTO carpeta VALUES('".$productos->numero_operacion."', '".$deudor->documento."', '".$carpeta->caratula."', '".$carpeta->comentario."', '".$carpeta->sucursal."', '".$carpeta->dias_adic."', '".$carpeta->legajo."', '".$carpeta->numero_gestion."', '".$carpeta->numero_lote."')");
 

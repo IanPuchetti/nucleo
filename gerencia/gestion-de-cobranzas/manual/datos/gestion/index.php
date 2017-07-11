@@ -10,8 +10,6 @@ if($_SESSION['puesto']=='sup'){
 header("Location: ../supervision/");
 }else{
 if($_SESSION['puesto']=='gen'){
-  header("Location: ../general/");
-
 }else{
 }
 }
@@ -505,7 +503,7 @@ select{
 </div>
 <div ng-show="gestionando==false">
   <div style="margin-top:25px;text-align:center;">
-    <span class="butn" ng-click="gestionando=true;refrescar();">Seguir gestionando</span>
+    <span class="butn" ng-click="gestionando=true;refrescar();tiempo.reiniciar()">Seguir gestionando</span>
   </div>
   <div style="margin-top:15px;text-align:center;" class="noselect">
     <span class="butn dropdown">
@@ -536,9 +534,11 @@ select{
 </div>
   <div style="margin-top:10px;text-align:center;">
   </div>
-  <div style="text-align:center;color:#07963d;position:absolute;bottom:5px;width:100%;" class="noselect">
-    {{tiempo.horas}}:{{tiempo.minutos}}:{{tiempo.segundos}}
+  <div style="text-align:center;color:{{tiempo.minutos<=4 ? '#07963d' : '#903'}};position:absolute;bottom:5px;width:100%;" class="noselect" ng-init="color='#07963d'">
+    {{tiempo.horas<=9 ? '0'+tiempo.horas : tiempo.horas}}:{{tiempo.minutos<=9 ? '0'+tiempo.minutos : tiempo.minutos}}:{{tiempo.segundos<=9 ? '0'+tiempo.segundos : tiempo.segundos}}
   </div>
+
+  <span class="butn" data-toggle="tooltip" title="Liquidación" ng-click="liquidar()" data-placement="top" style="position:fixed;bottom:5px;left:5px;padding:2px;"><img src="/.img/productos.png" style="width:18px;height:14px;"></span>
 <script>
 var $_GET={};var url=document.URL.split("/")[2];document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g,function(){function decode(s) {return decodeURIComponent(s.split("+").join(" "));}$_GET[decode(arguments[1])] = decode(arguments[2]);});
 var date = new Date(); 
@@ -551,7 +551,13 @@ angular
     ioSocket: io.connect('http://localhost:3000')
   });
   })
-  .controller("manual", function ($scope, $http, $timeout, socket) {
+  .factory('time', function (socketFactory) {
+  return socketFactory({
+    prefix: 'connection',
+    ioSocket: io.connect('http://'+document.URL.split("/")[2]+':3002')
+  });
+  })
+  .controller("manual", function ($scope, $http, $timeout, socket, time) {
     var _ = $scope;
     socket.emit('abrir-gestion');
     _.d=$_GET['d'];
@@ -576,7 +582,7 @@ angular
                historia:function(){_.refresh=1;$http.post('../../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
                productos:function(){$http.post('../../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;_.caso.sub_estado=_.caso.productos[0].sub_estado;});},
                bancos: function(){$http.post('../../php/bancos.php').then(function(res){_.bancos=res.data;});},
-               usuarios: function() {$http.post('../../php/usuarios.php').then(function(res){_.usuarios=res.data;});},
+               usuarios: function() {$http.post('../../php/usuarios.php').then(function(res){_.usuarios=res.data;for (var i in res.data){if(res.data[i].id == id_usuario){_.usuario=res.data[i].user; break;}}});},
                estados:  function() {$http.post('../../php/estados.php').then(function(res){_.estados=res.data;});},
                liquidadores:  function() { $http.post('../../php/liquidadores.php').then(function(res){_.liquidadores=res.data;});},
                sub_estados:  function() { $http.post('../../php/sub_estados.php').then(function(res){_.sub_estados=res.data;_.todos_sub_estados=res.data;_.pocos_sub_estados=[];for (var i in _.todos_sub_estados){if(_.todos_sub_estados[i].sub_estado=='NEGOCIACION' || _.todos_sub_estados[i].sub_estado=='INFORMO PAGO' || _.todos_sub_estados[i].sub_estado=='PROMETE PAGAR'){_.pocos_sub_estados.push(_.todos_sub_estados[i])}}});},
@@ -585,7 +591,17 @@ angular
                hora:function (){var date=new Date();var hora = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();return hora;}
 
              };
-
+    _.obtener.usuarios();_.obtener.liquidadores();
+    _.liquidar= function (){
+                        var link='';
+                        for (var i in _.liquidadores){
+                          if (_.liquidadores[i].id_banco==$_GET['b']){
+                            link = _.liquidadores[i].link;
+                          }
+                        }
+      if(link!=''){
+      liquidar($_GET['d'], $_GET['b'], link);}
+    };
     _.verificar={telefono:function(){ var a,b,c,d;
                                       for(var i in _.caso.telefonos){
                                       if(_.gestion.telefono.numero==_.caso.telefonos[i].numero){
@@ -603,7 +619,7 @@ angular
                 };
     _.refrescar=function (){_.gestion={telefono:{}, existe:true};_.obtener.telefonos();_.obtener.calificacion_telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.obtener.sub_estados();_.tooltip()};
     _.agregar={telefono:function(){if(_.gestion.telefono.numero.length<6){_.gestion.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.gestion.telefono['documento']=_.d;_.gestion.telefono.numero=sacar011(_.gestion.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../../php/agregar-telefono.php',_.gestion.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
-
+    
     _.registrar_gestion=function(){
                            $http.post('../../php/registrar-gestion.php',
                             {hora: _.obtener.hora(),
@@ -617,7 +633,7 @@ angular
                              banco:$_GET['b'],
                              sub_estado:_.caso.productos[0].sub_estado,
                              hoy:hoy})
-                           .then(function(){socket.emit('gestionado');_.gestionando=false;
+                           .then(function(){socket.emit('gestionado');_.gestionando=false;_.color='#07963d';
                            _.registrar.sub_estado=_.caso.sub_estado;_.refrescar();});
                          };
     _.abandonar_gestion=function(){
@@ -633,6 +649,15 @@ angular
                          };
     _.refrescar();_.obtener.tipo_gestion();
     socket.on('telefonos',function(){_.obtener.telefonos();});
+    _.avanzar = function(){if (_.gestionando == true){if(_.tiempo.segundos==59){_.tiempo.segundos=0;if(_.tiempo.minutos == 59){_.tiempo.minutos=0;_.tiempo.horas=_.tiempo.horas+1;}else{_.tiempo.minutos=_.tiempo.minutos+1;}}else{_.tiempo.segundos=_.tiempo.segundos+1;}
+    time.emit('tiempo', {usuario:_.usuario, apellido: _.caso.deudor.apellido, documento: _.caso.deudor.documento, telefono: _.gestion.telefono,  tiempo: _.tiempo.horas+':'+_.tiempo.minutos+':'+_.tiempo.segundos , tipo_gestion : _.gestion.tipo_gestion, color: _.color });
+    if(_.tiempo.minutos==5){
+      _.color="#903";
+    }
+    }
+    $timeout(_.avanzar, 1000);
+  };
+    _.avanzar();
 });
 var quit=false;
 $(document).ready(function(){
@@ -645,6 +670,10 @@ if(quit==false)
 
 function cerrar (){
   quit=true;window.close()
+}
+
+function liquidar(d, b, l){
+      window.open(l+'/?documento='+d+'&banco='+b, 'liquidacion-'+d,'height=400, width=720, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
 }
 
  document.addEventListener('dragover',function(event){

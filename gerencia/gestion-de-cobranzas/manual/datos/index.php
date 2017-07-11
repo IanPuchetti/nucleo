@@ -10,8 +10,6 @@ if($_SESSION['puesto']=='sup'){
 header("Location: ../supervision/");
 }else{
 if($_SESSION['puesto']=='gen'){
-  header("Location: ../general/");
-
 }else{
 }
 }
@@ -465,6 +463,7 @@ table.with-ellipsis td {
           <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Correo electronico" data-placement="bottom">@</span>
         <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.email" placeholder="Correo electronico..."></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.email()"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.email()"  data-toggle="tooltip" title="Enviar Email" data-placement="bottom"><img src="/.img/mail.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
@@ -556,7 +555,7 @@ table.with-ellipsis td {
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Gestionar</span></span>
     <ul class="dropdown-menu noshadow" style="border-radius:5px;padding:10px;">
       <li >Gestionar por su deuda con</li>
-      <li style="margin-top:10px;" ng-repeat="banco in caso.productos  | groupBy: 'banco'"  ng-click="gestionar(banco.banco)"><span class="button noselect"><span><img src="/.img/bank.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
+      <li style="margin-top:10px;" ng-repeat="banco in caso.productos  | groupBy: 'banco'"  ng-click="gestionar(banco[0].banco)"><span class="button noselect"><span><img src="/.img/bank.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{banco[0].dbanco}}</span></span></li>
     </ul>
   </span>
@@ -582,6 +581,8 @@ table.with-ellipsis td {
         <span style="border-left:1px solid #ddd;padding:2px 10px 2px 10px;margin-right:-2px;">{{telefono.numero}}</span>
         <span style="border-left:1px solid #ddd;padding:2px 2px 2px 10px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;" ng-model="telefono.comentario" placeholder="Comentario..."></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.telefono(telefono.numero, telefono.comentario, i)"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.sms(telefono.numero)"  data-toggle="tooltip" title="Enviar SMS" data-placement="bottom"><img src="/.img/mail.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.ivr(telefono.numero)"  data-toggle="tooltip" title="Enviar IVR" data-placement="bottom"><img src="/.img/ivr.png" style="width:17px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
@@ -632,7 +633,7 @@ angular
     _.ver='deudor';
     _.getNumber=function(n){return new Array(n);};
     _.gestionar= function (b){
-    window2=window.open('gestion/?d='+d+'&b='+b, 'call'+d,'height=330, width=300, left=-400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+    window2=window.open('gestion/?d='+d+'&b='+b, 'call'+d,'height=330, width=300, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
     };
     _.reporte=function(){window3 = window.open('reporte/?u='+_.caso.deudor.link, 'reporte'+d,'height=600, width=400, left=100, top=0, resizable=yes, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
 };
@@ -642,7 +643,8 @@ angular
     _.obtener={ telefonos:function(){$http.post('../php/telefonos.php',{documento:_.d}).then(function(res){_.caso.telefonos=res.data;})},
                deudor:function (){$http.post('../php/deudor-domicilios.php',{documento:_.d}).then(function(res){_.caso.deudor=res.data[0];})},
                historia:function(){$http.post('../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
-               productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});}
+               productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});},
+               propuestas:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});}
              };
     _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.tooltip()};
     _.agregar={telefono:function(){if(_.nuevo.telefono.numero.length<6){_.nuevo.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.nuevo.telefono['documento']=_.d;_.nuevo.telefono.numero=sacar011(_.nuevo.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../php/agregar-telefono.php',_.nuevo.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
