@@ -18,7 +18,6 @@ header("Location: ../../");
 	<title>Nucleo</title>
 	<link rel="stylesheet" href="/.css/bootstrap.min.css"/>
   <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-	<link href="/.css/signin.css" rel="stylesheet"/>
 	<script type="text/javascript" src="/.js/jquery.min.js"></script>
 	<script type="text/javascript" src="/.js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jsontable.js"></script>
@@ -509,7 +508,7 @@ label:hover:before {
     <div class="container">
 <div class="row">
 <div class="col-md-6">
-	<div class="jumbotron text-center">
+	<div class="">
   		<h2>Modificación masiva de productos</h2>
   		<p>Ingrese el archivo .xlsx para obtener los campos <button onclick="$('#archivo').click();$('#cargar-div').css('display','block');" id="boton" class="btn btn-danger btn-lg" role="button">Subir</button>
 <input type="file" id="archivo" style="display:none;">

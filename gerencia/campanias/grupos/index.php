@@ -193,7 +193,8 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
 
 #reload:hover{
@@ -506,7 +507,7 @@ label:hover:before {
   </span>
 </div>
 </div>
-    <div class="container">
+    <div >
     
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#actuales').css('display','block');" style="cursor:pointer;">Actuales</a></li>
