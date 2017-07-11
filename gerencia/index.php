@@ -355,9 +355,9 @@ select{
     <div  class="circle" style="margin:auto;margin-top:5px;"><span data-toggle="tooltip" title="Gerente" data-placement="bottom"><img src="/.img/gerencia-icon.png" style="width:30px;margin-top:9.5px;margin-left:-4px;"></span></div>
     <div class="boton-menu" ng-click="show='estadisticas'" ng-init="show='estadisticas'">Estadisticas</div>
     <div class="boton-menu" ng-click="show='agendas'">Agendas</div>
-    <div class="boton-menu" ng-click="show='campanias'">Campañas</div>
-    <div class="boton-menu" ng-click="show='casos'">Mis casos</div>
-    <div class="boton-menu"><a href="manual" target="_blank">Ayuda</a></div>
+    <!--<div class="boton-menu" ng-click="show='campanias'">Campañas</div>
+    <div class="boton-menu" ng-click="show='casos'">Mis casos</div>-->
+    <div class="boton-menu"><a href="#" >Ayuda</a></div>
   </div>
   <div class="side" ng-show="show=='estadisticas'">
     <h2 class="color-gr" style="margin-top:-5px;padding-left:20px;">Estadisticas</h2>

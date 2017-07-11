@@ -878,7 +878,6 @@ angular.module('exporte',['infinite-scroll'])
     _.bajar=function(){
       _.limite=_.limite+1;
       _.largotabla.push(_.largotabla.length+1);
-      _.largotabla.slice(1,_.limite-3);
     };
     _.enter = function (e){
           if(e.keyCode==13){
