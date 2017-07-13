@@ -1,5 +1,4 @@
-+
--6**6*9<?php
+<?php
 $carpeta=json_decode($_POST['carpeta']);
 $deudor=json_decode($_POST['deudor']);
 $domicilios=json_decode($_POST['domicilios']);

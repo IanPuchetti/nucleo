@@ -644,7 +644,7 @@ function json_tabla (id_tabla, objeto){
       <div style="margin-top:10px;text-align:center;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Ingreso</span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="date" id="fecha_ingreso" placeholder="Fecha de ingreso..." style="width:140px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input type="date" id="fecha_deuda" placeholder="Fecha de ingreso..." style="width:140px;"></span>
           </span>
       </div>
       <div style="margin-top:10px;text-align:center;">
@@ -763,13 +763,13 @@ function cambiar (q,a){
 						dolar: dolar,						
 						fecha_deuda: $("#fecha_deuda").val(),
 						fecha_mora: $("#fecha_mora").val(),
-						fecha_ult_cobro: $("#fecha_ult_cobro").val(),	
-						pase_legales: $("#pase_legales").val(),
+						fecha_ult_cobro: 0,	
+						pase_legales: 0,
 						estado: $("#estado").children(":selected").attr("id"),
-						sub_estado: $("#sub_estado").children(":selected").attr("id"),
+						sub_estado: 1,
 						banco: $("#banco").children(":selected").attr("id"),
-						nombre_producto: $("#nombre_producto").val(),
-						tipo_gestion: $("#tipo_gestion").val()
+						nombre_producto: $("#producto").val(),
+						tipo_gestion: 0
 						});
 			$.ajax({
 					url:'php/agregar.php',

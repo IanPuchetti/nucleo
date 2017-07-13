@@ -854,7 +854,7 @@ label:hover:before {
         </span> 
       <span class="button dropup" >
           <span style="padding:8px;"  class="dropdown-toggle" data-toggle="dropdown" >Agregar a campaña &#x25B4;</span>
-          <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:50px;width:200px;">
+          <ul class="dropdown-menu dropdown-menu-right dont-go noshadow" style="border-radius:0px;padding:20px;padding-top:50px;width:200px;">
             <div style="margin-top:-30.5px;text-align:center;">
             <div class="button" style="height:20px;">
               <span >Campaña</span><select style="font-size:10px;border:0px;width:100px;" ng-options="campania as campania.nombre for campania in campanias"  ng-model="agregar.campania" ></select>
@@ -866,7 +866,7 @@ label:hover:before {
       </span>
       <span class="button dropup" >
           <span style="padding:8px;"  class="dropdown-toggle" data-toggle="dropdown" >Generar campaña &#x25B4;</span>
-          <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:70px;width:250px;">
+          <ul class=" noshadow dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:70px;width:250px;">
             <div style="margin-top:-60px;">
             <input placeholder="Nombre de la campaña..."   ng-model="generar.nombre" style="display:block;">
             <input  placeholder="Descripcion de la campaña..."   ng-model="generar.comentario"  style="display:block;">

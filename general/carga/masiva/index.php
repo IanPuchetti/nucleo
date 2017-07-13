@@ -20,6 +20,7 @@ header("Location: ../../");
 	<link rel="stylesheet" href="/.css/bootstrap.min.css"/>
 	<script type="text/javascript" src="/.js/jquery.min.js"></script>
 	<script type="text/javascript" src="/.js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/xlsx.js"></script>
 <style>
 .navbar-static-top{
 margin-top:-40px;
@@ -490,31 +491,31 @@ function json_tabla (id_tabla, objeto){
     <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Caratula" data-placement="bottom"><img src="/.img/reporte.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="caratula"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="caratula" class="lista"><option></option></select></span>
           </span>
     </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Comentario" data-placement="bottom"><img src="/.img/comentario.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="comentario"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="comentario" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Sucursal" data-placement="bottom"><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="sucursal"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="sucursal" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Legajo" data-placement="bottom"><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="legajo"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="legajo" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Numero de gestión" data-placement="bottom"><img src="/.img/gestor.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="numero_gestion"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="numero_gestion" class="lista"><option></option></select></span>
           </span>
       </div>
   </div>
@@ -522,31 +523,31 @@ function json_tabla (id_tabla, objeto){
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudor" id="documento"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="documento" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Tipo de documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudor" id="tipo_documento"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="tipo_documento" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Apellido y nombre" data-placement="bottom"><img src="/.img/deudor.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudor" id="apellido"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="apellido" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Correo electrónico" data-placement="bottom" class="color-gr" style="padding:0px 4px 0px 4px">@</span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudor" id="email"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="email" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Empresa" data-placement="bottom"><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudor" id="empresa"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="empresa" class="lista"><option></option></select></span>
           </span>
       </div>
   </div>
@@ -555,52 +556,52 @@ function json_tabla (id_tabla, objeto){
 <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Dirección particular" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular" class="lista"><option></option></select></span>
           </span>
       </div>
 
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Dirección particular 2" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular2"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular2" class="lista"><option></option></select></span>
           </span>
       </div>
 
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Dirección particular 3" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular3"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular3" class="lista"><option></option></select></span>
           </span>
       </div> 
 
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Dirección laboral" data-placement="bottom"><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_laboral"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_laboral" class="lista"><option></option></select></span>
           </span>
       </div> 
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Dirección laboral 2" data-placement="bottom"><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_laboral2"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_laboral2" class="lista"><option></option></select></span>
           </span>
       </div> 
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Provincia" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="provincia"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="provincia" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Localidad" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="localidad"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="localidad" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Codigo postal" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="codigo_postal"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="codigo_postal" class="lista"><option></option></select></span>
           </span>
       </div>
 
@@ -609,18 +610,18 @@ function json_tabla (id_tabla, objeto){
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Telefono 1" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono1"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono1" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Telefono 2" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono2"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono2" class="lista"><option></option></select></span>
           </span>
       </div><div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Telefono 3" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono3"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono3" class="lista"><option></option></select></span>
           </span>
       </div>
 </div>
@@ -632,13 +633,13 @@ function json_tabla (id_tabla, objeto){
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Numero de operación" data-placement="bottom" class="color-gr"><img src="/.img/reporte.png" style="width:13px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="numero_operacion"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="numero_operacion" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Producto" data-placement="bottom" class="color-gr"><img src="/.img/productos.png" style="width:17px;height:12px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="producto"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="producto" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
@@ -646,20 +647,20 @@ function json_tabla (id_tabla, objeto){
               <span data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom" class="color-gr" style="padding-left:5px;padding-right:5px;" id="pesos" onclick="cambiar('pesos','dolares')">$</span>
               <span span data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" class="color-gr" style="padding-left:5px;padding-right:5px;font-size:12px;display:none;" id="dolares"
  onclick="cambiar('dolares','pesos')" >U$D</span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="deuda"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="deuda" class="lista"><option></option></select></span>
           </span>
           <span id="moneda" style="display:none;position:absolute;margin-top:3px;font-size:10px;margin-left:5px;" class="color-gr">¿<a href="#" onclick="cambiar('pesos','dolares')">Dólares</a> o <a href="#"  onclick="cambiar('dolares','pesos')">pesos</a>?</span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Ingreso</span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="fecha_deuda" style="width:140px !important;"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="fecha_deuda" style="width:140px !important;" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
           <span class="button noselect">
               <span data-toggle="tooltip" title="Fecha de mora" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Mora</span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="fecha_mora" style="width:150px !important;"><option></option></select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="fecha_mora" style="width:150px !important;" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
@@ -675,11 +676,9 @@ function json_tabla (id_tabla, objeto){
           </span>
       </div>
     </div>
-	
 </div>
 </div>
-     
-  </body>
+</body>
 <script>
 var date = new Date(); 
 var hoy = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
@@ -699,7 +698,7 @@ i++;
 }
 var i=0;
 while(i<document.getElementsByName('domicilios').length){
-	var campo=document.getElementsByName('domicilios')[i].id;
+	var campo = document.getElementsByName('domicilios')[i].id;
 	domicilios[campo]=document.getElementsByName('domicilios')[i].value;  
 i++;  
 }
@@ -719,13 +718,13 @@ datos['carpeta']=JSON.stringify({
 						caratula: excel[i][carpeta.caratula],
 						comentario: excel[i][carpeta.comentario],
 						sucursal: excel[i][carpeta.sucursal],
-						dias_adic: excel[i][carpeta.dias_adic],
+						dias_adic: 0,
 						legajo: excel[i][carpeta.legajo],
 						numero_gestion: excel[i][carpeta.numero_gestion],
-						numero_lote: excel[i][carpeta.numero_lote]});
+						numero_lote: 0});
 
 datos['deudor']=JSON.stringify({			
-						documento: transform_number (excel[i][deudores.documento]),
+						documento: transform_number(excel[i][deudores.documento]),
 						tipo_documento: excel[i][deudores.tipo_documento],
 						apellido: excel[i][deudores.apellido],
 						email: excel[i][deudores.email],
@@ -748,15 +747,16 @@ datos['deudor']=JSON.stringify({
 						producto: excel[i][productos.producto],
 						fecha_deuda: transform_fecha (excel[i][productos.fecha_deuda]),
 						fecha_mora: transform_fecha (excel[i][productos.fecha_mora]),
-            			deuda: transform_money(excel[i][productos.deuda]),
-            			dolar: dolar,
-						fecha_ult_cobro: transform_fecha (excel[i][productos.fecha_ult_cobro]),
-						pase_legales: excel[i][productos.pase_legales],
+            deuda: transform_money(excel[i][productos.deuda]),
+            dolar: dolar,
+						fecha_ult_cobro: 0,
+						pase_legales: 0,
 						estado: $("#estado").children(":selected").attr("id"),
-						sub_estado: $("#sub_estado").children(":selected").attr("id"),
+						sub_estado: 1,
 						banco: $("#banco").children(":selected").attr("id"),
-						nombre_producto: excel[i][productos.nombre_producto],
-						tipo_gestion: excel[i][productos.tipo_gestion]});
+						nombre_producto: excel[i][productos.producto],
+						tipo_gestion: 0});
+
 			datos['proceso']=i;
 			$.ajax({
 					url:'php/agregar.php',
@@ -770,8 +770,6 @@ datos['deudor']=JSON.stringify({
 			});
 			}
 });
-</script>
-<script>
 var carpeta={}, deudores={}, domicilios={}, productos={}, names, excel;
 
 var dolar=0;

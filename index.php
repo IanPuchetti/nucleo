@@ -19,7 +19,7 @@ else{
 	<title>Iniciar sesión</title>
 	<link rel="stylesheet" href=".css/bootstrap.min.css"/>
 	<script type="text/javascript" src=".js/jquery.min.js"></script>
-	<script type="text/javascript" src=".js/bootstrap.js"></script>
+	<script type="text/javascript" src=".js/bootstrap.min.js"></script>
 <style>
 .navbar-static-top{
 margin-top:-40px;
