@@ -475,7 +475,7 @@ function json_tabla (id_tabla, objeto){
      <span class="butn"  style="font-size:11px;padding:5px 7px 5px 7px" id="cargar" onclick="$('#barra').css('display','block')">Cargar</button>
      </div>
       <div class="progress"  id="barra" style="display:none;margin-top:20px;">
-        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span></div>
+        <div class="progress-bar progress-bar-danger back-gr" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span></div>
       </div>
      <div class="satisfaction lead" style="text-align:center;"></div>
 	</div>
