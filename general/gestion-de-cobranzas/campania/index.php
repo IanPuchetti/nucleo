@@ -421,13 +421,13 @@ tbody tr:hover{
           </div>
         </div>
         <div id="collapse{{campania.id_campania}}" class="panel-collapse collapse">
-          <div class="panel-body" ng-dblclick="elegir.dblclick(campania.documento)">
+          <div class="panel-body">
           <div style="border:1px solid #ddd;margin:10px;border-radius:5px;width:250px;padding:25px;">
             <div>Casos gestionados: <span data-toggle="tooltip" title="Gestionados" data-placement="bottom" style="color:#4a7">{{campania.gestionados}}</span></div>
             <div>Casos no gestionados: <span data-toggle="tooltip" title="No gestionados" data-placement="bottom" style="color:#a47">{{campania.no_gestionados}}</span></div>
             <div>Total de casos: <span data-toggle="tooltip" title="Total" data-placement="bottom">{{campania.total}}</span></div>
           </div>
-            <div class="link" style="position:absolute;left:50%;margin-top:-80px;font-size:20px;cursor:pointer;">
+            <div class="link" style="position:absolute;left:50%;margin-top:-80px;font-size:20px;cursor:pointer;" ng-click="log(campania.documento)">
               Loguearse a la campaña
             </div>
           </div>
@@ -459,15 +459,11 @@ angular
     _.enter =function(e){if(e.which === 13){_.buscar();}};
     _.buscar=function(){_.refresh=1;_.listado=[];$http.post('php/buscar-rapido.php', _.busqueda).then(function(res){_.limite=5;_.listado=res.data;$timeout(function(){_.refresh=0;_.deudor=0;});});}
     _.bajar=function(){_.limite=_.limite+1;};
-    _.elegir={click:function (d){$("tr").css('background','white');
-                            $("#"+d).css('background','#dfc');
-                            $http.post('php/deudor-domicilios.php',{documento:d}).then(function(res){_.caso.deudor=res.data[0];});
-                          },
-              dblclick:function (d){$("tr").css('background','white');
-                            $("#"+d).css('background','#dfc');
-                                window.open('datos/?d='+d, d,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
-$http.post('php/gestion.php',{documento:d}).then(function(res){_.caso.gestiones=res.data;});
-                          }
+    _.log=function (d){
+                            const remote = require('electron').remote;
+                            const BrowserWindow = remote.BrowserWindow;
+                            var win = new BrowserWindow({ width: 650, height: 400, frame:false, resizable:false});
+                            win.loadURL('http://'+document.URL.split("/")[2]+'/general/gestion-de-cobranzas/campania/datos/?d='+d); 
               };
 
 
