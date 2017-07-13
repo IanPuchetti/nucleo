@@ -427,7 +427,7 @@ tbody tr:hover{
             <div>Casos no gestionados: <span data-toggle="tooltip" title="No gestionados" data-placement="bottom" style="color:#a47">{{campania.no_gestionados}}</span></div>
             <div>Total de casos: <span data-toggle="tooltip" title="Total" data-placement="bottom">{{campania.total}}</span></div>
           </div>
-            <div class="link" style="position:absolute;left:50%;margin-top:-80px;font-size:20px;cursor:pointer;" ng-click="log(campania.documento)">
+            <div class="link" style="position:absolute;left:50%;margin-top:-80px;font-size:20px;cursor:pointer;" ng-click="log(campania.documento, campania.id, campania.nombre)">
               Loguearse a la campaña
             </div>
           </div>
@@ -459,11 +459,11 @@ angular
     _.enter =function(e){if(e.which === 13){_.buscar();}};
     _.buscar=function(){_.refresh=1;_.listado=[];$http.post('php/buscar-rapido.php', _.busqueda).then(function(res){_.limite=5;_.listado=res.data;$timeout(function(){_.refresh=0;_.deudor=0;});});}
     _.bajar=function(){_.limite=_.limite+1;};
-    _.log=function (d){
+    _.log=function (d, i, n){
                             const remote = require('electron').remote;
                             const BrowserWindow = remote.BrowserWindow;
                             var win = new BrowserWindow({ width: 650, height: 400, frame:false, resizable:false});
-                            win.loadURL('http://'+document.URL.split("/")[2]+'/general/gestion-de-cobranzas/campania/datos/?d='+d); 
+                            win.loadURL('http://'+document.URL.split("/")[2]+'/general/gestion-de-cobranzas/campania/datos/?d='+d+'&i='+i+'&n='+n); 
               };
 
 
