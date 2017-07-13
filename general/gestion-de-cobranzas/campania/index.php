@@ -200,6 +200,13 @@ body{
     font-family: Product-Sans-Bold;
 }
 
+.link:hover{
+
+    background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .color-gr{
   background: -webkit-linear-gradient(#07963d, #89bd25);
     -webkit-background-clip: text;
@@ -213,7 +220,8 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
 
 #reload:hover{
@@ -409,10 +417,20 @@ tbody tr:hover{
             <div  class="panel panel-default" ng-repeat="campania in campanias" style="margin-top:-1px;">
         <div class="panel-heading titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse{{campania.id_campania}}"  ng-click="data.opcion='campania'">
           <div class="panel-title" style="text-align:left;font-size:14px;">
-            <img src="/.img/campaign.png" style="width:30px;margin-right:20px;">{{campania.nombre}}   {{campania.gestionados}}/{{campania.no_gestionados}}  {{campania.total}}
+            <img src="/.img/campaign.png" style="width:30px;margin-right:20px;">{{campania.nombre}}
           </div>
         </div>
-        <div id="collapse{{campania.id_campania}}" class="panel-collapse collapse" style="text-align:center;">
+        <div id="collapse{{campania.id_campania}}" class="panel-collapse collapse">
+          <div class="panel-body" ng-dblclick="elegir.dblclick(campania.documento)">
+          <div style="border:1px solid #ddd;margin:10px;border-radius:5px;width:250px;padding:25px;">
+            <div>Casos gestionados: <span data-toggle="tooltip" title="Gestionados" data-placement="bottom" style="color:#4a7">{{campania.gestionados}}</span></div>
+            <div>Casos no gestionados: <span data-toggle="tooltip" title="No gestionados" data-placement="bottom" style="color:#a47">{{campania.no_gestionados}}</span></div>
+            <div>Total de casos: <span data-toggle="tooltip" title="Total" data-placement="bottom">{{campania.total}}</span></div>
+          </div>
+            <div class="link" style="position:absolute;left:50%;margin-top:-80px;font-size:20px;cursor:pointer;">
+              Loguearse a la campaña
+            </div>
+          </div>
         </div>
 <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
     <img src="/.img/loading.gif" style="position:absolute;top:40%;left:49%;width:30px;opacity:0.3;">
