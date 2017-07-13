@@ -50,6 +50,13 @@ margin-top:-40px;
 body{
 }
 
+.butn{
+  border-radius:5px;border:1px solid #ddd;padding:5px 8px 5px 8px;cursor:pointer;background: none;color:#666;font-size:14px;font-weight:100;
+}
+.butn:hover, .butn:hover > ul{
+  border-color:#95e53d !important;
+}
+
 .noselect{
   -webkit-touch-callout: none; 
     -webkit-user-select: none; 
@@ -220,8 +227,7 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow-x:hidden;
-  overflow-y:auto;
+  overflow:hidden;
 }
 
 #reload:hover{
@@ -410,28 +416,35 @@ tbody tr:hover{
 </div>
 </div>
 <div class="block" ng-if="block==true"></div> 
-        <div style="text-align:left;margin:15px 0px 0px 15px;font-size:17px;"> <img src="/.img/flag.png" style="width:35px;height:35px;margin-top:-10px;"> TUS CAMPAÑAS </div>
-        <div class="panel-collapse">
-          <div class="panel-body">
-            <div id="accordion" class="panel-group">
-            <div  class="panel panel-default" ng-repeat="campania in campanias" style="margin-top:-1px;">
-        <div class="panel-heading titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse{{campania.id_campania}}"  ng-click="data.opcion='campania'">
-          <div class="panel-title" style="text-align:left;font-size:14px;">
-            <img src="/.img/campaign.png" style="width:30px;margin-right:20px;">{{campania.nombre}}
-          </div>
-        </div>
-        <div id="collapse{{campania.id_campania}}" class="panel-collapse collapse">
-          <div class="panel-body">
-          <div style="border:1px solid #ddd;margin:10px;border-radius:5px;width:250px;padding:25px;">
+        <div style="position:absolute;left:-12px;top:25px;padding-top:15px;text-align:left;margin:15px 0px 0px 15px;font-size:17px;width:200px;border-right:1px solid #ddd;height:100%;">
+          <div> <img src="/.img/flag.png" style="width:35px;height:35px;margin-top:-10px;"> TUS CAMPAÑAS </div><hr>
+        <div style="position:absolute;left:5px;font-size:12px;margin-top:-10px;" ng-show="campania">
+          <div class="color-gr" style="font-size:17px;margin-bottom:15px;"> <img src="/.img/campaign.png" style="width:30px;margin-top:-3px;">{{campania.nombre}}</div>
+          <div style="border:1px solid #ddd;border-radius:5px;width:180px;padding:15px;">
             <div>Casos gestionados: <span data-toggle="tooltip" title="Gestionados" data-placement="bottom" style="color:#4a7">{{campania.gestionados}}</span></div>
             <div>Casos no gestionados: <span data-toggle="tooltip" title="No gestionados" data-placement="bottom" style="color:#a47">{{campania.no_gestionados}}</span></div>
             <div>Total de casos: <span data-toggle="tooltip" title="Total" data-placement="bottom">{{campania.total}}</span></div>
           </div>
-            <div class="link" style="position:absolute;left:50%;margin-top:-80px;font-size:20px;cursor:pointer;" ng-click="log(campania.documento, campania.id, campania.nombre)">
+            <div class="butn" style="display:block;font-size:15px;cursor:pointer;text-align:center;margin-top:15px;border:1px solid #eee;border-radius:5px;padding:5px;" ng-click="log(campania.documento, campania.id, campania.nombre)">
               Loguearse a la campaña
             </div>
           </div>
+      </div>
+        <div style="position:absolute;left:200px;width:500px;overflow-y:auto;overflow-x:hidden;">
+        <div class="panel-collapse">
+          <div class="panel-body">
+            <div id="accordion" class="panel-group">
+            <div  class="panel panel-default" ng-repeat="camp in campanias" style="margin-top:-1px;">
+        <div class="panel-heading titulo" ng-click="asignar(camp)">
+          <div class="panel-title" style="text-align:left;font-size:14px;">
+            <img src="/.img/campaign.png" style="width:30px;margin-right:20px;">{{camp.nombre}}
+          </div>
         </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    </div>
 <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
     <img src="/.img/loading.gif" style="position:absolute;top:40%;left:49%;width:30px;opacity:0.3;">
   </div>
@@ -449,6 +462,7 @@ angular
     _.listado=[];
     _.caso={};
     _.limite=5;
+    _.asignar=function(c){_.campania=c;};
     _.traer={campanias: function (){
       $scope.campanias=[];
       $http.post('php/campanias.php', {id: id_usuario}).then(function(res){
