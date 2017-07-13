@@ -409,30 +409,10 @@ tbody tr:hover{
             <div  class="panel panel-default" ng-repeat="campania in campanias" style="margin-top:-1px;">
         <div class="panel-heading titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse{{campania.id_campania}}"  ng-click="data.opcion='campania'">
           <div class="panel-title" style="text-align:left;font-size:14px;">
-            <img src="/.img/campaign.png" style="width:30px;margin-right:20px;">{{campania.nombre}}
+            <img src="/.img/campaign.png" style="width:30px;margin-right:20px;">{{campania.nombre}}   {{campania.gestionados}}/{{campania.no_gestionados}}  {{campania.total}}
           </div>
         </div>
         <div id="collapse{{campania.id_campania}}" class="panel-collapse collapse" style="text-align:center;">
-          <div class="panel-body" ng-dblclick="elegir.dblclick(campania.documento)">
-            <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button">
-            <span data-toggle="tooltip" title="Titular" data-placement="bottom"><img src="/.img/deudor.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">
-            {{campania.apellido}}
-            </span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  id="change">
-            {{campania.documento}}
-            </span>
-            <span data-toggle="tooltip" title="Estado" data-placement="bottom" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/estado.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">
-            {{campania.estado}}
-            </span>
-            <span data-toggle="tooltip" title="Banco" data-placement="bottom" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/bank.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">
-            {{campania.banco}}
-            </span>
-            </span>
-          </div>
         </div>
 <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
     <img src="/.img/loading.gif" style="position:absolute;top:40%;left:49%;width:30px;opacity:0.3;">
