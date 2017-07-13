@@ -791,7 +791,7 @@ label:hover:before {
   </table>
 </div>
 </div>
-<div style="position:fixed;bottom:5px;left:5px;">
+<div style="position:fixed;bottom:5px;left:5px;z-index:2;">
       <span class="dropup">
           <span class="button dropdown-toggle" data-toggle="dropdown" style="margin-right:5px;">
           <span><img src="/.img/campos.png" style="width:17px;height:20px;margin-left:2px;margin-top:-3px" data-toggle="tooltip" title="Campos" data-placement="top"></span>
