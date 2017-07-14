@@ -605,7 +605,7 @@ table.with-ellipsis td {
     </table>
   </div>
       </div>
-      <div ng-show="ver=='propuestas'">
+      <div ng-show="ver=='propuesta'">
         <div>
         <table style="width:700px;float:left;margin-top:-2px;" ng-repeat="propuesta in propuestas">
           
