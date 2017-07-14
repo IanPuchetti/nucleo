@@ -535,9 +535,11 @@ select{
 </div>
   <div style="margin-top:10px;text-align:center;">
   </div>
-  <div style="text-align:center;color:#07963d;position:absolute;bottom:5px;width:100%;" class="noselect">
-    {{tiempo.horas}}:{{tiempo.minutos}}:{{tiempo.segundos}}
+  <div style="text-align:center;color:{{tiempo.minutos<=4 ? '#07963d' : '#903'}};position:absolute;bottom:5px;width:100%;" class="noselect" ng-init="color='#07963d'">
+    {{tiempo.horas<=9 ? '0'+tiempo.horas : tiempo.horas}}:{{tiempo.minutos<=9 ? '0'+tiempo.minutos : tiempo.minutos}}:{{tiempo.segundos<=9 ? '0'+tiempo.segundos : tiempo.segundos}}
   </div>
+    <span class="butn" data-toggle="tooltip" title="Liquidación" ng-click="liquidar()" data-placement="top" style="position:fixed;bottom:5px;left:5px;padding:2px;"><img src="/.img/productos.png" style="width:18px;height:14px;"></span>
+
 <script>
 var $_GET={};var url=document.URL.split("/")[2];document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g,function(){function decode(s) {return decodeURIComponent(s.split("+").join(" "));}$_GET[decode(arguments[1])] = decode(arguments[2]);});
 var date = new Date(); 
@@ -548,6 +550,12 @@ angular
   return socketFactory({
     prefix: 'connection',
     ioSocket: io.connect('http://localhost:3000')
+  });
+  })
+  .factory('time', function (socketFactory) {
+  return socketFactory({
+    prefix: 'connection',
+    ioSocket: io.connect('http://'+document.URL.split("/")[2]+':3002')
   });
   })
   .controller("manual", function ($scope, $http, $timeout, socket) {
@@ -633,6 +641,15 @@ angular
                          };
     _.refrescar();_.obtener.tipo_gestion();
     socket.on('telefonos',function(){_.obtener.telefonos();});
+    _.avanzar = function(){if (_.gestionando == true){if(_.tiempo.segundos==59){_.tiempo.segundos=0;if(_.tiempo.minutos == 59){_.tiempo.minutos=0;_.tiempo.horas=_.tiempo.horas+1;}else{_.tiempo.minutos=_.tiempo.minutos+1;}}else{_.tiempo.segundos=_.tiempo.segundos+1;}
+    time.emit('tiempo', {usuario:_.usuario, apellido: _.caso.deudor.apellido, documento: _.caso.deudor.documento, telefono: _.gestion.telefono,  tiempo: _.tiempo.horas+':'+_.tiempo.minutos+':'+_.tiempo.segundos , tipo_gestion : _.gestion.tipo_gestion, color: _.color });
+    if(_.tiempo.minutos==5){
+      _.color="#903";
+    }
+    }
+    $timeout(_.avanzar, 1000);
+  };
+    _.avanzar();
 });
 var quit=false;
 $(document).ready(function(){

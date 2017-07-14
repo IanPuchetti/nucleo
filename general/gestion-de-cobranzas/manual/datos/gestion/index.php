@@ -581,7 +581,7 @@ angular
     _.obtener={ telefonos:function(){$http.post('../../php/telefonos.php',{documento:_.d}).then(function(res){_.caso.telefonos=res.data;})},
                deudor:function (){$http.post('../../php/deudor-domicilios.php',{documento:_.d}).then(function(res){_.caso.deudor=res.data[0];})},
                historia:function(){_.refresh=1;$http.post('../../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
-               productos:function(){$http.post('../../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;_.caso.sub_estado=_.caso.productos[0].sub_estado;});},
+               productos:function(){$http.post('../../php/propuestas.php',{documento:_.d}).then(function (res){_.caso.propuestas=res.data;});},
                bancos: function(){$http.post('../../php/bancos.php').then(function(res){_.bancos=res.data;});},
                usuarios: function() {$http.post('../../php/usuarios.php').then(function(res){_.usuarios=res.data;for (var i in res.data){if(res.data[i].id == id_usuario){_.usuario=res.data[i].user; break;}}});},
                estados:  function() {$http.post('../../php/estados.php').then(function(res){_.estados=res.data;});},

@@ -456,8 +456,13 @@ resize(700,400);
 
 angular
   .module("gestion", ['infinite-scroll','btford.socket-io','angular.filter'])
-
-  .controller("manual", function ($scope, $http, $timeout) {
+  .factory('socket', function (socketFactory) {
+  return socketFactory({
+    prefix: 'connection',
+    ioSocket: io.connect('http://localhost:3000')
+  });
+  })
+  .controller("manual", function ($scope, $http, $timeout, socket) {
     var _ = $scope;
     _.listado=[];
     _.caso={};
@@ -469,7 +474,9 @@ angular
       $scope.campanias=res.data;
       });
     }};
+
     _.traer.campanias();
+    socket.on('campania', function(){_.traer.campanias();});
     _.enter =function(e){if(e.which === 13){_.buscar();}};
     _.buscar=function(){_.refresh=1;_.listado=[];$http.post('php/buscar-rapido.php', _.busqueda).then(function(res){_.limite=5;_.listado=res.data;$timeout(function(){_.refresh=0;_.deudor=0;});});}
     _.bajar=function(){_.limite=_.limite+1;};

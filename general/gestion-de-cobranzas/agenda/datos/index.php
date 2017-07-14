@@ -605,9 +605,26 @@ table.with-ellipsis td {
     </table>
   </div>
       </div>
+      <div ng-show="ver=='propuestas'">
+        <div>
+        <table style="width:700px;float:left;margin-top:-2px;" ng-repeat="propuesta in propuestas">
+          
+          <tbody>
+      <tr class="table-body producto" style="font-size:10px;padding:5px;cursor:pointer;">
+        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Fecha propuesta" data-placement="bottom">{{propuesta.fecha | date: 'dd/MM/yyyy'}}</td>
+        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Monto total" data-placement="bottom">${{propuesta.monto}}</td>
+        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Anticipo" data-placement="bottom">${{propuesta.anticipo}}</td>
+        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{producto.fecha_mora | date: "dd/MM/yyyy"}}</td>
+      </tr>
+      <tr class="table-body producto" style="font-size:10px;padding:5px;cursor:pointer;">
+        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Fecha propuesta" data-placement="bottom">{{propuesta.fecha_pago | date: 'dd/MM/yyyy'}}</td>
+        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Monto total" data-placement="bottom">${{propuesta.aprobado}}</td>
+        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Cuota cero" data-placement="bottom">${{propuesta.cuota_cero}}</td>
+      </tr>
+          </tbody>
+    </table>
   </div>
-
-
+      </div>
   <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
     <img src="/.img/loading.gif" style="position:absolute;top:45%;left:45%;width:30px;opacity:0.3;">
   </div>
@@ -642,7 +659,8 @@ angular
     _.obtener={ telefonos:function(){$http.post('../php/telefonos.php',{documento:_.d}).then(function(res){_.caso.telefonos=res.data;})},
                deudor:function (){$http.post('../php/deudor-domicilios.php',{documento:_.d}).then(function(res){_.caso.deudor=res.data[0];})},
                historia:function(){$http.post('../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
-               productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});}
+               productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});},
+               propuestas:function(){$http.post('../php/propuestas.php',{documento:_.d}).then(function (res){_.caso.propuestas=res.data;});}
              };
     _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.tooltip()};
     _.agregar={telefono:function(){if(_.nuevo.telefono.numero.length<6){_.nuevo.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.nuevo.telefono['documento']=_.d;_.nuevo.telefono.numero=sacar011(_.nuevo.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../php/agregar-telefono.php',_.nuevo.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
