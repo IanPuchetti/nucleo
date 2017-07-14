@@ -1,6 +1,6 @@
 <?php
 $documento=$_POST['documento'];
-$a_modificar=json_decode($_POST['a_modificar']);
+$a_modificar=json_decode($_POST['a_modificar'][0]);
 $tipo_documento=$a_modificar->tipo_documento;
 $apellido=$a_modificar->apellido;
 $email=$a_modificar->email;
@@ -14,14 +14,14 @@ if($empresa!=''){$deudores=$deudores.' empresa = '.$empresa.','}
 if($tipo_documento!=''){$deudores=$deudores.' tipo_documento = '.$tipo_documento.','}
 $deudores=rtrim($deudores, ",");
 $domicilios='';
-if($direccion_laboral!=''){$domicilios=$domicilios.' direccion_laboral = '.$direccion_laboral.','}
-if($direccion_laboral2!=''){$domicilios=$domicilios.' direccion_laboral2 = '.$direccion_laboral2.','}
-if($direccion_particular!=''){$domicilios=$domicilios.' direccion_particular = '.$direccion_particular.','}
-if($direccion_particular2!=''){$domicilios=$domicilios.' direccion_particular2 = '.$direccion_particular2.','}
-if($direccion_particular3!=''){$domicilios=$domicilios.' direccion_particular3 = '.$direccion_particular3.','}
-if($provincia!=''){$domicilios=$domicilios.' provincia = '.$provincia.','}
-if($localidad!=''){$domicilios=$domicilios.' localidad = '.$localidad.','}
-if($codigo_postal!=''){$domicilios=$domicilios.' codigo_postal = '.$codigo_postal.','}
+if($a_modificar->direccion_laboral!=''){$domicilios=$domicilios.' direccion_laboral = '.$direccion_laboral.','}
+if($a_modificar->direccion_laboral2!=''){$domicilios=$domicilios.' direccion_laboral2 = '.$direccion_laboral2.','}
+if($a_modificar->direccion_particular!=''){$domicilios=$domicilios.' direccion_particular = '.$direccion_particular.','}
+if($a_modificar->direccion_particular2!=''){$domicilios=$domicilios.' direccion_particular2 = '.$direccion_particular2.','}
+if($a_modificar->direccion_particular3!=''){$domicilios=$domicilios.' direccion_particular3 = '.$direccion_particular3.','}
+if($a_modificar->provincia!=''){$domicilios=$domicilios.' provincia = '.$provincia.','}
+if($a_modificar->localidad!=''){$domicilios=$domicilios.' localidad = '.$localidad.','}
+if($a_modificar->codigo_postal!=''){$domicilios=$domicilios.' codigo_postal = '.$codigo_postal.','}
 $domicilios=rtrim($domicilios, ",");
 
 $result = $mysqli->query("UPDATE deudores SET ".$deudores." WHERE documento = '$documento'");

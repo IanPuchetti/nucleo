@@ -16,6 +16,7 @@ $apellido1=$request->filtro ->apellido1;
 $apellido2=$request->filtro ->apellido2;
 $banco=$request->filtro ->banco -> id;
 $responsable=$request->filtro ->responsable -> id;
+$operador=$request->filtro ->operador -> id;
 $fecha_ingreso1=$request->filtro ->fecha_ingreso1;
 $fecha_ingreso2=$request->filtro ->fecha_ingreso2;
 $fecha_mora1=$request->filtro ->fecha_mora1;
@@ -102,6 +103,11 @@ if(isset($responsable)){
 $consulta = $consulta." AND deudores.responsable = '$responsable' ";
 }
 
+if(isset($operador)){
+$consulta = $consulta." AND gestiones.operador = '$operador' ";
+}
+
+
 if( isset($deuda1) && isset($deuda2)){
 $consulta = $consulta." AND (productos.deuda BETWEEN '$deuda1' AND '$deuda2') ";
 }
@@ -143,10 +149,10 @@ if(isset($tipo_gestion)){
 $consulta = $consulta." AND gestiones.tipo_gestion = '$tipo_gestion' ";
 }
 if($contactado=='sin'){
-	$consulta = $consulta." AND (gestiones.sub_estado!='2' OR gestiones.sub_estado!='3' OR gestiones.sub_estado!='8') ";
+	$consulta = $consulta." AND (productos.sub_estado!='2' OR productos.sub_estado!='3' OR productos.sub_estado!='8') ";
 }else{
 	if($contactado=='con'){
-		$consulta = $consulta." AND (gestiones.sub_estado='2' OR gestiones.sub_estado='3' OR gestiones.sub_estado='8') ";
+		$consulta = $consulta." AND (productos.sub_estado='2' OR productos.sub_estado='3' OR productos.sub_estado='8') ";
 	}
 }
 

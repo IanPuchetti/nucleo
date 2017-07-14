@@ -199,7 +199,7 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow:hidden;
+  overflow-x:hidden;overflow-y:auto;
 }
 
 #reload:hover{
@@ -578,10 +578,10 @@ function json_tabla (id_tabla, objeto){
 	    				}else{
 	    				if($("#puesto-"+modifid).val()=="Supervision"){
 	    				var datos={ id: modifid,
-	    							user:$("#usuario-"+modifid).val(),
-	    							pass:$("#password-"+modifid).val(),
-	    							puesto:'sup'
-	    						  };
+                    user:$("#usuario-"+modifid).val(),
+                    pass:$("#password-"+modifid).val(),
+                    puesto:'ger'
+                    };
 	    				}else{
 	    					var datos={
 	    							id: modifid,

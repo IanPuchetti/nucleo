@@ -137,10 +137,10 @@ if(isset($tipo_gestion)){
 $consulta = $consulta." AND gestiones.tipo_gestion = '$tipo_gestion' ";
 }
 if($contactado=='sin'){
-	$consulta = $consulta." AND (gestiones.sub_estado!='2' OR gestiones.sub_estado!='3' OR gestiones.sub_estado!='8') ";
+	$consulta = $consulta." AND (productos.sub_estado!='2' OR productos.sub_estado!='3' OR productos.sub_estado!='8') ";
 }else{
 	if($contactado=='con'){
-		$consulta = $consulta." AND (gestiones.sub_estado='2' OR gestiones.sub_estado='3' OR gestiones.sub_estado='8') ";
+		$consulta = $consulta." AND (productos.sub_estado='2' OR productos.sub_estado='3' OR productos.sub_estado='8') ";
 	}
 }
 

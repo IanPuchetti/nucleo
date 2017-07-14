@@ -6,7 +6,7 @@ $agenda2=$request ->agenda2;
 $documento1=$request ->documento1;
 $documento2=$request ->documento2;
 $apellido=$request ->apellido;
-$banco=$request ->banco->id;
+$banco=$request ->banco->cbanco;
 $responsable=$request ->responsable->id;
 $tipo_gesion=$request ->tipo_gestion;
 $fecha_ingreso1=$request ->fecha_ingreso1;
@@ -20,10 +20,10 @@ $reporte=$request ->reportes;
 $mysqli = new mysqli("localhost", "ian", "p", "nucleo");
 $mysqli->set_charset("utf8");
 
-$consulta = "SELECT DISTINCT deudores.documento, deudores.apellido, estados.estado, bancos.dbanco, reportes.link FROM  productos LEFT OUTER JOIN reportes ON reportes.documento = productos.documento INNER JOIN deudores ON deudores.documento = productos.documento INNER JOIN estados ON productos.estado = estados.id INNER JOIN bancos ON bancos.cbanco = productos.banco WHERE deudores.apellido LIKE '%$apellido%' ";
+$consulta = "SELECT DISTINCT deudores.documento, deudores.apellido, estados.estado, bancos.dbanco, reportes.link FROM  productos LEFT OUTER JOIN reportes ON reportes.documento = productos.documento INNER JOIN deudores ON deudores.documento = productos.documento INNER JOIN estados ON productos.estado = estados.id INNER JOIN bancos ON bancos.cbanco = productos.banco WHERE deudores.apellido LIKE '%$apellido%'";
 
-if($banco){
-$consulta = $consulta." AND productos.banco = '".$banco."' ";
+if($banco != 0){
+$consulta = $consulta."AND productos.banco LIKE '$banco' ";
 }
 
 if($documento1 != "" && $documento2 != ""){

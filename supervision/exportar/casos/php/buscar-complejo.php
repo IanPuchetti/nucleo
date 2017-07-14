@@ -94,6 +94,10 @@ $consulta = $consulta." AND productos.banco = '$banco' ";
 
 if(isset($documento1) && isset($documento2)){
 $consulta = $consulta." AND (productos.documento BETWEEN '$documento1' AND '$documento2') ";
+}else{
+	if($documento){
+	$consulta = $consulta." AND productos.documento LIKE '%$documento%' ";	
+}
 }
 
 if(isset($agenda1) && isset($agenda2)){

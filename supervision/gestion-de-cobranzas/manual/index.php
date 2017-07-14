@@ -1,21 +1,29 @@
 <?php
 session_start();
-$operador= $_SESSION['id'];
-$usuario = $_SESSION['user'];
 if(isset($_SESSION['user'])){
 if($_SESSION['puesto']=='adm'){
-header("Location: ../admin/");
+header("Location: ../administracion/");
+}else{
+if($_SESSION['puesto']=='ger'){
+}else{
+if($_SESSION['puesto']=='sup'){
+header("Location: ../supervision/");
+}else{
+if($_SESSION['puesto']=='gen'){
+}else{
+}
+}
+}
 }
 }
 else{
-header("Location: ../");
+header("Location: /");
 }
-$date = getdate();
-?>
-<!DOCTYPE html>
-<html lang="es">
 
-  <head>
+echo "<script>var id_usuario = ".$_SESSION["id"]."</script>"
+?>
+<html lang="es">
+<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,539 +31,548 @@ $date = getdate();
 	<meta name="author" content="">
 	<link rel="icon" href="/icon.png">
 	<title>Nucleo</title>
-	<link rel="stylesheet" href="css/tooltip-view.css"/>
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/styles.css"/>
-	<link rel="stylesheet" href="/.css/signin.css"/>
+  <link rel="stylesheet" href="/.css/bootstrap.min.css"/>
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script type="text/javascript" src="/.js/jquery.min.js"></script>
 	<script type="text/javascript" src="/.js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/.js/FileSaver.min.js"></script>
-	<script type="text/javascript" src="/.js/angular.1.5.min.js"></script>
+  <script type="text/javascript" src="/.js/angular.min.js"></script>
+  <script type="text/javascript" src="/.js/ng-infinite-scroll.js"></script>
   <script type="text/javascript" src="/.js/angular-filter.min.js"></script>
   <script type="text/javascript" src="/.js/socket.io.js"></script>
   <script type="text/javascript" src="/.js/ngsocket.io.js"></script>
-	<script type="text/javascript" src="/.js/tooltip-viewport.js"></script>
+  <script src="/.js/angular-es.js"></script>
 <style>
 .navbar-static-top{
 margin-top:-40px;
 }
 
-table tr td{
-  text-align: left;
-  margin:5px;
+body{
+}
+
+.noselect{
+  -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none;
+}
+.header{
+  width:100%;
+  height:40px;
+  background:white;
+  padding-top:12px;
+  font-size:12px;
+  border-bottom:1px solid #ddd;
+  /*-webkit-box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);
+  -moz-box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);
+  box-shadow: 0px 3px 14px -7px rgba(138,138,138,1);*/
+}
+
+.boton, .logout, .logout a{
+  padding:5px 10px 5px 10px;
+  cursor:pointer;
+  text-decoration: none;
+  color:#666;
+}
+
+.boton:hover, .boton span:hover, .logout a:hover{
+  color:#333;
+}
+
+.dropdown-menu{
+  margin-top:6px;
+  border-radius:0px;
+  font-size:11px;
+}
+
+.no-top{
+    border-top:0px;
+}
+
+
+@font-face {
+    font-family: Product-Sans;
+    src: url('/fonts/Product Sans Regular.ttf');
+}
+
+@font-face {
+    font-family: Product-Sans-Bold;
+    src: url('/fonts/Product Sans Bold.ttf');
+}
+
+@font-face {
+    font-family: Benton-Sans-Light;
+    src: url('/fonts/Benton-Sans-Light.ttf');
+}
+
+*{
+  font-family: Product-Sans;
+  color:#666;
+}
+
+.drag{
+  -webkit-app-region:drag;
+}
+
+.bar{
+  width:100%;
+  height:15px;
+  position:fixed;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: 0px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+}
+
+.trgl{
+  color:#aaa;
+}
+
+
+.boton-menu, .boton-menu a{
+  font-size:15px;
+  padding:10px;
+  text-align:center;
+  color:white;
+  cursor:pointer;
+}
+
+.boton-menu:hover, .boton-menu a:hover{
+  color:#ddd;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px; 
+  text-align: center;
+  font-size:35px;
+  background:white;
+}
+
+.circle span{
+    margin-top:-5px;
+    margin-left:-10px;
+    position:absolute;
+    background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Product-Sans-Bold;
+}
+
+.color-gr{
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.back-gr{
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+  color:white;
+}
+
+body{
+  border:1px solid #ccc;
+  overflow:hidden;
+}
+
+#reload:hover{
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+
+#reload{
+  width:22px;margin-top:4px;-webkit-transition: -webkit-transform .4s ease-in-out;transition:transform .4s ease-in-out;cursor:pointer;
+}
+
+.block{
+  width:100%;
+  height:40px;
+  position:fixed;
+  top:0px;
+  left:0px;
+}
+
+
+.side{
+  z-index:0;background:white;position:fixed;top:40px;left:150px;width:850px; height:90%;padding:10px;font-size:17px;overflow-y:auto;overflow-x:hidden;
+}
+
+.caja{
+  padding:20px;
+  border-radius:15px;
+  border:1px solid #ddd;
+  width:310px;
+}
+
+.dias{
+  padding:3px;margin:1px;border-radius:5px;border:1px solid #ddd;cursor:pointer;display:inline-block;width:30px;text-align: center;
+}
+
+.dias:hover{
+  background:#eee;
+}
+
+select{
+  background:none;
+}
+
+.boton a{
+  text-decoration: none;
+  color:#777;
+}
+
+.buscador{
+    margin-top:0px;
+    padding-top:3px;
+}
+
+
+input{
+  border:0px;
+  font-size:12px;
+}
+
+input:focus{
+    outline: none;
+}
+
+table{
+  font-size:14px;
+  width:100%;
+  float:right;
+  cursor:pointer;
+  margin-bottom: 1px;
+}
+
+td{
+  border:1px solid #aaa;
+  padding:0px 4px 0px 4px;
+}
+
+.busqueda{
+  height: 305px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  border-bottom:1px solid #ddd;
+}
+
+tbody tr td{
+  font-size:12px;
+}
+
+thead tr td{
+  background:#efd;
+}
+
+tbody tr:hover{
+  background:#eafada !important;
+}
+
+.left{
+  width:10%;position:absolute;top:83px;border-top:1px solid #eee;padding-top:5px;
+}
+
+.button{
+  cursor:pointer;
+}
+.button:hover>#change{
+  background:#eafada;
+}
+
+.down{
+  position:absolute;
+  top:285px;
+  border-top:1px #ddd solid;
+  width:100%;
+  padding:5px;
+}
+
+.tooltip-inner {
+  background-color: #0b3 !important;
+  /*!important is not necessary if you place custom.css at the end of your css calls. For the purpose of this demo, it seems to be required in SO snippet*/
+  color: #fff;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #0b3;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #0b3;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  border-bottom-color: #0b3;
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color: #0b3;
 }
 </style>
-	<script src="js/app.js"></script>
-  <?php echo "<script> var usuario = '$usuario' , operador = '$operador'</script>"; ?>
   </head>
 
-<body>
-<nav class="navbar navbar-default navbar-static-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
+  <body oncontextmenu="return false;" ng-app="gestion" ng-controller="manual" class="noselect">
+    <div class="bar drag">
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="/inicio">Inicio</a></li>     
-        
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Administración de Cartera <span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/supervision/carga/comparacion">Comparación</a></li>
+<div class="header">
+  <div style="position:absolute;width:1000px;">
+  <span class="dropdown boton">
+    <a href="/">Inicio</a>
+  </span>
+  <span class="dropdown boton">
+    <span class="dropdown-toggle" data-toggle="dropdown">Campañas <span class="trgl">&#x25BE;</span></span>
+    <ul class="dropdown-menu no-top">
+      <li><a href="/gerencia/campanias/ver">Ver</a></li>
+      <li><a href="/gerencia/campanias/generar/">Generar</a></li>
+      <li><a href="/gerencia/campanias/grupos/">Grupos</a></li>
+    </ul>
+  </span>
+  <span class="dropdown boton">
+    <span class="dropdown-toggle" data-toggle="dropdown">Panel <span class="trgl">&#x25BE;</span></span>
+    <ul class="dropdown-menu no-top">
+      <li><a href="/gerencia/panel/gestiones">Gestiones</a></li>
+    </ul>
+  </span>
+  <span class="dropdown boton">
+            <span data-toggle="dropdown">Administración de Cartera <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/carga/comparacion" class="ventana">Comparación</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Carga</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/carga/masiva" class="ventana">Masiva</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/manual" class="ventana">Manual</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Modificación masiva</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1" href="/gerencia/modificacion/productos" class="ventana">Productos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/modificacion/deudores" class="ventana">Deudores</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Enriquecimiento</a>
+                <ul class="dropdown-menu ">
+                  <li><a tabindex="-1"href="/gerencia/carga/enriquecer" class="ventana">Telefonos / Mails</a></li>
+                  <li><a href="/gerencia/carga/reportes" class="ventana">Datos Enriquecidos</a></li>
+                </ul>
+              </li>
+              <li><a href="/gerencia/baja/" class="ventana">Cambio de estado</a></li>
+            </ul>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Gestión de cobranzas <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/gestion-de-cobranzas/manual" class="ventana">Manual</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/campania" class="ventana">Campaña</a></li>
+              <li><a href="/gerencia/gestion-de-cobranzas/consultas" class="ventana">Consultas</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Carga</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="/supervision/carga/masiva">Masiva</a></li>
-                  <li><a tabindex="-1" href="/supervision/carga/manual">Manual</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Modificación Masiva</a>
-                <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="/supervision/modificacion/productos">Productos</a></li>
-                  <li><a tabindex="-1" href="/supervision/modificacion/deudores">Deudores</a></li>
-                </ul>
-              </li>
-              <li><a class="ventana" href="/gerencia/baja/">Cambio de Estado</a></li>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Enriquecimiento</a>
-                <ul class="dropdown-menu">
-                  <li><a tabindex="-1"href="/supervision/carga/enriquecer">Telefonos / Emails</a></li>
-                  <li><a href="/supervision/carga/reportes">Datos Enriquecidos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/carga/gestiones-automaticas" class="ventana">Gestiones automáticas</a></li>
                 </ul>
               </li>
             </ul>
-        </li>
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Gestión de Cobranzas<span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/supervision/gestion-de-cobranzas/manual">Manual</a></li>
-              <li><a href="/supervision/gestion-de-cobranzas/campania">Campaña</a></li>
-              <li><a href="#">Automática</a></li>  
-              <li><a href="/supervision/gestion-de-cobranzas/consultas">Consultas</a></li>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Cargar</a>
-                <ul class="dropdown-menu pull-left">
-                  <li><a tabindex="-1" href="/supervision/carga/gestiones-automaticas">Gestiones Automáticas</a></li>
-                </ul>
-              </li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a role="button" data-toggle="dropdown" href="#">
-                Exporte<span class="caret"></span>
-            </a>
-        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-              <li><a href="/supervision/exportar/casos">Casos</a></li>
-              <li><a href="/supervision/exportar/telefonos">Telefonos</a></li>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Exportar <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/exportar/casos" class="ventana">Casos</a></li>
+              <li><a href="/gerencia/exportar/telefonos" class="ventana">Telefonos</a></li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">Para enviar</a>
-                <ul class="dropdown-menu pull-left">
-                  <li><a tabindex="-1" href="/supervision/exportar/sms">SMS</a></li>
-                  <li><a tabindex="-1" href="/supervision/exportar/mails">Mails</a></li>
-                  <li><a tabindex="-1" href="/supervision/exportar/mails">IVR</a></li>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/sms" class="ventana">SMS</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/mails" class="ventana">Mails</a></li>
+                  <li><a tabindex="-1" href="/gerencia/exportar/ivr" class="ventana">IVR</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Informes</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/exportar/propuestas" class="ventana">Propuestas</a></li>
                 </ul>
               </li>
             </ul>
-        </li>
-      <ul class="nav navbar-nav navbar-right">
-        <li id="logout"><a href="/.php/logout.php"><span class="glyphicon glyphicon-log-out"></span>Salir</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<div class="container" ng-app="myApp"> 
-	<div ng-controller="busqueda" class="izquierda">
-	<div class="borde-abajo">
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a ng-click="filtro()">Filtro</a></li>
-        <li role="presentation"><a ng-click="deudor()">Deudor</a></li>
-        <li role="presentation"><a ng-click="productos()">Productos</a></li>
-        <li role="presentation"><a ng-click="gestion()">Gestión</a></li>
-      </ul>
-	</div>
-	<div class="tabla">
-		<table class="table table-condensed">
-			<tr>
-				<td>Apellido</td>
-				<td>Documento</td>
-				<td>Estado</td>
-			</tr>
-			<tr ng-repeat="deudor in data.listado" ng-click="data.seleccionar(deudor.documento)" id="{{deudor.documento}}" class="deudores" title="Nombre:{{deudor.apellido}}&#10;Documento:{{deudor.documento}}&#10;Estado:{{deudor.estado}}&#10;Banco:{{deudor.dbanco}}">
-				<td>{{deudor.apellido}}</td>
-				<td>{{deudor.documento}}</td>
-				<td>{{deudor.estado}}</td>
-			</tr>
-      <tr><td>Casos:</td><td>{{data.listado.length}}</td></tr>
-		</table>
-    <div style="text-align:center;"><img src="/.img/loading.gif" ng-show="data.loading"></div>
-	</div>
-	</div>
-	<div ng-controller="filtro" class="filtro derecha-fixed">
-		<div class="borde-abajo">
-      <ul class="nav nav-tabs" role="tablist">
-        <li><label ng-click="buscar.rapido()" class="btn btn-primary btn-left nb-right" ng-show="filtro=='rapido'">Buscar</label></li>
-        <li><label ng-click="buscar.complejo()" class="btn btn-primary btn-left nb-right" ng-show="filtro=='complejo'">Buscar</label></li>
-        <li role="presentation"><label ng-click="filtro='rapido'" class="btn btn-default btn-center nb-both">Rápido</label></li>
-        <li role="presentation"><label ng-click="filtro='complejo'" class="btn btn-default btn-right nb-left">Complejo</label></li>
-      </ul>
-    </div>
-  <div class="tabla">
-		<div class="form-group" ng-show="filtro=='rapido'" style="width:90%; margin:auto;">
-    <div style="margin-top:35px;">
-      <div>
-        <label for="rapido-documento" class="btn btn-left boton-s">Documento</label><input type="number" class="btn btn-right input-s" id="rapido-documento" placeholder="Documento..." ng-model="rapido.documento" ng-keypress="enter($event.keyCode)">
-      </div>
-      <div>
-        <label for="rapido-apellido" class="btn btn-left boton-s">Apellido</label><input type="text" class="btn btn-right input-s" id="rapido-apellido" placeholder="Apellido..." ng-model="rapido.apellido" ng-keypress="enter($event.keyCode)">
-      </div>
-      <div>
-        <label for="rapido-telefono" class="btn btn-left boton-s">Telefono</label><input type="text" class="btn btn-right input-s" id="rapido-telefono" placeholder="Teléfono..." ng-model="rapido.telefono" ng-keypress="enter($event.keyCode)">
-      </div>
-  </div>
-  </div>
-  <div class="form-group" ng-show="filtro=='complejo'" style="width:90%;margin:auto;" >
-  <div class="grupo" style="margin-top:20px;">
-  <div class="encabezado">Agenda</div>
-  <div>
-  <label class="btn btn-center boton-s">Desde</label><input class="btn btn-center input-date-s" type="date"  ng-model="complejo.agenda1" ng-keypress="enter($event.keyCode)">
-  </div>
-  <div>
-  <label class="btn btn-center boton-s">Hasta</label><input class="btn btn-center input-date-s" type="date"  ng-model="complejo.agenda2" ng-keypress="enter($event.keyCode)">
-  </div>
-  </div>
-  <br>
-  <div class="grupo" style="margin-top:20px;">
-  <div class="encabezado">Documento</div>
-  <div class="margen-top">
-  <label class="btn btn-center boton-s">Desde</label><input class="btn btn-center input-date-s" type="number" ng-model="complejo.documento1" placeholder="Documento..." ng-keypress="enter($event.keyCode)">
-  </div>
-  <div class="margen-top">
-  <label class="btn btn-center boton-s">Hasta</label><input class="btn btn-center input-date-s" type="number" ng-model="complejo.documento2" placeholder="Documento..." ng-keypress="enter($event.keyCode)">
-  </div>
-  </div>
-  <br>
-      <div class="margen-top">
-      <label for="complejo-apellido" class="btn btn-left boton-s">Apellido</label><input type="text" class="btn btn-right input-s" id="complejo-apellido" ng-model="complejo.apellido" placeholder="Apellido..." ng-keypress="enter($event.keyCode)">
-      </div>
-      <div class="margen-top">
-        <label for="complejo-banco" class="btn btn-left boton-s" type="button">Banco</label><select ng-model="complejo.banco" ng-options="banco as banco.dbanco for banco in data.bancos" class="btn btn-right input-s" ng-keypress="enter($event.keyCode)"></select>
-      </div>
-      <div class="margen-top">
-        <label for="complejo-responsable" class="btn btn-left boton-s" type="button">Responsable</label><select type="text" ng-model="complejo.responsable" ng-options="responsable as responsable.user for responsable in data.usuarios" class="btn btn-right input-s" ng-keypress="enter($event.keyCode)"></select>
-      </div>
-      <div class="margen-top">
-        <label for="complejo-apellido" class="btn btn-left boton-s">Número gestión</label><input type="text" class="btn btn-right input-s" id="complejo-apellido" ng-model="complejo.numero_gestion" placeholder="Gestión..." ng-keypress="enter($event.keyCode)">
-      </div>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Fecha de ingreso</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input class="btn btn-center input-date-s" type="date" ng-model="complejo.fecha_ingreso1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input class="btn btn-center input-date-s" type="date" ng-model="complejo.fecha_ingreso2" ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Fecha de mora</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input class="btn btn-center input-date-s" ng-model="complejo.fecha_mora1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input class="btn btn-center input-date-s" ng-model="complejo.fecha_mora2" ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Monto de deuda</div>
-        <div>
-          <label class="btn btn-center boton-c">Desde</label><label class="btn btn-center symbol">$</label><input class="btn btn-center input-c" type="number" ng-model="complejo.deuda1" placeholder="Monto..." ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-          <label class="btn btn-left boton-c">Hasta</label><label class="btn btn-center symbol">$</label><input class="btn btn-right input-c" type="number" ng-model="complejo.deuda2" placeholder="Monto..." ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <br>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Fecha de estado</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input type="date" class="btn btn-center input-date-s" ng-model="complejo.fecha_estado1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input type="date"  class="btn btn-center input-date-s" ng-model="complejo.fecha_estado2" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-        <label for="complejo-banco" class="btn btn-left boton-s" type="button">Estado</label><select type="text" ng-model="complejo.estado" ng-options="estado as estado.estado for estado in data.estados" class="btn btn-right input-s" ng-keypress="enter($event.keyCode)"></select>
-        </div>
-      </div>
-      <br>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">
-          <button class="btn btn-default" ng-show="movimiento=='con'" ng-init="movimiento='con'" ng-click="movimiento='sin'">Con</button>
-          <button class="btn btn-default" ng-show="movimiento=='sin'" ng-click="movimiento='con'">Sin</button>
-           Movimiento</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input class="btn btn-center input-date-s" ng-model="complejo.fecha_mora1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input class="btn btn-center input-date-s" ng-model="complejo.fecha_mora2" ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <br>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Fecha de convenio</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input type="date" class="btn btn-center input-date-s" ng-model="complejo.fecha_convenio1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input type="date"  class="btn btn-center input-date-s" ng-model="complejo.fecha_convenio2" ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <br>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Monto de acuerdo</div>
-        <div>
-          <label class="btn btn-center boton-c">Desde</label><label class="btn btn-center symbol">$</label><input class="btn btn-center input-c" type="number" ng-model="complejo.acuerdo1" placeholder="Monto..." ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-          <label class="btn btn-left boton-c">Hasta</label><label class="btn btn-center symbol">$</label><input class="btn btn-right input-c" type="number" ng-model="complejo.acuerdo2" placeholder="Monto..." ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <br>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Fecha de ultimo pago</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input type="date" class="btn btn-center input-date-s" ng-model="complejo.fecha_ultimo_pago1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input type="date"  class="btn btn-center input-date-s" ng-model="complejo.fecha_ultimo_pago2" ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <br>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Fecha de vencimiento de cuota</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input type="date" class="btn btn-center input-date-s" ng-model="complejo.fecha_vencimiento_cuota1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input type="date"  class="btn btn-center input-date-s" ng-model="complejo.fecha_vencimiento_cuota2" ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <br>
-      <div class="grupo" style="margin-top:20px;">
-        <div class="encabezado">
-          <button class="btn btn-default" ng-show="complejo.reportes=='todos'" ng-init="complejo.reportes='todos'" ng-click="complejo.reportes='con'">Con o sin</button>
-          <button class="btn btn-default" ng-show="complejo.reportes=='con'" ng-click="complejo.reportes='sin'">Con</button>
-          <button class="btn btn-default" ng-show="complejo.reportes=='sin'" ng-click="complejo.reportes='todos'">Sin</button>
-           Datos Enriquecidos</div>
-        <div>
-          <label class="btn btn-center boton-s">Desde</label><input class="btn btn-center input-date-s" ng-model="complejo.fecha_reporte1" ng-keypress="enter($event.keyCode)">
-        </div>
-        <div>
-         <label class="btn btn-center boton-s">Hasta</label><input class="btn btn-center input-date-s" ng-model="complejo.fecha_reporte2" ng-keypress="enter($event.keyCode)">
-        </div>
-      </div>
-      <br>
-      <div class="margen-top">
-        <label for="complejo-banco" class="btn btn-left boton-s" type="button">Estado</label><select ng-model="complejo.estado" ng-options="estado as estado.estado for estado in data.estados" class="btn btn-right input-s" ng-keypress="enter($event.keyCode)"></select>
-      </div>
-      <div class="margen-top">
-        <label for="complejo-banco" class="btn btn-left boton-s" type="button">Sub estado</label><select ng-model="complejo.sub_estado" ng-options="sub_estado as sub_estado.sub_estado for sub_estado in data.sub_estados" class="btn btn-right input-s" ng-keypress="enter($event.keyCode)"></select>
-      </div>
-  </div>
-	<div ng-controller="gestion" class="gestion derecha">
-    <div class="tabla">
-    <div style="width:90%;margin:auto;">
-    <div>
-    <label class="btn encabezado" style="width:100%;color:white;background:{{color}};">{{gestion.horas}}:{{gestion.minutos}}:{{gestion.segundos}}</label>
-    </div>
-    <div class="margen-top">
-    <label class="btn btn-izquierda boton-s" style="background:{{color}};border-radius:5px 0px 0px 0px;">Deudor</label><label class="btn btn-derecha input-s" style="border:0px;">&nbsp;{{data.deudor.apellido}}</label>
-    </div>
-    <div>
-      <label class="btn btn-izquierda boton-s" style="background:{{color}};border-radius:0px 0px 0px 5px;margin-top:-5px;">Banco</label><label class="btn btn-derecha input-s" style="border:0px;">&nbsp;{{data.gestion.banco}}</label>
-    </div>
-    <div ng-show="!comenzar_gestion">
-        <label class="btn btn-primary btn-down" ng-click="comenzar_gestion=1;hora();gestion= {horas:0,minutos:0,segundos:0};avanzar();" ng-show="data.gestion.banco">Comenzar gestión</label>
-    </div>
-    <div ng-show="comenzar_gestion" class="gestion">
-		    <div class="margen-top">
-        <label class="btn btn-left boton-s" style="background:{{color}};">Tipo de gestión</label><select class="btn btn-right input-s"  ng-model="gestion.tipo_gestion" ng-options="tipo as tipo.tipo for tipo in data.tipo_gestion" id="tipo_gestion"></select>
-      </div>
-        <div class="margen-top">
-        <label class="btn btn-left boton-s" style="background:{{color}}">Teléfono</label><select class="btn btn-right input-s" id="telefonos" ng-model="gestion.telefono" ng-options="telefono as telefono.numero for telefono in data.telefonos" ng-change="gestion.calificacion=gestion.telefono.calificacion"></select>
-        </div>
-        <div class="margen-top">
-        <label class="btn btn-left boton-s"  style="background:{{color}}">Comentario</label><input type="text" class="btn btn-right input-s" placeholder="Comentario..." ng-model="gestion.comentario"><br>
-        </div>
-        <div class="margen-top">
-        <label class="btn btn-left boton-s" style="background:{{color}}">Sub estado</label><select type="text" ng-model="gestion.sub_estado" ng-options="sub_estado as sub_estado.sub_estado for sub_estado in data.sub_estados" class="btn btn-right input-s"></select>
-        </div>
-        
-      <div class="margen-top">
-        <label class="btn btn-left boton-s" style="background:{{color}}">Calificar teléfono</label><select class="btn btn-right input-s" ng-model="gestion.calificacion" ng-options="calificacion.id as calificacion.titulo for calificacion in data.calificacion_telefonos" ng-show="gestion.telefono.calificacion==0"></select><select class="btn btn-right input-s" ng-model="gestion.calificacion" ng-options="calificacion.id as calificacion.titulo for calificacion in data.calificacion_telefonos" ng-show="gestion.telefono.calificacion!=0" disabled>
-        </select>
-      </div>
-      <div style="font-size:14px;" class="alert alert-danger" role="alert" ng-show="(!gestion.calificacion || gestion.calificacion==0)">
-          La calificacion del telefono es obligatoria. {{banco}}
-      </div>
-      <div class="margen-top">
-        <label class="btn btn-left boton-s" style="background:{{color}}">Agenda</label><input type="date" class="btn btn-right input-date-s" ng-model="gestion.agenda"><br>
-      </div> 
-      <div style="font-size:14px;" class="alert alert-danger" role="alert" ng-show="(gestion.sub_estado.sub_estado=='NEGOCIACION' || gestion.sub_estado.sub_estado=='PROMETE PAGAR' || gestion.sub_estado.sub_estado=='INFORMO PAGO') && !gestion.agenda">
-          <strong>¡Atención!</strong> la agenda es obligatoria.
-      </div>
-      <div class="margen-top">
-        <label class="btn btn-down btn-primary" ng-click="liquidar()" style="background:{{color}};border:0px;">Liquidación</button>
-      </div>
-    <br>
-    <label class="btn btn-default" ng-hide="(gestion.sub_estado.sub_estado=='NEGOCIACION' || gestion.sub_estado.sub_estado=='PROMETE PAGAR' || gestion.sub_estado.sub_estado=='INFORMO PAGO') && !gestion.agenda" style="width:100%;" ng-click="comenzar_gestion=0;registrar();color='#337ab7';">Registrar</label>
-    </div>
-    <br>
-    <div  ng-show="data.gestion.banco">
-      <label class="btn btn-success" style="border-radius:0px 0px 0px 0px;width:100%;" ng-click="mail()" ng-show="data.deudor.email">Enviar Mail</label><label class="btn btn-success" style="border-radius:0px 0px 0px 0px;width:100%;" ng-hide="data.deudor.email" disabled>Enviar Mail</label>
-      <div class="alert alert-danger" ng-hide="data.deudor.email">El deudor no tiene email registrado.</div>
-    </div>
-    <div ng-show="data.gestion.banco">
-      <label class="btn btn-primary" style="border-radius:0px 0px 0px 0px;width:50%;" ng-show="enviar.telefono" ng-click="sms()">Enviar SMS</label><label ng-hide="enviar.telefono" class="btn btn-primary" style="border-radius:0px 0px 0px 0px;width:50%;" disabled>Enviar SMS</label>
-      <label class="btn btn-warning" style="border-radius:0px 0px 0px 0px;width:50%;margin-left:-6px;" ng-show="enviar.telefono" ng-click="ivr()">Enviar IVR</label> <label class="btn btn-warning" style="border-radius:0px 0px 0px 0px;width:50%;margin-left:-6px;" ng-hide="enviar.telefono" disabled>Enviar IVR</label>      
-    </div>
-    <div ng-show="data.gestion.banco">
-      <select class="btn btn-default" style="border-radius:0px 0px 0px 5px;width:50%;" ng-model="enviar.telefono" ng-options="telefono as telefono.numero for telefono in data.telefonos" ng-change="enviar.calificacion=enviar.telefono.calificacion"></select> 
-      <select class="btn btn-default" ng-model="enviar.calificacion" ng-options="calificacion.id as calificacion.titulo for calificacion in data.calificacion_telefonos" style="border-radius:0px 0px 5px 0px;width:50%;margin-left:-6px;" disabled></select>      
-    </div>
+    </span>
+    <span class="dropdown boton">
+            <span data-toggle="dropdown">Administración <span class="trgl">&#x25BE;</span></span>
+        <ul class="dropdown-menu multi-level no-top" role="menu" aria-labelledby="dropdownMenu">
+              <li><a href="/gerencia/administracion/responsables" class="ventana">Responsables</a></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">ABMS</a>
+                <ul class="dropdown-menu " style="margin-left:-318px;">
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios" class="ventana">Operadores</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/bancos" class="ventana">Bancos</a></li>
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/liquidadores" class="ventana">Liquidadores</a></li>
 
-  </div>
-  </div>
-	  </div>
-	<div ng-controller="productos" class="productos derecha">
-    <table class="table table-condensed" ng-repeat="banco in data.productos | groupBy: 'banco'">
-      <tr class="table-head"><td colspan="3">{{banco[0].dbanco}} <a href="#" ng-click="gestion();data.gestion.banco = banco[0].dbanco; data.gestion.cbanco = banco[0].banco">Gestionar</a> - <a href="#" ng-click="data.descargar_carpeta(banco[0].banco);">Descargar carpeta</a>- <a href="#" ng-click="data.ver_propuesta(banco[0].banco);">Propuesta</a></span>
-    </div>
-      <tr ng-repeat="producto in banco" class="table-body producto" ng-click="seleccionar(producto.numero_operacion)" id="{{producto.numero_operacion}}">
-        <td>{{producto.producto}}</td>
-        <td>${{producto.deuda}}</td>
-        <td>{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
-      </tr>
-    </table>
-  </div>
-    <div ng-controller="producto" class="derecha product">
-      <div class="borde-abajo"> 
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation"><a ng-click="product='Carpeta'">Carpeta</a></li>
-          <li role="presentation"><a ng-click="product='Producto'">Producto</a></li>
-          <li role="presentation"><a ng-click="modificar()" class="accion">Modificar</a></li>
-        </ul>
-      </div>
-    <div ng-show="product=='Carpeta'" class="tabla">
-    <div>
-        <label class="btn btn-left boton-s">Caratula</label><input class="btn btn-right input-s" ng-model="data.producto.caratula">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Comentario</label><input class="btn btn-right input-s" ng-model="data.producto.comentario">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Sucursal</label><input class="btn btn-right input-s" ng-model="data.producto.sucursal">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Dias adic</label><input class="btn btn-right input-s" ng-model="data.producto.dias_adic">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Legajo</label><input class="btn btn-right input-s" ng-model="data.producto.legajo">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Número de gestion</label><input class="btn btn-right input-s" ng-model="data.producto.numero_gestion">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Número de lote</label><input class="btn btn-right input-s" ng-model="data.producto.numero_lote">
-    </div>
-    </div>
-    <div ng-show="product=='Producto'" class="tabla">
-      
-    <div>
-        <label class="btn btn-left boton-s">Producto</label><input class="btn btn-right input-s" ng-model="data.producto.producto">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Nombre de producto</label><input class="btn btn-right input-s" ng-model="data.producto.nombre_producto">
-    </div>
-      <div>
-        <label class="btn btn-left boton-c">Deuda</label><label class="btn btn-center symbol">$</label><input class="btn btn-right input-c" ng-model="data.producto.deuda">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Fecha Deuda</label><input type="date" class="btn btn-right input-s" ng-model="data.producto.fecha_deuda">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Fecha Mora</label><input type="date" class="btn btn-right input-s" ng-model="data.producto.fecha_mora">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Fecha ultimo cobro</label><input type="date" class="btn btn-right input-s" ng-model="data.producto.fecha_ult_cobro">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Pase legales</label><input class="btn btn-right input-s" ng-model="data.producto.pase_legales">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Estado</label><select class="btn btn-right input-s" ng-model="data.producto.estado" ng-options="estado.id as estado.estado for estado in data.estados"></select>
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Sub Estado</label><select class="btn btn-right input-s" ng-model="data.producto.sub_estado" ng-options="sub_estado.id as sub_estado.sub_estado for sub_estado in data.sub_estados"></select>
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Banco</label><select class="btn btn-right input-s" ng-model="data.producto.banco" ng-options="banco.cbanco as banco.dbanco for banco in data.bancos"></select>
-    </div>
-    </div>
-  </div>
-	<div ng-controller="deudor" class="deudor derecha">
-		<div class="borde-abajo"> 
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a ng-click="deudor='Deudor'">Deudor</a></li>
-        <li role="presentation"><a ng-click="deudor='Domicilios'">Domicilios</a></li>
-        <li role="presentation"><a ng-click="deudor='Telefonos'">Telefonos</a></li>
-        <li role="presentation"><a ng-click="modificar()" class="accion">Modificar</a></li>
-        <li role="presentation"><a ng-click="ver_gestion()" class="accion">Gestion</a></li>
-        <li role="presentation" ng-show="data.deudor.link"><a target="_blank" href="{{data.deudor.link}}" class="accion">Reporte</a></li>
-      </ul>
-		</div>
-		<div ng-show="deudor=='Deudor'">
-      <div>
-        <label class="btn btn-left boton-s">Documento</label><input class="btn btn-right input-s" ng-model="data.deudor.documento">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Tipo documento</label><input class="btn btn-right input-s" ng-model="data.deudor.tipo_documento">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Apellido</label><input class="btn btn-right input-s" ng-model="data.deudor.apellido">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Email</label><input class="btn btn-right input-s" ng-model="data.deudor.email">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Empresa</label><input class="btn btn-right input-s" ng-model="data.deudor.empresa">
-    </div>
-    </div>
-		<div ng-show="deudor=='Domicilios'" class="tabla">
-    <div>
-        <label class="btn btn-left boton-s">Direccion laboral 1</label><input class="btn btn-right input-s" ng-model="data.deudor.direccion_laboral">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Direccion laboral 2</label><input class="btn btn-right input-s" ng-model="data.deudor.direccion_laboral2">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Direccion particular 1</label><input class="btn btn-right input-s" ng-model="data.deudor.direccion_particular">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Direccion particular 2</label><input class="btn btn-right input-s" ng-model="data.deudor.direccion_particular2">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Direccion particular 3</label><input class="btn btn-right input-s" ng-model="data.deudor.direccion_particular1">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Provincia</label><input class="btn btn-right input-s" ng-model="data.deudor.provincia">
-    </div>
-      <div>
-        <label class="btn btn-left boton-s">Localidad</label><input class="btn btn-right input-s" ng-model="data.deudor.localidad">
-    </div>
-    <div>
-        <label class="btn btn-left boton-s">Codigo Postal</label><input class="btn btn-right input-s" ng-model="data.deudor.codigo_postal">
-    </div>
-    </div>
-		<div ng-show="deudor=='Telefonos'" class="tabla">
-      <div class="grupo" style="margin-top:15px;">
-        <div class="encabezado">Agregar telefono</div>
-        <div class="margen-top">
-          <label class="btn btn-left boton-s">Numero</label><input type="number" ng-model="data.telefono_nuevo.numero" placeholder="Nuevo numero..." class="btn btn-right input-s">
-        </div>
-        <div class="margen-top">
-          <label class="btn btn-left boton-s">Comentario</label><input type="text" ng-model="data.telefono_nuevo.comentario" placeholder="Comentario..."  class="btn btn-right input-s">
-        </div>
-        <div class="margen-top">
-          <label class="btn btn-primary btn-down" ng-click="agregar_telefono()">Agregar</label>
-        </div>
-      </div>
-      <div ng-repeat="(n,telefono) in data.telefonos" class="grupo" style="margin-top:20px;">
-        <div class="encabezado">Telefono {{n+1}}</div>
-        <div class="margen-top">
-          <label class="btn btn-center boton-s">Numero</label><input class="btn btn-center input-date-s" ng-model="telefono.numero">
-        </div>
-        <div class="margen-top">
-          <label class="btn btn-center boton-s">Comentario</label><input class="btn btn-left input-date-s" ng-model="data.telefonos[n].comentario">
-
-        </div>
-      <div class="margen-top">
-        <label class="btn btn-primary btn-down" ng-click="modificar_telefono(n)">Modificar</label>
-      </div>
-      </div>
-    </div>
-	</div>
-  <div class="control" ng-controller="control">
-  {{data.control}} </div>
+                </ul>
+              </li>
+            </ul>
+    </span>
+    <span class="dropdown boton logout">
+    <a href="/.php/logout.php">Salir</a>
+  </span>
 </div>
+</div>
+<div class="block" ng-if="block==true"></div> 
+<div class="header buscador" style="height:25px;">
+  <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
+  <span data-toggle="tooltip" title="Titular" data-placement="bottom"><img src="/.img/deudor.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+      <input type="text" ng-model="busqueda.apellido" placeholder="Apellido y nombre..."  ng-keypress="enter($event)">
+  </span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+  <input type="number" ng-model="busqueda.documento" placeholder="Numero de documento..."  ng-keypress="enter($event)">
+  </span>
+  <span data-toggle="tooltip" title="Telefono" data-placement="bottom" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/phone.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+  <input type="text" ng-model="busqueda.telefono" placeholder="Numero de telefono..."  ng-keypress="enter($event)">
+  </span>
+  <span data-toggle="tooltip" title="Buscar" data-placement="bottom" ng-click="buscar()" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/search.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  </span>
+
+  <!--
+  <span ng-click="buscar()"><img src="/.img/buscar.png" style="width:15px;margin-top:-5px;margin-left:-20px;margin-right:15px;">Buscar</span>
+  <input type="number" ng-model="busqueda.documento" placeholder="Numero de documento..."  ng-keypress="enter($event)">
+  <input type="text" ng-model="busqueda.telefono" placeholder="Numero de telefono..."  ng-keypress="enter($event)">
+    <span ng-click="busqueda={}" style="margin-left:-5px;background:#fafafa;color:#666;border:1px solid #aaa;padding:-1px;">Borrar</span>
+-->
+</div>
+<div class="busqueda">
+  <table style="position:absolute;right:15px;width:97.8%">
+    <thead>
+      <tr>
+        <td style="width:25%">Documento</td>
+        <td style="width:25%">Titular</td>
+        <td style="width:25%">Estado</td>
+        <td style="width:25%">Banco</td>
+      </tr>
+    <thead>
+    </table>
+    <table>
+    <tbody ng-if="refresh==0" ng-init="refresh=0;" class="casos" id="myTable">
+      <tr>
+        <td style="height:18px"></td>
+      </tr>
+      <tr  ng-if="i<limite" ng-repeat="(i, caso) in ::listado" class="caso" id="{{caso.documento}}" ng-click="elegir.click(caso.documento)" ng-dblclick="elegir.dblclick(caso.documento)">
+        <td style="width:25%">{{caso.documento |limitTo: 23}}{{caso.documento.length > 23 ? "..." : ""}}</td>
+        <td style="width:25%">{{caso.apellido |limitTo: 20}}{{caso.apellido.length > 20 ? "..." : ""}}</td>
+        <td style="width:25%">{{caso.estado |limitTo: 23}}{{caso.estado.length > 23 ? "..." : ""}}</td>
+        <td style="width:25%" >{{caso.banco |limitTo: 20}}{{caso.banco.length > 20 ? "..." : ""}}</td>
+      </tr>
+      <tr infinite-scroll="bajar()" infinite-scroll-container='".casos"' infinite-scroll-distance="5" infinite-scroll-disabled="!listado || limite>=listado.length"></tr>
+    </tbody>
+    <tbody>
+      <tr ng-if="listado.length==0">
+        <td style="height:18px"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr ng-if="listado.length<i-1" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
+        <td style="height:15px"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div style="padding:4px;width:100%;border-bottom:1px solid #aaa;">
+<span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
+  <span><img src="/.img/deudor.png" style="width:17px;height:15px;margin-left:2px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">{{caso.deudor ? caso.deudor.apellido : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}}</span>
+</span>
+</div>
+<div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
+    <img src="/.img/loading.gif" style="position:absolute;top:40%;left:49%;width:30px;opacity:0.3;">
+  </div>
+<script>
+const remote = require('electron').remote;
+var resize = remote.require('./main').resize;
+resize(700,400);
+
+
+angular
+  .module("gestion", ['infinite-scroll','btford.socket-io','angular.filter'])
+
+  .controller("manual", function ($scope, $http, $timeout) {
+    var _ = $scope;
+    _.listado=[];
+    _.caso={};
+    _.limite=5;
+    _.enter =function(e){if(e.which === 13){_.buscar();}};
+    _.buscar=function(){_.refresh=1;_.listado=[];$http.post('php/buscar-rapido.php', _.busqueda).then(function(res){_.limite=5;_.listado=res.data;$timeout(function(){_.refresh=0;_.deudor=0;});});}
+    _.bajar=function(){_.limite=_.limite+1;};
+    _.elegir={click:function (d){$("tr").css('background','white');
+                            $("#"+d).css('background','#dfc');
+                            $http.post('php/deudor-domicilios.php',{documento:d}).then(function(res){_.caso.deudor=res.data[0];});
+                          },
+              dblclick:function (d){$("tr").css('background','white');
+                            $("#"+d).css('background','#dfc');
+                                window.open('datos/?d='+d, d,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+$http.post('php/gestion.php',{documento:d}).then(function(res){_.caso.gestiones=res.data;});
+                          }
+              };
+
+
+});
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+document.addEventListener('dragover',function(event){
+    event.preventDefault();
+    return false;
+  },false);
+
+  document.addEventListener('drop',function(event){
+    event.preventDefault();
+    return false;
+  },false);
+</script>
 </body>
 </html>
