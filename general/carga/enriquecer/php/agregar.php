@@ -10,35 +10,35 @@ $result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."',
 }
 
 if($domicilios->telefono2 != ''){
-$result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono2."', '', 0)");
+$result2 = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono2."', '', 0)");
 }
 
 if($domicilios->telefono3 != ''){
-$result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono3."', '', 0)");
+$result3 = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono3."', '', 0)");
 }
 
 if($domicilios->telefono4 != ''){
-$result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono4."', '', 0)");
+$result4 = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono4."', '', 0)");
 }
 
 if($domicilios->telefono5 != ''){
-$result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono5."', '', 0)");
+$result5 = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono5."', '', 0)");
 }
 
 if($domicilios->telefono6 != ''){
-$result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono6."', '', 0)");
+$result6 = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono6."', '', 0)");
 }
 
 if($domicilios->telefono7 != ''){
-$result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono7."', '', 0)");
+$result7 = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono7."', '', 0)");
 }
 
 if($domicilios->telefono8 != ''){
-$result = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono8."', '', 0)");
+$result8 = $mysqli->query("INSERT INTO telefonos VALUES('".$deudor->documento."', '".$domicilios->telefono8."', '', 0)");
 }
 
 if($email != ''){
-$result = $mysqli->query("UPDATE deudores SET email = '$email' WHERE documento = '".$deudor->documento."'");
+$result9 = $mysqli->query("UPDATE deudores SET email = '$email' WHERE documento = '".$deudor->documento."'");
 }
 $mysqli->close();
 echo $proceso;

@@ -403,7 +403,8 @@ tbody tr:hover{
 <div >Seleccione el archivo .zip que contenga los reportes.</div>
 <label onclick='$("#subir").css("display","block")' class="butn">Archivo ZIP<input type="file" name="zip_file" id="zip_file" class="button" style="display:none;"></label>
 <br>
-<input type="submit" class="butn" id="subir" style="display:none;" value="Subir"></button>
+<input type="submit" class="butn" id="subir" style="display:none;" value="Subir" onclick="$('#loading').css('display','block')">
+<div style="display:none;" id="loading">Cargando... <img src="/.img/loading.gif" style="width:20px;"></div>
 </form>
 <div style="position:absolute;right:50px;width:300px;top:75px;">
 <label class="alert alert-danger" style="font-weight:100;"><h4>ATENCIÓN</h4>Debe asegurarse que todos los archivos tengan el formato *numero de cuil*.html</label>
@@ -434,7 +435,7 @@ if($_FILES["zip_file"]["tmp_name"]) {
 	
 	$continue = strtolower($name[1]) == 'zip' ? true : false;
 	if(!$continue) {
-		$message = "The file you are trying to upload is not a .zip file. Please try again.";
+		$message = "El archivo no es un .zip. Vuelva a intentarlo.";
 	}
 
 	$target_path = "/srv/nucleo/general/carga/reportes/temporal/".$zipfilename;  // change this to the correct site path
@@ -458,10 +459,10 @@ if($_FILES["zip_file"]["tmp_name"]) {
 	
 			unlink($target_path);
 		}
-		$message = "Los reportes se cargaron correctamente";
+		$message = "<span class='color-gr'>Los reportes se cargaron correctamente <span><img src='/.img/yes.png' style='width:20px'>";
 		echo $message;
 	} else {	
-		$message = "Hubo un problema cargando los reportes.";
+		$message = "<span style='color:#a74'>Hubo un problema cargando los reportes.</span>";
 		echo $message;
 	}
 }

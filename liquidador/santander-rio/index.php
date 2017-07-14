@@ -372,9 +372,7 @@ select{
     border-radius:0px 0px 5px 5px;
     padding-top:15px;
 }
-
-
-    </style>
+</style>
 </head>
 <body ng-app="myApp">
   <div class="drag"></div>
@@ -402,9 +400,8 @@ select{
           <button class="form-control" ng-show="cuota_cero==1" ng-click="cuota_cero=0;iniciar()" ng-init="cuota_cero = 0">Si</button>
       </div>
     </div>
-    <div class="panel panel-default" ng-show="cuota_cero==1">
-    <div class="panel-heading"><h3 class="panel-title">Operaciones</h3></div>
-    <div class="panel-body" style="text-align:left;font-weight:200;font-size:18px;">
+    <div ng-show="cuota_cero==1" style="border-radius:5px;padding:15px;border:1px solid #ddd;">
+    <div style="text-align:left;font-weight:200;font-size:18px;">
     <div class="borde-inferior">Capital inicial: ${{capital_inicial | number:2}}</div>
     <div class="borde-inferior">Interes: ${{interes | number:2}}</div>
       <div class="borde-inferior">IVA sobre interes: ${{iva_sobre_interes | number:2}}</div>
@@ -436,11 +433,8 @@ select{
         <br>
     </div>
     </div>
-  	<div class="row" ng-show="cuota_cero==0">
-  	<div class="col-md-6">
-  	<div class="panel panel-primary">
-		<div class="panel-heading"><h3 class="panel-title">Operaciones</h3></div>
-		<div class="panel-body" style="text-align:left;font-weight:200;font-size:18px;">
+  	<div  style="border-radius:5px;padding:15px;border:1px solid #ddd;" ng-show="cuota_cero==0">
+		<div style="text-align:left;font-weight:200;font-size:18px;">
 		<div class="borde-inferior">Capital inicial: ${{capital_inicial | number:2}}</div>
 		<div class="borde-inferior">Interes: ${{interes | number:2}}</div>
   		<div class="borde-inferior">IVA sobre interes: ${{iva_sobre_interes | number:2}}</div>
@@ -466,7 +460,6 @@ select{
    	</div>
    	
 	</div>
-	</div>
     <div style="padding:15px;border-radius:5px;border:1px solid #aaa;margin:15px;display:block;">
 		<div >Quitas <span class="butn" ng-click="quitar()">Calcular</span><hr>
 		<div  style="margin:5px;max-width:500px;">
@@ -482,24 +475,18 @@ select{
    	</div>
    	</div>
 	</div>
-	</div>
-	</div>
-	<div class="panel panel-default" ng-show="cuota_cero==0">
-		<div class="panel-heading"><h3 class="panel-title">Frances</h3></div>
-		<div class="panel-body" style="text-align:left;font-weight:200;font-size:18px;">
+	<div ng-show="cuota_cero==0" style="padding:15px;border:1px solid #ddd;margin:15px;">
+		<div>Financiacion</div>
 		
-			<div class="row">
-				<div class="col-md-8">
 				<div class="borde-inferior">A financiar: $ <input type="number" ng-model="a_financiar" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"></div>
 				<div class="borde-inferior">Plazo (meses): <input type="number" ng-model="plazo" ng-change="calcular_cuotas();total_total=(cuota_promedio * plazo | number:2);">
 				</div>
   				<div class="borde-inferior">Fecha de anticipo: <input type="date" ng-model="fecha_anticipo" ng-change="cambio_primer_cuota();calcular_cuotas();total_total=(cuota_promedio * plazo | number:2);"></div>
   				<div class="borde-inferior">1° cuota: {{fecha_primer_cuota | date: "dd/MM/yyyy"}}</div>
-  				</div>
+  			
   				<div class="col-md-4" style="text-align:center;">
   				<button class="btn btn-primary" ng-click="calcular_cuotas();total_total=(cuota_promedio * plazo | number:2);" style="margin:50px;">CALCULAR</button>
   				</div>
-  			</div>
   				<div class="resaltado">CUOTA PROMEDIO: $ {{cuota_promedio | number:0}} </div>
           <div class="resaltado" ng-init="total_total=(cuota_promedio * plazo | number:2)">TOTAL PROMEDIO: $ {{total_total}} </div>
    				<hr>
@@ -537,11 +524,8 @@ select{
 						</tr>
 					</tbody>
 				</table>
-   			
-   			
-   		</div>
-   	</div>
-   	<div class="jumbotron">
+   			</div>
+   		   	<div >
       <div class="panel panel-default">
       <div class="panel-heading"><h3 class="panel-title">Propuesta</h3></div>
       <div class="panel-body" style="text-align:left;font-weight:200;font-size:18px;">

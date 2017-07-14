@@ -193,8 +193,7 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow-x:hidden;
-  overflow-y:auto;
+  overflow:hidden;
 }
 
 #reload:hover{
@@ -398,6 +397,26 @@ label:hover:before {
 .inputs{
   width:100px !important;
 }
+
+.panel, .panel-heading{
+  background: #fff !important;
+  border-color:#ddd !important;
+  color:#666 !important;
+}
+
+
+
+.inp{border:0px;border-bottom:1px solid #ddd;font-size:12px;margin:5px;}
+.inp:focus{border-bottom:1px solid #496;}
+
+.plus{cursor: pointer;}
+.plus:hover{
+  background: -webkit-linear-gradient(#07963d, #89bd25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+table{font-size:12px;}
 </style>
   </head>
 
@@ -509,28 +528,31 @@ label:hover:before {
 </div>
     <div >
     
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#actuales').css('display','block');" style="cursor:pointer;">Actuales</a></li>
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#nuevo').css('display','block');" style="cursor:pointer;">Nuevo</a></li>
-
-      </ul>
-    
-     <div class="panel panel-primary ocultar" id="nuevo" style="display:none;">
+    <div style="position:absolute;left:0px;width:100px;height:400px;text-align:center;font-weight:100;" class="back-gr">
+        <div style="padding:10px;color:white;cursor:pointer;" onclick="$('.ocultar').css('display','none');$('#actuales').css('display','block');" style="cursor:pointer;">Actuales</div>
+        <div style="padding:10px;color:white;cursor:pointer;" onclick="$('.ocultar').css('display','none');$('#nuevo').css('display','block');" style="cursor:pointer;">Nuevo</div>
+      </div>
+    <div style="position:absolute;left:100px;width:600px;overflow-y:auto;height:400px;">
+     <div class="panel panel-primary ocultar" id="nuevo" style="display:none;margin:25px;">
 	<div class="panel-heading"><h3 class="panel-title">Crear grupo</h3></div>
 <div class="panel-body">
 	<div class="form-group">
     	<div class="row" style="font-size:13px;">
     	<div clasS="col-md-6">
-  		<label for="nombre">Nombre del grupo</label>
-  		<input type="text" id="nombre" placeholder="Nombre del grupo..." class="form-control">
-  		<label for="descripcion">Descripción</label>
-  		<input type="text" id="descripcion" placeholder="Descripcion.." class="form-control">
-  		<br>
-  		<label for="operador_nueva">Operador</label>
-  		<br>
-  		<select id="operador_nueva" class="btn btn-info">
+        <div>
+  		<input type="text" id="nombre" placeholder="Nombre del grupo..." class="inp">
+    </div>
+    <div>
+  		<input type="text" id="descripcion" placeholder="Descripcion.." class="inp">
+    </div>
+    <div style="padding:50px 25px 25px 25px;">
+      <button class="butn" id="crear_grupo" style="position:absolute;left:25px;">Crear grupo</button>
+    </div>
+    <div style="position:absolute;left:300px;top:0px;">
+  		<span for="operador_nueva">Agregar operador</span>: <select id="operador_nueva" style="border:0px;">
 		</select>
-		<button id="agregar_operador" class="btn btn-default">Agregar operador</button>
+		<span id="agregar_operador" style="font-size:18px;" class="plus">+</span>
+  
 		<script>
 		var lista_operadores = [];
 		$.ajax({
@@ -560,19 +582,13 @@ label:hover:before {
 		lista_operadores.splice(lista_operadores.indexOf(elemento), 1);
 		}
 		</script>
-  		</div>
-  		<div class="col-md-6">
+  		<div style="height:130px;overflow-y:auto;">
   		<table class="table table-condensed">
-  		<thead>
-  		<th>Operadores</th>
   		<tbody id="operadores">
   		</tbody>
   		</thead>
   		</table>
-  		</div></div></div>
   		</div>
-  		<div style="text-align:center;">
-  		<button class="btn btn-primary" id="crear_grupo">Crear grupo</button><br><br>
   		<script>
   		$("#crear_grupo").click(function(){
   						var datos={ 	nombre: $("#nombre").val(),
@@ -593,9 +609,8 @@ label:hover:before {
   		</script>
   		</div>
   		</div>
-  		
-  		
-  		<div class="panel panel-primary ocultar" id="actuales">
+    </div></div></div></div>
+  		<div class="panel panel-primary ocultar" id="actuales" style="margin:25px;">
 	<div class="panel-heading"><h3 class="panel-title">Grupos actuales</h3></div>
 		<div id="accordion" class="panel-group panel-body">
 		
@@ -677,6 +692,7 @@ label:hover:before {
       }
   		</script>
     </div>
+  </div>
   </body>
 <script>
 

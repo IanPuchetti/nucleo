@@ -607,19 +607,23 @@ table.with-ellipsis td {
       </div>
       <div ng-show="ver=='propuesta'">
         <div>
-        <table style="width:700px;float:left;margin-top:-2px;" ng-repeat="propuesta in propuestas">
-          
+        <table style="width:700px;float:left;margin-top:-2px;" ng-repeat="(i, propuesta) in caso.propuestas">
+          <thead>
+            <tr>
+              <td style="width:100%;">PROPUESTA {{i+1}}</td>
+            </tr>
+          </thead>
           <tbody>
       <tr class="table-body producto" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Fecha propuesta" data-placement="bottom">{{propuesta.fecha | date: 'dd/MM/yyyy'}}</td>
+        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Fecha propuesta" data-placement="bottom">{{propuesta.fecha_propuesta | date: 'dd/MM/yyyy'}}</td>
         <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Monto total" data-placement="bottom">${{propuesta.monto}}</td>
         <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Anticipo" data-placement="bottom">${{propuesta.anticipo}}</td>
-        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{producto.fecha_mora | date: "dd/MM/yyyy"}}</td>
+        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Cuotas" data-placement="bottom">{{propuesta.cuotas}} cuotas</td>
       </tr>
       <tr class="table-body producto" style="font-size:10px;padding:5px;cursor:pointer;">
         <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Fecha propuesta" data-placement="bottom">{{propuesta.fecha_pago | date: 'dd/MM/yyyy'}}</td>
-        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Monto total" data-placement="bottom">${{propuesta.aprobado}}</td>
-        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Cuota cero" data-placement="bottom">${{propuesta.cuota_cero}}</td>
+        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Aprobacion" data-placement="bottom">{{propuesta.aprobado==0 ? 'NO APROBADO' : 'APROBADO'}}</td>
+        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Cuota cero" data-placement="bottom">{{propuesta.cuota_cero==0 ? '' : 'CUOTA CERO'}}</td>
       </tr>
           </tbody>
     </table>
@@ -662,7 +666,7 @@ angular
                productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});},
                propuestas:function(){$http.post('../php/propuestas.php',{documento:_.d}).then(function (res){_.caso.propuestas=res.data;});}
              };
-    _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.tooltip()};
+    _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.obtener.propuestas();_.tooltip()};
     _.agregar={telefono:function(){if(_.nuevo.telefono.numero.length<6){_.nuevo.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.nuevo.telefono['documento']=_.d;_.nuevo.telefono.numero=sacar011(_.nuevo.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../php/agregar-telefono.php',_.nuevo.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
     _.refrescar();
     _.modificar={email:function (){_.caso.deudor.modificado=0;_.caso.deudor.modificando=1;$http.post('../php/modificar-deudor.php',_.caso.deudor).then(function(res){_.caso.deudor.modificando=0;_.caso.deudor.modificado=1;});},

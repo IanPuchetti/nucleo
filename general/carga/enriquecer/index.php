@@ -414,8 +414,8 @@ table.with-ellipsis td {
 <div style="display:none;"id="cargar-div">
       Una vez subido el archivo, escoja los campos del archivo que corresponda a los siguientes datos. <br><br> Luego, al elegir los campos correspondientes, haga click en <span class="butn" id="cargar" onclick="$('#barra').css('display','block')">Cargar</button>
      </div>
-      <div class="progress"  id="barra" style="display:none;">
-      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span></div>
+      <div class="progress"  id="barra" style="display:none;margin-top:25px;">
+      <div class="progress-bar progress-bar-danger back-gr" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span></div>
      </div>
      <div class="satisfaction lead" style="text-align:center;"></div>
 	</div>
@@ -508,16 +508,16 @@ for(var i in excel){
 datos['deudor']=JSON.stringify({			
 						documento: excel[i][deudores.documento],
 						});
-			datos['domicilios']=JSON.stringify({			
-						telefono1: sacar011(excel[i][domicilios.telefono1].replace(/[^0-9.]/g, "")),
-						telefono2: sacar011(excel[i][domicilios.telefono2].replace(/[^0-9.]/g, "")),
-						telefono3: sacar011(excel[i][domicilios.telefono3].replace(/[^0-9.]/g, "")),
-            telefono4: sacar011(excel[i][domicilios.telefono4].replace(/[^0-9.]/g, "")),
-            telefono5: sacar011(excel[i][domicilios.telefono5].replace(/[^0-9.]/g, "")),
-            telefono6: sacar011(excel[i][domicilios.telefono6].replace(/[^0-9.]/g, "")),
-            telefono7: sacar011(excel[i][domicilios.telefono7].replace(/[^0-9.]/g, "")),
-            telefono8: sacar011(excel[i][domicilios.telefono8].replace(/[^0-9.]/g, ""))
-          });
+var telefonos = {};
+if(excel[i][domicilios.telefono1] ) {telefonos.telefono1=sacar011(excel[i][domicilios.telefono1].replace(/[^0-9.]/g, "").replace("'", ""))};
+if(excel[i][domicilios.telefono2] ) {telefonos.telefono2=sacar011(excel[i][domicilios.telefono2].replace(/[^0-9.]/g, "").replace("'", ""))};
+if(excel[i][domicilios.telefono3] ) {telefonos.telefono3=sacar011(excel[i][domicilios.telefono3].replace(/[^0-9.]/g, "").replace("'", ""))};
+if(excel[i][domicilios.telefono4] ) {telefonos.telefono4=sacar011(excel[i][domicilios.telefono4].replace(/[^0-9.]/g, "").replace("'", ""))};
+if(excel[i][domicilios.telefono5] ) {telefonos.telefono5=sacar011(excel[i][domicilios.telefono5].replace(/[^0-9.]/g, "").replace("'", ""))};
+if(excel[i][domicilios.telefono6] ) {telefonos.telefono6=sacar011(excel[i][domicilios.telefono6].replace(/[^0-9.]/g, "").replace("'", ""))};
+if(excel[i][domicilios.telefono7] ) {telefonos.telefono7=sacar011(excel[i][domicilios.telefono7].replace(/[^0-9.]/g, "").replace("'", ""))};
+if(excel[i][domicilios.telefono8] ) {telefonos.telefono8=sacar011(excel[i][domicilios.telefono8].replace(/[^0-9.]/g, "").replace("'", ""))};
+			datos['domicilios']=JSON.stringify(telefonos);
 			datos['proceso']=i;
 			datos['email']=excel[i][domicilios.email];
 			$.ajax({
