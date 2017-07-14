@@ -3,7 +3,7 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $id=$request->id;
 $conn = new mysqli("localhost", "ian", "p", "nucleo");
-$result = $conn->query("SELECT * FROM (SELECT grupos_casos.id_campania, grupos_casos.deudor FROM grupos_casos INNER JOIN grupos_usuarios ON grupos_casos.id_grupo = grupos_usuarios.id_grupo WHERE grupos_usuarios.id_usuario = '$id' AND grupos_casos.gestionado = 0 ORDER BY RAND()) as i GROUP BY id_campania");
+$result = $conn->query("SELECT * FROM (SELECT grupos_casos.id_campania, grupos_casos.deudor FROM grupos_casos INNER JOIN grupos_usuarios ON grupos_casos.id_grupo = grupos_usuarios.id_grupo WHERE grupos_usuarios.id_usuario = '$id' AND grupos_casos.gestionado = 0 AND grupos_casos.gestionando = 0 ORDER BY RAND()) as i GROUP BY id_campania");
 $campanias = array();
 $productos = array();
 while($r = $result->fetch_array()){

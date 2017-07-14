@@ -574,7 +574,7 @@ angular
     _.getNumber=function(n){return new Array(n);};
     _.bajar=function(){_.limite=_.limite+1;};
     _.elegir=function (c){_.visualizar=c};
-    _.cerrar=function (){socket.emit('cerrar-gestion');cerrar();};
+    _.cerrar=function (){socket.emit('campania');cerrar();};
     _.unname=function(){$timeout(function(){_.named=false;_.gestion.telefono.numero='';});};
     _.set=function(a){_.gestion.telefono.numero=a;_.named=true;_.gestion.existe=true;_.verificar.telefono();}
     _.tooltip= function (){$timeout(function(){$('[data-toggle="tooltip"]').tooltip();});};
@@ -642,6 +642,7 @@ angular
                             {
                              agenda:_.registrar.agenda,
                              documento:$_GET['d'],
+                             id_campania:$_GET['i'],
                              operador:id_usuario,
                              sub_estado:_.registrar.sub_estado,
                              fecha:hoy

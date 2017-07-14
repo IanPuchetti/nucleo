@@ -558,7 +558,7 @@ table.with-ellipsis td {
     </ul>
   </span>
   <span class="button noselect" style="position:absolute;right:10px;bottom:-3px;">
-    <img src="/.img/flag.png" style="width:17px;"><span style="padding-right:5px;"> {{campania.nombre}}</span> <span onclick="quit=true;window.close()" class="close" ng-show="quit==true" ng-init="quit=true" style="margin:-2px;">×</span>
+    <img src="/.img/flag.png" style="width:17px;"><span style="padding-right:5px;"> {{campania.nombre}}</span> <span ng-click="desgestionando()" class="close" ng-show="quit==true" ng-init="quit=true" style="margin:-2px;">×</span>
   </span>
   </div>
   <div ng-show="ver=='telefonos'" style="padding:20px;">
@@ -578,12 +578,12 @@ table.with-ellipsis td {
       <div style="height:240px;overflow-y:auto;width:103%;border-top:1px solid #ddd;">
       <div style="margin-top:10px;" ng-repeat="(i, telefono) in caso.telefonos">
         <span class="button noselect">
-          <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Telefono {{i+1}}" data-placement="bottom"><img src="/.img/phone.png" style="width:15px;height:15px;margin-left:2px;"></span>
+        <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Telefono {{i+1}}" data-placement="bottom"><img src="/.img/phone.png" style="width:15px;height:15px;margin-left:2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px 10px 2px 10px;margin-right:-2px;">{{telefono.numero}}</span>
         <span style="border-left:1px solid #ddd;padding:2px 2px 2px 10px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;" ng-model="telefono.comentario" placeholder="Comentario..."></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.telefono(telefono.numero, telefono.comentario, i)"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.sms(telefono.numero)"  data-toggle="tooltip" title="Enviar SMS" data-placement="bottom"><img src="/.img/mail.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.ivr(telefono.numero)"  data-toggle="tooltip" title="Enviar IVR" data-placement="bottom"><img src="/.img/ivr.png" style="width:17px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.ivr(telefono.numero)"  data-toggle="tooltip" title="Enviar IVR" data-placement="bottom"><img src="/.img/ivr.png" style="width:17px;height:17px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
@@ -633,9 +633,11 @@ angular
     _.limite=5;
     _.ver='deudor';
     _.campania={nombre:$_GET['n'],id:$_GET['i']};
+    _.gestionando=function(d){$http.post('../php/gestionando.php',{id_campania:_.campania.id,documento:d}).then(function(res){});};
+    _.desgestionando=function(){$http.post('../php/des-gestionando.php',{id_campania:_.campania.id, documento:_.d}).then(function(res){cerrar();});};
     _.getNumber=function(n){return new Array(n);};
     _.gestionar= function (b){
-    window2=window.open('gestion/?d='+d+'&b='+b, 'call'+d,'height=330, width=300, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+    window2=window.open('gestion/?d='+d+'&b='+b+'&i='+$_GET['i'], 'call'+d,'height=330, width=300, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
     };
     _.reporte=function(){window3 = window.open('reporte/?u='+_.caso.deudor.link, 'reporte'+d,'height=600, width=400, left=100, top=0, resizable=yes, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
 };
@@ -646,16 +648,22 @@ angular
                deudor:function (){$http.post('../php/deudor-domicilios.php',{documento:_.d}).then(function(res){_.caso.deudor=res.data[0];})},
                historia:function(){$http.post('../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
                productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});},
-               propuestas:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});}
+               propuestas:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});},
+               caso:function(){$http.post('../php/campania.php',{id_campania:_.campania.id}).then(function(res){_.d=res.data[0].deudor;_.refrescar();})}
              };
-    _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.tooltip()};
+    _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.tooltip();_.gestionando(d);};
     _.agregar={telefono:function(){if(_.nuevo.telefono.numero.length<6){_.nuevo.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.nuevo.telefono['documento']=_.d;_.nuevo.telefono.numero=sacar011(_.nuevo.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../php/agregar-telefono.php',_.nuevo.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
     _.refrescar();
     _.modificar={email:function (){_.caso.deudor.modificado=0;_.caso.deudor.modificando=1;$http.post('../php/modificar-deudor.php',_.caso.deudor).then(function(res){_.caso.deudor.modificando=0;_.caso.deudor.modificado=1;});},
                  telefono: function (n,c,i){_.caso.telefonos[i].modificado=0;_.caso.telefonos[i].modificando=1;$http.post('../php/modificar-telefono.php',{numero:n,comentario:c}).then(function(){_.caso.telefonos[i].modificando=0;_.caso.telefonos[i].modificado=1;})}
                };
+    _.enviar={email:function (){_.caso.deudor.modificado=0;_.caso.deudor.modificando=1;$http.post('../php/enviar-email.php',_.caso.deudor.documento).then(function(res){_.caso.deudor.modificando=0;_.caso.deudor.modificado=1;});},
+              sms: function (n){_.caso.telefonos[i].modificado=0;_.caso.telefonos[i].modificando=1;$http.post('../php/enviar-sms.php',{numero:n,comentario:c}).then(function(){_.caso.telefonos[i].modificando=0;_.caso.telefonos[i].modificado=1;})},
+              ivr: function (n){_.caso.telefonos[i].modificado=0;_.caso.telefonos[i].modificando=1;$http.post('../php/enviar-ivr.php',{numero:n,comentario:c}).then(function(){_.caso.telefonos[i].modificando=0;_.caso.telefonos[i].modificado=1;})}
+              };
     socket.on('abrir-gestion',function(){_.quit=false;});
-    socket.on('cerrar-gestion',function(){_.quit=true;_.obtener.productos();});
+    socket.on('cerrar-gestion',function(){_.quit=true;_.obtener.caso();});
+    socket.on('campania',function(){_.quit=true;_.obtener.caso();});
     socket.on('gestionado',function(){_.refresh=1;_.obtener.historia();});
     socket.on('telefonos',function(){_.obtener.telefonos();});
 });
@@ -668,6 +676,7 @@ if(quit==false)
   return false
 };
 
+function cerrar(){quit=true;window.close()};
  document.addEventListener('dragover',function(event){
     event.preventDefault();
     return false;

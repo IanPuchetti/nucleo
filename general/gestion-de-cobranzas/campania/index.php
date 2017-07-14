@@ -425,7 +425,7 @@ tbody tr:hover{
             <div>Casos no gestionados: <span data-toggle="tooltip" title="No gestionados" data-placement="bottom" style="color:#a47">{{campania.no_gestionados}}</span></div>
             <div>Total de casos: <span data-toggle="tooltip" title="Total" data-placement="bottom">{{campania.total}}</span></div>
           </div>
-            <div class="butn" style="display:block;font-size:15px;cursor:pointer;text-align:center;margin-top:15px;border:1px solid #eee;border-radius:5px;padding:5px;" ng-click="log(campania.documento, campania.id, campania.nombre)">
+            <div class="butn" style="display:block;font-size:15px;cursor:pointer;text-align:center;margin-top:15px;border:1px solid #eee;border-radius:5px;padding:5px;" ng-click="log(campania.documento, campania.id_campania, campania.nombre)">
               Loguearse a la campaña
             </div>
           </div>

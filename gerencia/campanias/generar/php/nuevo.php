@@ -13,7 +13,7 @@ $result = $mysqli->query("INSERT INTO campanias VALUES(NULL, '$nombre', '$fecha'
 $id= $mysqli->insert_id;
 foreach($id_casos as $id_caso){
 
-$result = $mysqli->query("INSERT INTO grupos_casos VALUES('$id', '$grupo', '$id_caso', 0)");
+$result = $mysqli->query("INSERT INTO grupos_casos VALUES('$id', '$grupo', '$id_caso', 0,0)");
 }
 $mysqli->close();
 echo 'Campaña generada correctamente.';

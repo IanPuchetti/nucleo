@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-var allowedOrigins = ['http://172.17.50.82', 'http://localhost'];
+var allowedOrigins = ['http://172.17.50.82', 'http://localhost', 'http://127.0.0.1'];
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);
