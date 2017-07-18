@@ -673,7 +673,7 @@ angular
                historia:function(){$http.post('../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
                productos:function(){$http.post('../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;});},
                propuestas:function(){$http.post('../php/propuestas.php',{documento:_.d}).then(function (res){_.caso.propuestas=res.data;});},
-               caso:function(){$http.post('../php/campania.php',{id_campania:_.campania.id}).then(function(res){_.d=res.data[0].deudor;_.refrescar();})}
+               caso:function(){$http.post('../php/campania.php',{id_campania:_.campania.id}).then(function(res){if(res.data[0].deudor){_.d=res.data[0].deudor;$timeout(function(){_.refrescar();});}else{cerrar()}})}
              };
     _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.obtener.propuestas();_.tooltip();_.gestionando(d);};
     _.agregar={telefono:function(){if(_.nuevo.telefono.numero.length<6){_.nuevo.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.nuevo.telefono['documento']=_.d;_.nuevo.telefono.numero=sacar011(_.nuevo.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../php/agregar-telefono.php',_.nuevo.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
