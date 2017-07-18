@@ -426,7 +426,7 @@ table{font-size:12px;}
 <div class="header">
   <div style="position:absolute;width:1000px;">
   <span class="dropdown boton">
-    Inicio
+    <a href="/">Inicio</a>
   </span>
   <span class="dropdown boton">
     <span class="dropdown-toggle" data-toggle="dropdown">Campañas <span class="trgl">&#x25BE;</span></span>
@@ -440,7 +440,6 @@ table{font-size:12px;}
     <span class="dropdown-toggle" data-toggle="dropdown">Panel <span class="trgl">&#x25BE;</span></span>
     <ul class="dropdown-menu no-top">
       <li><a href="/gerencia/panel/gestiones">Gestiones</a></li>
-      <li><a href="/gerencia/panel/estadisticas">Estadisticas</a></li>
     </ul>
   </span>
   <span class="dropdown boton">
@@ -513,10 +512,7 @@ table{font-size:12px;}
               <li class="dropdown-submenu">
                 <a tabindex="-1" href="#">ABMS</a>
                 <ul class="dropdown-menu " style="margin-left:-318px;">
-                  <li><a tabindex="-1" href="/gerencia/administracion/operadores" class="ventana">Operadores</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/bancos" class="ventana">Bancos</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/liquidadores" class="ventana">Liquidadores</a></li>
-
+                  <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios" class="ventana">Operadores</a></li>
                 </ul>
               </li>
             </ul>
@@ -624,7 +620,7 @@ table{font-size:12px;}
   									 res=JSON.parse(res);
   									 for (var i in res){
   									 seccion=res[i].id;
-									 $("#accordion").append('<div  class="panel panel-default"><div class="panel-heading titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse'+res[i].id+'" style="cursor:pointer;"><h4 class="panel-title" style="text-align:left;">'+res[i].nombre+'</h4></div><div id="collapse'+res[i].id+'" class="panel-collapse collapse"><div class="panel-body"><table class="table table-condensed" style="font-size:13px;"><thead><th>Usuario</th></thead><tbody id="grupo'+res[i].id+'" ></tbody></table></div></div></div>');
+									 $("#accordion").append('<div  class="panel panel-default"><div class="panel-heading titulo" data-toggle="collapse" data-parent="#accordion" href="#collapse'+res[i].id+'" style="cursor:pointer;"><h4 class="panel-title" style="text-align:left;">'+res[i].nombre+'</h4></div><div id="collapse'+res[i].id+'" class="panel-collapse collapse"><div class="panel-body" id="body'+res[i].id+'"><table class="table table-condensed" style="font-size:12px;width:50%;float:left;"><tbody id="grupo'+res[i].id+'" ></tbody></table></div></div></div>');
 									traerinfo(seccion, documentos);
 									}
 									}
@@ -641,8 +637,7 @@ table{font-size:12px;}
 																	for(var e in response){
 																	$("#grupo"+numero).append('<tr id="user'+numero+'"><td>'+response[e].user+'</td><td style="color:red;cursor:pointer;" id="eliminar_usuario'+numero+'" onclick="eliminar_usuario(this, '+response[e].id_usuario+')">Eliminar</td></tr>');
 																	}
-                                  $("#grupo"+numero).append('<tr><td style="text-align:center;"><select id="usuarios_'+numero+'" class="usuarios btn btn-default"></select><button class="btn btn-danger" id="agregar_'+numero+'" onclick="agregar_grupo(this)">Agregar</button></td></tr>');
-                                  $("#grupo"+numero).append('<tr><td style="text-align:center;"><button class="btn btn-danger" id="eliminar_'+numero+'" onclick="eliminar_grupo(this)">Eliminar grupo</button></td></tr>');
+                                  $("#body"+numero).append('<div style="float:right;margin-top:-20px;width:49%;"><div style="margin:20px;">Agregar operador: <select id="usuarios_'+numero+'"  style="border:0px;"></select><span class="plus" id="agregar_'+numero+'" onclick="agregar_grupo(this)" style="font-size:18px;">+</span></div><div style="text-align:center;"><span class="butn" id="eliminar_'+numero+'" onclick="eliminar_grupo(this)">Eliminar grupo</button></div></div>');
                                   $.ajax({
           url:'php/usuarios.php',
           type:'post',

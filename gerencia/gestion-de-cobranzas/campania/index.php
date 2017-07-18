@@ -453,9 +453,6 @@ tbody tr:hover{
                 <a tabindex="-1" href="#">ABMS</a>
                 <ul class="dropdown-menu " style="margin-left:-318px;">
                   <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios" class="ventana">Operadores</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/bancos" class="ventana">Bancos</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/liquidadores" class="ventana">Liquidadores</a></li>
-
                 </ul>
               </li>
             </ul>

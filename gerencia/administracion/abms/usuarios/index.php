@@ -26,9 +26,6 @@ header("Location: /");
 margin-top:-40px;
 }
 
-body{
-}
-
 .noselect{
   -webkit-touch-callout: none; 
     -webkit-user-select: none; 
@@ -199,7 +196,7 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow-x:hidden;overflow-y:auto;
+  overflow: hidden;
 }
 
 #reload:hover{
@@ -378,8 +375,19 @@ select:hover, select:focus, select:active, select:checked{
   color:#abdf47;
 }
 
-.ocultar{
-  width:350px;
+#cargados{
+height:250px !important;
+overflow-y:auto;
+text-align: center !important;
+}
+
+#cargados div{
+  width:580px;
+  border:1px solid #ddd;
+  padding:5px;
+  margin:auto;
+  margin-top:5px;
+  border-radius:5px;
 }
 
 </style>
@@ -494,9 +502,6 @@ function json_tabla (id_tabla, objeto){
                 <a tabindex="-1" href="#">ABMS</a>
                 <ul class="dropdown-menu " style="margin-left:-318px;">
                   <li><a tabindex="-1" href="/gerencia/administracion/abms/usuarios" class="ventana">Operadores</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/bancos" class="ventana">Bancos</a></li>
-                  <li><a tabindex="-1" href="/gerencia/administracion/abms/liquidadores" class="ventana">Liquidadores</a></li>
-
                 </ul>
               </li>
             </ul>
@@ -506,29 +511,64 @@ function json_tabla (id_tabla, objeto){
   </span>
 </div>
 </div>
-    <div class="container">
-          <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#actuales').css('display','block');">Actuales</a></li>
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#nuevo').css('display','block');">Nuevo</a></li>
-
-      </ul>
-			<div class="ocultar" id="actuales">
-			<table class="table table-condensed">
-            <thead>
-              <tr>
-                <th>Usuario</th>
-                <th>Contraseña</th>
-                <th>Puesto</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="cargados">
+    <div>
+          <div style="border-bottom:1px solid #ddd;padding:10px;">
+          <div class="butn" style="margin:auto;width:570px;margin-bottom:5px;margin-top:5px;padding:2px;"><img src="/.img/icon-username.png" style="width:12px;margin-right:10px;margin-left:5px"><input placeholder="Usuario..." style="width:150px" id="usuario_nuevo"><img src="/.img/icon-password.png" style="width:12px;margin-left:10px;margin-right:10px;"><input placeholder="Contraseña..." type="password" id="password_nuevo" style="width:150px"><select id="puesto_nuevo"  style="width:150px">
+                  <option>Administración</option>
+                  <option>Gerencia</option>
+                  <option>Supervision</option>                  
+                  <option>General</option>                  
+                </select>
+<span class="color-gr" style="margin-left:10px;" id="boton-nuevo">+</span>
+              </div>
+      </div>
+			<div class="ocultar" id="actuales">            
+            <div id="cargados">
               
-            </tbody>
-          </table>
+            </div>
 			</div>
-			<script>
+      <script>
+            $("#boton-nuevo").click(function(){
+            if($("#puesto_nuevo").val()=="Administración"){
+            var datos={
+                  user:$("#usuario_nuevo").val(),
+                  pass:$("#password_nuevo").val(),
+                  puesto:'adm'
+                  };
+            }else{
+              if($("#puesto_nuevo").val()=="Gerencia"){
+            var datos={
+                  user:$("#usuario_nuevo").val(),
+                  pass:$("#password_nuevo").val(),
+                  puesto:'ger'
+                  };
+            }else{
+            if($("#puesto_nuevo").val()=="Supervision"){
+            var datos={
+                  user:$("#usuario_nuevo").val(),
+                  pass:$("#password_nuevo").val(),
+                  puesto:'sup'
+                  };
+            }else{
+                var datos={
+                    user:$("#usuario_nuevo").val(),
+                    pass:$("#password_nuevo").val(),
+                    puesto:'gen'
+                    };
+              }
+              }
+            }
+            $.ajax({
+            url:'php/nuevo.php',
+            type:'post',
+            data:datos,
+            success: function (res){
+                alert(res);
+                traerusuarios();
+            }
+            })
+            }); 
+
 			function traerusuarios() {
 			$("#cargados").html('');
 			$.ajax({
@@ -539,16 +579,16 @@ function json_tabla (id_tabla, objeto){
 								    for (var i in res)
 								    	{
 								    	if(res[i].puesto=='adm'){
-								    		$("#cargados").append('<tr><td><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'" class="form-control"></td><td><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'" class="form-control"></td><td><select class="btn btn-default" id="puesto-'+res[i].id+'"><option selected>Administración</option><option>Gerencia</option><option>Supervision</option><option>General</option></select></td><td><button class="btn btn-success" id="modif-'+res[i].id+'" onclick="modificar(this)">Modificar</button></td><td><button class="btn btn-danger" onclick="eliminar(this)" id="elim-'+res[i].id+'">Eliminar</button></td></tr>');
+								    		$("#cargados").append('<div><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'"><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'"><select id="puesto-'+res[i].id+'"><option selected>Administración</option><option>Gerencia</option><option>Supervision</option><option>General</option></select><span id="modif-'+res[i].id+'" onclick="modificar(this)"><img src="/.img/write.png" style="width:15px;"></span><span onclick="eliminar(this)" id="elim-'+res[i].id+'"><img src="/.img/borrar.png" style="width:15px;"></span></div>');
 								    		}
 								    	else{
 								    		if(res[i].puesto=='ger'){
-								    			$("#cargados").append('<tr><td><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'" class="form-control"></td><td><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'" class="form-control"></td><td><select class="btn btn-default" id="puesto-'+res[i].id+'"><option>Administración</option><option selected>Gerencia</option><option>Supervision</option><option>General</option></select></td><td><button class="btn btn-success" id="modif-'+res[i].id+'" onclick="modificar(this)">Modificar</button></td><td><button class="btn btn-danger" onclick="eliminar(this)" id="elim-'+res[i].id+'">Eliminar</button></td></tr>');
+								    			$("#cargados").append('<div><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'"><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'"><select id="puesto-'+res[i].id+'"><option>Administración</option><option selected>Gerencia</option><option>Supervision</option><option>General</option></select><span id="modif-'+res[i].id+'" onclick="modificar(this)"><img src="/.img/write.png" style="width:15px;"></span><span onclick="eliminar(this)" id="elim-'+res[i].id+'"><img src="/.img/borrar.png" style="width:15px;"></span></div>');
 								    		}else{
 								    		if(res[i].puesto=='sup'){
-								    			$("#cargados").append('<tr><td><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'" class="form-control"></td><td><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'" class="form-control"></td><td><select class="btn btn-default" id="puesto-'+res[i].id+'"><option>Administración</option><option>Gerencia</option><option selected>Supervision</option><option>General</option></select></td><td><button class="btn btn-success" id="modif-'+res[i].id+'" onclick="modificar(this)">Modificar</button></td><td><button class="btn btn-danger" onclick="eliminar(this)" id="elim-'+res[i].id+'">Eliminar</button></td></tr>');
+								    			$("#cargados").append('<div><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'"><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'"><select id="puesto-'+res[i].id+'"><option>Administración</option><option>Gerencia</option><option selected>Supervision</option><option>General</option></select><span id="modif-'+res[i].id+'" onclick="modificar(this)"><img src="/.img/write.png" style="width:15px;"></span><span onclick="eliminar(this)" id="elim-'+res[i].id+'"><img src="/.img/borrar.png" style="width:15px;"></span></div>');
 								    		}else{
-								    			$("#cargados").append('<tr><td><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'" class="form-control"></td><td><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'" class="form-control"></td><td><select class="btn btn-default" id="puesto-'+res[i].id+'"><option>Administración</option><option>Gerencia</option><option>Supervision</option><option selected>General</option></select></td><td><button class="btn btn-success" id="modif-'+res[i].id+'" onclick="modificar(this)">Modificar</button></td><td><button class="btn btn-danger" onclick="eliminar(this)" id="elim-'+res[i].id+'">Eliminar</button></td></tr>');
+								    			$("#cargados").append('<div><input type="text" id="usuario-'+res[i].id+'" value="'+res[i].user+'"><input type="password" id="password-'+res[i].id+'" value="'+res[i].pass+'"><select id="puesto-'+res[i].id+'"><option>Administración</option><option>Gerencia</option><option>Supervision</option><option selected>General</option></select><span id="modif-'+res[i].id+'" onclick="modificar(this)"><img src="/.img/write.png" style="width:15px;"></span><span onclick="eliminar(this)" id="elim-'+res[i].id+'"><img src="/.img/borrar.png" style="width:15px;"></span></div>');
 								    		}
 								    		}
 								    		}
@@ -623,67 +663,7 @@ function json_tabla (id_tabla, objeto){
 			
 			</script>
 			
-	    	<div id="nuevo" class="ocultar" style="display:none;">
-	    	<div class="panel panel-danger">
-	<div class="panel-heading"><h3 class="panel-title">Nuevo</h3></div>
-	<div class="panel-body">
-	<div class="form-group">
-                <label for="usuario_nuevo">Usuario</label>
-                <input type="text" class="form-control" id="usuario_nuevo" placeholder="Usuario...">
-                <label for="password_nuevo">Contraseña</label>
-                <input type="password" class="form-control" id="password_nuevo" placeholder="Contraseña...">
-                <label for="puesto_nuevo">Puesto</label><br>
-                <select class="btn btn-default" id="puesto_nuevo">
-                	<option>Administración</option>
-                	<option>Gerencia</option>
-                	<option>Supervision</option>                	
-                	<option>General</option>                	
-                </select>
-   				</div><br>
-   				<div style="text-align:center;">
-	    		<button class="btn btn-danger" id="boton-nuevo">Registrar</button>
-	    		<script>
-	    			$("#boton-nuevo").click(function(){
-	    			if($("#puesto_nuevo").val()=="Administración"){
-	    			var datos={
-	    						user:$("#usuario_nuevo").val(),
-	    						pass:$("#password_nuevo").val(),
-	    						puesto:'adm'
-	    					  };
-	    			}else{
-	    				if($("#puesto_nuevo").val()=="Gerencia"){
-	    			var datos={
-	    						user:$("#usuario_nuevo").val(),
-	    						pass:$("#password_nuevo").val(),
-	    						puesto:'ger'
-	    					  };
-	    			}else{
-	    			if($("#puesto_nuevo").val()=="Supervision"){
-	    			var datos={
-	    						user:$("#usuario_nuevo").val(),
-	    						pass:$("#password_nuevo").val(),
-	    						puesto:'sup'
-	    					  };
-	    			}else{
-	    					var datos={
-	    							user:$("#usuario_nuevo").val(),
-	    							pass:$("#password_nuevo").val(),
-	    							puesto:'gen'
-	    						  };
-	    				}
-	    				}
-	    			}
-	    			$.ajax({
-	    			url:'php/nuevo.php',
-	    			type:'post',
-	    			data:datos,
-	    			success: function (res){
-	    					alert(res);
-	    					traerusuarios();
-	    			}
-	    			})
-	    			});
-	    		</script>
+	    		
 	    		</div>
 	    		
 			</div>
