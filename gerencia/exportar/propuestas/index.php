@@ -801,104 +801,6 @@ label:hover:before {
         </span>
   </div>
 
-  <!--
-
-  <div class="navbar-header pull-left" id="myNavbar" style="margin-top:10px;margin-left:-20px;">
-
-    <span class=" input-group" style="width:100%;">
-            <span class="btn input-group-addon" style="border-radius:0px;color:white;background:#4574a9;border-color:#4574a9;height:24px;font-size:11px;" ng-click="buscar.complejo();">Buscar</span>
-
-      <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">Fecha Propuesta &#x25BE;</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px">
-          <li>
-            <span class="form-control btn btn-default" style="border-radius:0px;height:24px;font-size:11px;margin-top:-5px;">Desde</span>
-            <input type="date" class="form-control" ng-model="complejo.fecha_propuesta1">
-            <span class="form-control btn btn-default"  style="border-radius:0px;height:24px;font-size:11px;">Hasta</span>
-            <input type="date" class="form-control" style="border-radius:0px;" ng-model="complejo.fecha_propuesta2">
-          </li>
-        </ul>
-      </span>
-      <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">Documento &#x25BE;</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px">
-          <li>
-            <span class="form-control btn btn-default" style="border-radius:0px;height:24px;font-size:11px;margin-top:-5px;">Entre</span>
-            <input type="number" class="form-control" ng-model="complejo.documento1" ng-keypress="enter($event.keyCode)">
-            <span class="form-control btn btn-default"  style="border-radius:0px;height:24px;font-size:11px;">y</span>
-            <input type="number" class="form-control" style="border-radius:0px;" ng-model="complejo.documento2" ng-keypress="enter($event.keyCode)">
-          </li>
-        </ul>
-      </span>
-      <span class="btn input-group-addon" style="border-radius:0px;height:24px;font-size:11px;">Responsable</span>
-      <select style="font-size:9px;" class="form-control" placeholder="Nombre del archivo" style="border-radius:0px;border-color:#aaa;height:25px;font-size:10px" ng-model="complejo.responsable" ng-options="responsable as responsable.user for responsable in usuarios"><option></option></select>
-      <span class="btn input-group-addon" style="border-radius:0px;height:24px;font-size:11px;">Banco</span>
-      <select class="form-control" placeholder="Nombre del archivo" style="border-radius:0px;border-color:#aaa;height:25px;font-size:10px" ng-model="complejo.banco" ng-options="banco as banco.banco for banco in bancos"><option></option></select>
-      <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">Monto de acuerdo &#x25BE;</span>
-        <ul class="dropdown-menu dropdown-menu-left dont-go" style="border-radius:0px">
-          <li>
-            <span class="form-control btn btn-default" style="border-radius:0px;height:24px;font-size:11px;margin-top:-5px;">Entre</span>
-            <input type="number" class="form-control" ng-model="complejo.monto_acuerdo1">
-            <span class="form-control btn btn-default"  style="border-radius:0px;height:24px;font-size:11px;">y</span>
-            <input type="number" class="form-control" style="border-radius:0px;" ng-model="complejo.monto_acuerdo2">
-          </li>
-        </ul>
-      </span>
-      <span class="btn input-group-addon" style="border-radius:0px;color:black;background:#fff;border-color:#aaa;height:24px;font-size:11px;" ng-click="complejo={};complejo.reportes='todos';complejo.movimiento='todos';complejo.contactado='todos';complejo.aprobados='todos';complejo.cuota_cero='todos'">Limpiar</span>
-    </span>  
-  </div>
-
-  <div class="navbar-header pull-left input-group" id="myNavbar" style="margin-top:0px;margin-left:-20px;">
-    <input type="text" ng-model="complejo.apellido" placeholder="Apellido..." ng-keypress="enter($event.keyCode)" class="form-control" style="border-color:#aaa;height:25px;font-size:10px;border-right:0px;">
-    <span class="input-group-addon form-control btn" ng-show="complejo.cuota_cero=='todos'" ng-init="complejo.cuota_cero='todos'" ng-click="complejo.cuota_cero='si'">Propuestas y cuotas cero</span>
-    <span class="input-group-addon form-control btn" ng-show="complejo.cuota_cero=='si'" ng-click="complejo.cuota_cero='no'">Cuotas cero</span>
-    <span class="input-group-addon form-control btn" ng-show="complejo.cuota_cero=='no'" ng-click="complejo.cuota_cero='todos'">Propuestas</span>
-    <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">Fecha de pago &#x25BE;</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px">
-          <li>
-            <span class="form-control btn btn-default" style="border-radius:0px;height:24px;font-size:11px;margin-top:-5px;">Desde</span>
-            <input type="date" class="form-control" ng-model="complejo.fecha_pago1">
-            <span class="form-control btn btn-default"  style="border-radius:0px;height:24px;font-size:11px;">Hasta</span>
-            <input type="date" class="form-control" style="border-radius:0px;" ng-model="complejo.fecha_pago2">
-          </li>
-        </ul>
-      </span>
-      <span class="input-group-addon dropdown" style="border-radius:0px;height:24px;font-size:11px;">
-        <span class="dropdown-toggle" data-toggle="dropdown" style="font-size:11px;width:100%;height:100%;">Monto primer pago &#x25BE;</span>
-        <ul class="dropdown-menu dropdown-menu-left dont-go" style="border-radius:0px">
-          <li>
-            <span class="form-control btn btn-default" style="border-radius:0px;height:24px;font-size:11px;margin-top:-5px;">Entre</span>
-            <input type="number" class="form-control" ng-model="complejo.monto_primer_pago1">
-            <span class="form-control btn btn-default"  style="border-radius:0px;height:24px;font-size:11px;">y</span>
-            <input type="number" class="form-control" style="border-radius:0px;" ng-model="complejo.monto_primer_pago2">
-          </li>
-        </ul>
-      </span>
-      <input type="number" ng-model="complejo.cuotas" placeholder="Cuotas..." ng-keypress="enter($event.keyCode)" class="form-control" style="border-color:#aaa;height:25px;font-size:10px;border-right:0px;">
-      <input type="number" ng-model="complejo.asignacion" placeholder="Asignación..." ng-keypress="enter($event.keyCode)" class="form-control" style="border-color:#aaa;height:25px;font-size:10px;border-right:0px;">
-      <span class="input-group-addon btn" ng-show="complejo.aprobados=='todos'" ng-init="complejo.aprobados='todos'" ng-click="complejo.aprobados='si'">Aprobados y No aprobados</span>
-      <span class="input-group-addon btn" ng-show="complejo.aprobados=='si'" ng-click="complejo.aprobados='no'">Aprobados </span>
-      <span class="input-group-addon btn" ng-show="complejo.aprobados=='no'" ng-click="complejo.aprobados='todos'">No aprobados</span>
-  </div>
-</nav>
-<div style="height:80%;overflow-y:auto;margin-top:-20px;" class="tablon">
-<table ng-init="limite=20;orden='documento';" height="100px">
-  <thead>
-    <tr ng-repeat="campo in tabla| limitTo: 1">
-      <th ng-repeat="(key, value) in campo" ng-click="ordenar(key)" id="{{key}}" ng-if="key!='id'">{{::key}}</th>
-    </tr>
-  </thead>
-  <tbody ng-if="volver==1" infinite-scroll="bajar()" infinite-scroll-container='".tablon"' infinite-scroll-distance="1" infinite-scroll-disabled="!tabla || limite>=tabla.length">
-    <tr ng-repeat="(i, fila) in ::tabla  | orderBy: orden" ng-if="i<limite" ng-dblclick="aprobar(fila.id, fila.aprobado, i)">
-      <td ng-repeat="(i, valor) in fila" ng-if="fila[i]!=fila['id']">{{valor}}</td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-    <div class="input-group" style="margin-bottom:-40px;"><span class="input-group-addon">Cantidad de resultados</span><span class="form-control" style="font-size:10px;">{{tabla.length}}</span><span class="input-group-addon" >Total de acuerdos</span><span  class="form-control" style="font-size:10px;">${{total_acuerdos | number: 2}}</span><span class="input-group-addon" >Total de anticipos:</span><span  class="form-control" style="font-size:10px;">${{total_anticipos | number: 2}}</span></div>
-  -->
   <script type="text/javascript">
     function dateTransform(a,b){if(a===Array){a=a.split('-');a=a[2]+'/'+a[1]+'/'+a[0];}else{if(a[0][b]){for(var i in a){a[i][b]=a[i][b].split('-');a[i][b]=a[i][b][2]+'/'+a[i][b][1]+'/'+a[i][b][0];}}}return a;}
 var produtos, producto;var counted;
@@ -992,9 +894,10 @@ angular.module('exporte',['infinite-scroll',"chart.js"])
   };
   _.descargar = function (){
     for (var i in _.tabla){
-      delete _.tabla[i]['$$hashKey']
+      delete _.tabla[i]['$$hashKey'];
+      delete _.tabla[i]['id'];
     }
-    exportar(_.tabla, _.nombre_archivo);
+    exportar(_.tabla, 'propuestas');
     $http.post('php/registrar.php', {tabla: _.tabla , hoy : hoy}).then(function (res){
           _.volver=0;
           _.tabla=[];

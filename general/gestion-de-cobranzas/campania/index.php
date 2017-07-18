@@ -421,9 +421,10 @@ tbody tr:hover{
         <div style="position:absolute;left:5px;font-size:12px;margin-top:-10px;" ng-show="campania">
           <div class="color-gr" style="font-size:17px;margin-bottom:15px;"> <img src="/.img/campaign.png" style="width:30px;margin-top:-3px;">{{campania.nombre}}</div>
           <div style="border:1px solid #ddd;border-radius:5px;width:180px;padding:15px;">
-            <div>Casos gestionados: <span data-toggle="tooltip" title="Gestionados" data-placement="bottom" style="color:#4a7">{{campania.gestionados}}</span></div>
-            <div>Casos no gestionados: <span data-toggle="tooltip" title="No gestionados" data-placement="bottom" style="color:#a47">{{campania.no_gestionados}}</span></div>
             <div>Total de casos: <span data-toggle="tooltip" title="Total" data-placement="bottom">{{campania.total}}</span></div>
+            <div style="margin-top:5px;">Casos gestionados: <span data-toggle="tooltip" title="Gestionados" data-placement="bottom" style="color:#4a7">{{campania.gestionados}}</span></div>
+            <div>Casos no gestionados: <span data-toggle="tooltip" title="No gestionados" data-placement="bottom" style="color:#a47">{{campania.no_gestionados}}</span></div>
+            <div style="margin-top:5px;">Fin de campaña: <span data-toggle="tooltip" title="Finalización" data-placement="bottom" style="color:#a47">{{campania.fecha_finalizacion}}</span></div>
           </div>
             <div class="butn" style="display:block;font-size:15px;cursor:pointer;text-align:center;margin-top:15px;border:1px solid #eee;border-radius:5px;padding:5px;" ng-click="log(campania.documento, campania.id_campania, campania.nombre)">
               Loguearse a la campaña

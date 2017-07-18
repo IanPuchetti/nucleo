@@ -548,7 +548,7 @@ label:hover:before {
   </span>
 </div>
 </div>
-  <div class="header buscador" style="height:25px;width:900px;margin-left:-2px;border-bottom:0px;">
+  <div class="header buscador" style="height:25px;width:700px;margin-left:-2px;border-bottom:0px;">
   <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" >
   <span data-toggle="tooltip" title="Titular" data-placement="bottom"><img src="/.img/deudor.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">

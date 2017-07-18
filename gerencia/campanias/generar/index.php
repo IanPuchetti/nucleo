@@ -787,7 +787,7 @@ label:hover:before {
   </table>
 </div>
 </div>
-<div style="position:fixed;bottom:5px;left:5px;z-index:2;">
+<div style="position:fixed;bottom:5px;left:5px;z-index:2;font-size:12px">
       <span class="dropup">
           <span class="button dropdown-toggle" data-toggle="dropdown" style="margin-right:5px;">
           <span><img src="/.img/campos.png" style="width:17px;height:20px;margin-left:2px;margin-top:-3px" data-toggle="tooltip" title="Campos" data-placement="top"></span>
@@ -841,10 +841,13 @@ label:hover:before {
         </li>
       </ul>
     </span>
-       
+       <span class="button" ng-click="descargar()">
+          <span style="padding:2px 5px 2px 5px;"><img src="/.img/xlsx.png" style="width:11px;height:13px;margin-top:-2px;"></span>
+          <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;">Exportar</span>
+        </span> 
       <span class="button">
           <span style="padding:8px;"  onclick="$('#xlsx').click()">Importar XLSX</span>
-          <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"  onclick="$('#xlsx').click()"><img src="/.img/xlsx.png" style="width:13px;height:15px;"></span>
+          <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"  onclick="$('#xlsx').click()"><img src="/.img/xlsx.png" style="width:11px;height:13px;margin-top:-2px;"></span>
           <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"  ng-click="leer_excel()">&#x25B4;</span>
           <input type="file" style="display:none" id="xlsx" ng-model="excel" ng-change="leer_excel()">
         </span> 
@@ -1003,7 +1006,7 @@ angular.module('exporte',['infinite-scroll'])
     for (var i in _.tabla){
       delete _.tabla[i]['$$hashKey']
     }
-    exportar(_.tabla, _.nombre_archivo)
+    exportar(_.tabla, 'campaña')
   }
   _.ordenar = function (a){
     _.volver=0;_.limite=20;

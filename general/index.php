@@ -302,8 +302,8 @@ select{
 <div style="width:100%;height:100%;top:40px;">
   <div style="border-right:0px;background: -webkit-linear-gradient(#07963d, #89bd25);width:120px;float:left;height:100%;">
     <div  class="circle" style="margin:auto;margin-top:5px;"><span data-toggle="tooltip" title="Gestor" data-placement="bottom"><img src="/.img/gestor.png" style="width:35px;margin-top:12.5px;margin-left:-7px;"></span></div>
-    <div class="boton-menu" ng-click="show='estadisticas'" ng-init="show='estadisticas'">Estadisticas</div>
-    <div class="boton-menu" ng-click="show='agendas'">Agendas <span ng-if="agenda.length!=0" style="color:white;">({{agenda.length}})</span></div>
+    <div class="boton-menu" ng-click="show='agendas'" ng-init="show='agendas'">Agendas <span ng-if="agenda.length!=0" style="color:white;">({{agenda.length}})</span></div>
+    <div class="boton-menu" ng-click="show='estadisticas'">Estadisticas</div>
    <!--<div class="boton-menu" ng-click="show='campanias'">Campañas</div>
     <div class="boton-menu" ng-click="show='casos'">Mis casos</div>-->
     <div class="boton-menu"><a href="#">Ayuda</a></div>
