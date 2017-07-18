@@ -15,7 +15,7 @@ while($a = $result->fetch_array()){
 		}
 $result2= $mysqli->query("UPDATE gestiones SET sub_estado = '$sub_estado' WHERE id = '$id_gestion'");
 $result3= $mysqli->query("UPDATE productos SET sub_estado = '$sub_estado', agenda = '$agenda' WHERE documento = '$documento'");
-$result5= $mysqli->query("UPDATE grupos_casos SET gestionado = '$id_gestion' WHERE deudor='$documento' AND id_campania = '$id_campania'");
+$result5= $mysqli->query("UPDATE grupos_casos SET gestionado = '$id_gestion', gestionando='1' WHERE deudor='$documento' AND id_campania = '$id_campania'");
 if($agenda){
 $result = $mysqli->query("INSERT INTO agendas VALUES(NULL,'$documento', '$operador', '$agenda', 0)");
 }
