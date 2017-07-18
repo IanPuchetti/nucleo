@@ -638,7 +638,7 @@ angular
                            _.registrar.sub_estado=_.caso.sub_estado;_.refrescar();});
                          };
     _.abandonar_gestion=function(){
-                           $http.post('../../php/abandonar-gestion.php',
+                           $http.post('../../php/abandonar.php',
                             {
                              agenda:_.registrar.agenda,
                              documento:$_GET['d'],

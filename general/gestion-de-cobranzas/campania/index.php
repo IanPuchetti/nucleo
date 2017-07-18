@@ -467,16 +467,16 @@ angular
     _.listado=[];
     _.caso={};
     _.limite=5;
-    _.asignar=function(c){_.campania=c;};
+    _.asignar=function(c){_.campania=c;_.last=c;};
     _.traer={campanias: function (){
       $scope.campanias=[];
       $http.post('php/campanias.php', {id: id_usuario}).then(function(res){
-      $scope.campanias=res.data;
+      $scope.campanias=res.data;_.asignar(_.last);
       });
     }};
 
     _.traer.campanias();
-    socket.on('campania', function(){_.traer.campanias();});
+    socket.on('campania', function(){$timeout(function(){_.traer.campanias();}); });
     _.enter =function(e){if(e.which === 13){_.buscar();}};
     _.buscar=function(){_.refresh=1;_.listado=[];$http.post('php/buscar-rapido.php', _.busqueda).then(function(res){_.limite=5;_.listado=res.data;$timeout(function(){_.refresh=0;_.deudor=0;});});}
     _.bajar=function(){_.limite=_.limite+1;};

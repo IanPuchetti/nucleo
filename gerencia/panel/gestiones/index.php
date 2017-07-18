@@ -612,7 +612,7 @@ label:hover:before {
     _.elegir=function (d){$("tr").css('background','white');
                           window.open('/gerencia/gestion-de-cobranzas/manual/datos/?d='+d, d,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
                           };
-    socket.on('panel',function(data){if(!_.gestiones[data.usuario]){_.gestiones[data.usuario]={}};_.gestiones[data.usuario][data.documento]=data;});
+    socket.on('panel',function(data){_.gestiones[data.usuario]={};_.gestiones[data.usuario][data.documento]=data;});
 });
 
 
