@@ -657,7 +657,7 @@ angular
     }
     }
     $timeout(_.avanzar, 1000);
-  };
+    };
     _.avanzar();
 });
 var quit=false;

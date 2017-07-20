@@ -555,7 +555,7 @@ table.with-ellipsis td {
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Gestionar</span></span>
     <ul class="dropdown-menu noshadow" style="border-radius:5px;padding:10px;">
       <li >Gestionar por su deuda con</li>
-      <li style="margin-top:10px;" ng-repeat="banco in caso.productos  | groupBy: 'banco'"  ng-click="gestionar(banco.banco)"><span class="button noselect"><span><img src="/.img/bank.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
+      <li style="margin-top:10px;" ng-repeat="banco in caso.productos  | groupBy: 'banco'"  ng-click="gestionar(banco[0].banco)"><span class="button noselect"><span><img src="/.img/bank.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{banco[0].dbanco}}</span></span></li>
     </ul>
   </span>

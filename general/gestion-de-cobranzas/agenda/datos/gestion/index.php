@@ -558,7 +558,7 @@ angular
     ioSocket: io.connect('http://'+document.URL.split("/")[2]+':3002')
   });
   })
-  .controller("manual", function ($scope, $http, $timeout, socket) {
+  .controller("manual", function ($scope, $http, $timeout, socket, time) {
     var _ = $scope;
     socket.emit('abrir-gestion');
     _.d=$_GET['d'];
@@ -583,7 +583,7 @@ angular
                historia:function(){_.refresh=1;$http.post('../../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
                productos:function(){$http.post('../../php/carpeta-producto.php',{documento:_.d}).then(function (res){_.caso.productos=res.data;_.caso.sub_estado=_.caso.productos[0].sub_estado;});},
                bancos: function(){$http.post('../../php/bancos.php').then(function(res){_.bancos=res.data;});},
-               usuarios: function() {$http.post('../../php/usuarios.php').then(function(res){_.usuarios=res.data;});},
+               usuarios: function() {$http.post('../../php/usuarios.php').then(function(res){_.usuarios=res.data;for (var i in res.data){if(res.data[i].id == id_usuario){_.usuario=res.data[i].user; break;}}});},
                estados:  function() {$http.post('../../php/estados.php').then(function(res){_.estados=res.data;});},
                liquidadores:  function() { $http.post('../../php/liquidadores.php').then(function(res){_.liquidadores=res.data;});},
                sub_estados:  function() { $http.post('../../php/sub_estados.php').then(function(res){_.sub_estados=res.data;_.todos_sub_estados=res.data;_.pocos_sub_estados=[];for (var i in _.todos_sub_estados){if(_.todos_sub_estados[i].sub_estado=='NEGOCIACION' || _.todos_sub_estados[i].sub_estado=='INFORMO PAGO' || _.todos_sub_estados[i].sub_estado=='PROMETE PAGAR'){_.pocos_sub_estados.push(_.todos_sub_estados[i])}}});},
@@ -592,7 +592,17 @@ angular
                hora:function (){var date=new Date();var hora = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();return hora;}
 
              };
-
+    _.obtener.usuarios();_.obtener.liquidadores();
+    _.liquidar= function (){
+                        var link='';
+                        for (var i in _.liquidadores){
+                          if (_.liquidadores[i].id_banco==$_GET['b']){
+                            link = _.liquidadores[i].link;
+                          }
+                        }
+      if(link!=''){
+      liquidar($_GET['d'], $_GET['b'], link);}
+    };
     _.verificar={telefono:function(){ var a,b,c,d;
                                       for(var i in _.caso.telefonos){
                                       if(_.gestion.telefono.numero==_.caso.telefonos[i].numero){
@@ -610,12 +620,11 @@ angular
                 };
     _.refrescar=function (){_.gestion={telefono:{}, existe:true};_.obtener.telefonos();_.obtener.calificacion_telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.obtener.sub_estados();_.tooltip()};
     _.agregar={telefono:function(){if(_.gestion.telefono.numero.length<6){_.gestion.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.gestion.telefono['documento']=_.d;_.gestion.telefono.numero=sacar011(_.gestion.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../../php/agregar-telefono.php',_.gestion.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
-
+    
     _.registrar_gestion=function(){
                            $http.post('../../php/registrar-gestion.php',
                             {hora: _.obtener.hora(),
                              documento:$_GET['d'],
-                             id_agenda:$_GET['i'],
                              telefono:_.gestion.telefono.numero,
                              comentario:_.gestion.descripcion,
                              calificacion:_.gestion.calificacion,
@@ -648,7 +657,7 @@ angular
     }
     }
     $timeout(_.avanzar, 1000);
-  };
+    };
     _.avanzar();
 });
 var quit=false;
@@ -659,6 +668,10 @@ window.onbeforeunload = function (e) {
 if(quit==false)
   return false;
 };
+
+function liquidar(d, b, l){
+      window.open(l+'/?documento='+d+'&banco='+b, 'liquidacion-'+d,'height=400, width=720, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+}
 
 function cerrar (){
   quit=true;window.close()
