@@ -440,7 +440,7 @@ select{
 		        <div style="display:inline-block;width:300px;">
 
 				<div >A financiar: $  <input type="number" ng-model="a_financiar" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"></div>
-				<div >Plazo (meses): <input type="number" ng-model="plazo" ng-change="calcular_cuotas()">
+				<div >Plazo (meses): <select type="number" ng-model="plazo" ng-options="cuota as cuota.cuotas for cuota in amortizacion" ng-change="calcular_cuotas()"></select>
 				</div>
   				<div >Fecha de anticipo: <input type="date" ng-model="fecha_anticipo=fecha_actualizacion" ng-change="cambio_primer_cuota();calcular_cuotas()"></div>
   				<div >1° cuota: {{fecha_primer_cuota | date: "dd/MM/yyyy"}}</div>
