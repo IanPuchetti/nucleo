@@ -548,7 +548,7 @@ label:hover:before {
   </span>
 </div>
 </div>
-  <div class="header buscador" style="height:25px;width:700px;margin-left:-2px;border-bottom:0px;">
+  <div class="header buscador" style="height:25px;width:800px;margin-left:-2px;border-bottom:0px;">
   <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" >
   <span data-toggle="tooltip" title="Titular" data-placement="bottom"><img src="/.img/deudor.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
@@ -594,7 +594,7 @@ label:hover:before {
   </span>
   <span data-toggle="tooltip" title="Banco" data-placement="bottom" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/bank.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
-  <select ng-model="complejo.banco" ng-options="banco as banco.banco for banco in bancos" style="width:148px;border:none;"><option></option></select>
+  <select ng-model="complejo.banco" ng-options="banco as banco.banco for banco in bancos" style="width:128px;border:none;"><option></option></select>
   </span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Deuda" data-placement="bottom"><img src="/.img/productos.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
