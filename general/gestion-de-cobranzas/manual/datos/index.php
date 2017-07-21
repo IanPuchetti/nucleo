@@ -677,6 +677,11 @@ angular
     _.modificar={email:function (){_.caso.deudor.modificado=0;_.caso.deudor.modificando=1;$http.post('../php/modificar-deudor.php',_.caso.deudor).then(function(res){_.caso.deudor.modificando=0;_.caso.deudor.modificado=1;});},
                  telefono: function (n,c,i){_.caso.telefonos[i].modificado=0;_.caso.telefonos[i].modificando=1;$http.post('../php/modificar-telefono.php',{numero:n,comentario:c}).then(function(){_.caso.telefonos[i].modificando=0;_.caso.telefonos[i].modificado=1;})}
                };
+    _.enviar={
+      sms:function(t){$http.post("../php/sms.php", {documento:_.d, telefono:t}).then(function(res){alert(res.data)});},
+      email:function(){$http.post("../php/mail.php", {documento:_.d}).then(function(res){alert(res.data)});},
+      ivr:function(t){$http.post("../php/ivr.php", {documento:_.d, telefono:t}).then(function(res){alert(res.data)});}
+    };
     socket.on('abrir-gestion',function(){_.quit=false;});
     socket.on('cerrar-gestion',function(){_.quit=true;_.obtener.productos();});
     socket.on('gestionado',function(){_.refresh=1;_.obtener.historia();});

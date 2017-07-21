@@ -18,10 +18,10 @@ if($producto->banco){$mostrar=$mostrar." bancos.dbanco as 'Banco',";}
 
 $mostrar=rtrim($mostrar, ",");
 
-$consulta = "SELECT mails.documento, deudores.email as 'Email' ".$mostrar." FROM  mails INNER JOIN deudores ON deudores.documento = mails.documento INNER JOIN (select * from productos group by documento) productos ON productos.documento=mails.documento INNER JOIN bancos ON bancos.cbanco = mails.banco  LEFT OUTER JOIN estados ON productos.estado = estados.id  LEFT OUTER JOIN sub_estados ON productos.sub_estado = sub_estados.id  ";
+$consulta = "SELECT mails.documento, deudores.email as 'Email' ".$mostrar." FROM  mails INNER JOIN deudores ON deudores.documento = mails.documento INNER JOIN (select * from productos group by documento) productos ON productos.documento=mails.documento INNER JOIN bancos ON bancos.cbanco = productos.banco  LEFT OUTER JOIN estados ON productos.estado = estados.id  LEFT OUTER JOIN sub_estados ON productos.sub_estado = sub_estados.id  ";
 
 if($banco){
-$consulta = $consulta." WHERE mails.banco = '$banco' ";
+$consulta = $consulta." WHERE productos.banco = '$banco' ";
 }
 
 if($fecha1 && $fecha2){

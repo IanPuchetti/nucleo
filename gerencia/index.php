@@ -247,7 +247,7 @@ select{
   <body oncontextmenu="return false;" ng-app="inicio" ng-controller="inicio">
 <div class="header">
   <div style="position:absolute;width:1000px;">
-  <span class="dropdown boton">
+  <span class="dropdown boton logout">
     <a href="/">Inicio</a>
   </span>
   <span class="dropdown boton">

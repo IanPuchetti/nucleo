@@ -434,9 +434,7 @@ select{
 </div>
 	</div>
     </div>
-    <div style="position:fixed;left:20px;width:665px;;top:0px;padding:25px;background:white;-webkit-box-shadow: 1px 4px 24px 9px rgba(153,153,153,0.56);
--moz-box-shadow: 1px 4px 24px 9px rgba(153,153,153,0.56);
-box-shadow: 1px 4px 24px 9px rgba(153,153,153,0.56);">
+    <div style="position:fixed;left:20px;width:665px;border:1px solid #ddd;top:0px;padding:25px;background:white;z-index:5;">
       <div class="row">
         <div class="col-xs-6">
           <p>Campaña: {{campania.nombre}} </p>

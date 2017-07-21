@@ -383,110 +383,53 @@ select{
   <div style="position:fixed;top:0px;left:5px;color:white;cursor:pointer;font-size:18px;" onclick="$('#alerta').css('display','block');">×</div>
   <div style="height:100%;overflow-y:auto;margin-left:20px;" ng-controller="myCtrl">
 	 <div style="padding:15px;border-radius:5px;border:1px solid #aaa;width:350px;margin:15px;display:inline-block;">
-		<div>Banco: {{banco}}</div>
+		  <div>Banco: {{banco}}</div>
   		<div>Titular: {{titular}}</div>
+      <div >N° de gestión : {{numero_gestion}}°</div>
   		<div>DNI: {{documento}}</div>
-  		<div>Fecha de actualización: <input type='date' ng-model="fecha_actualizacion" ng-change="recargar();fecha_anticipo=fecha_actualizacion;"></div>
+  		<div>Fecha de actualización: <input type='date' ng-model="fecha_actualizacion" ng-change="recargar();fecha_anticipo=fecha_actualizacion;" style="border:0px;color:#478dff;"></div>
    		<div>Fecha de mora: {{fecha_mora | date: "dd/MM/yyyy"}}</div>
    		<div>Días de atraso: {{dias_atraso}}</div>
    		<div>Monto de atraso: ${{monto_atraso  | number:2}}</div>
    		</div>
       <div style="padding:15px;border-radius:5px;border:1px solid #aaa;width:250px;margin:15px;display:inline-block;">
 		  <div>IVA: 21% </div>
-  		<div >Tasa: {{tasa}}%</div>
   		<div >Porcentaje de honorarios: {{porcentaje_honorarios}}%</div>
   		<div>Gastos: ${{gastos  | number:2}} ({{estado}})</div>
    		</div>
 
-    <div style="padding:15px;border-radius:5px;border:1px solid #aaa;margin:15px;display:block;">
-    <div style="display:inline-block;">
-		<div >Capital inicial: ${{capital_inicial | number:2}}</div>
-		  <!--<div >Interes: ${{interes | number:2}}</div>
+    <div style="padding:15px;border-radius:5px;border:1px solid #aaa;margin:15px;display:inline-block;width:220px;">
+      <div style="display:inline-block;">
+		  <div>Capital inicial: ${{capital_inicial | number:2}}</div>
+		  <!--<div>Interes: ${{interes | number:2}}</div>
   		<div>IVA sobre interes: ${{iva_sobre_interes | number:2}}</div>-->
   		<div >Sub total: ${{sub_total | number:2}}</div>
   		<div >Honorarios: ${{honorarios | number:2}}</div>
    		<div >IVA sobre honorarios: $ {{iva_sobre_honorarios | number:2}}</div>
       <div class="resaltado" style="color:red;">DEUDA REAL: ${{supuesto_total | number:2}}</div>
    		<div class="resaltado">TOTAL: ${{total | number:2}}</div>
-   		</div>
-      <div style="display:inline-block;width:350px;padding-left:50px;">
-      <div class="input-group">
-        <span class="input-group-btn">
-        <button ng-click="porcentaje_step=1" class="btn btn-default" ng-show="porcentaje_step==10" ng-init="porcentaje_step=10">Flexibilizar</button>
-        <button ng-click="porcentaje_step=10" class="btn btn-default" ng-show="porcentaje_step==1">Volver</button>
+      <hr>
+   		<div>
+      <span style="padding-bottom:5px;">
+      Anticipo: $<input placeholder="Anticipo..." type="number" style="border:0px;padding-left:3px;width:100px;" ng-model="anticipo" ng-init="anticipo=0" ng-change="quitar_y_cuotas()">
       </span>
-        <input type="number" class="form-control" ng-model='porcentaje' step="{{porcentaje_step}}" min='0' max='35' ng-init="porcentaje=10">
-        <span class="input-group-addon">%</span>
       </div>
-      <div >Anticipo : $ {{anticipo=(porcentaje/100 * total  | number:2)}} </div>
-      <div >A financiar : $ {{(100 - porcentaje)/ 100 *total   | number:2}}</div>
+      <div>
+      <span style="padding-bottom:5px;">
+      Cuotas: <input placeholder="Cuotas..." type="number" ng-model="pagos" style="border:0px;padding-left:3px;width:100px;" ng-change="quitar_y_cuotas()"  ng-init="pagos=1;quitar_y_cuotas()">
+      </span>
+      </div>
+      <div style="padding-bottom:5px;">
+      Descuento: $ <input type="number" style="border:0px;width:100px;" ng-model="descuento" placeholder="Descuento" ng-change="calcular_cuotas()" max="{{descuento_m}}">
+      </div>
       </div>
    		</div>
-   	
-	<div style="padding:15px;border-radius:5px;border:1px solid #aaa;margin:15px;display:block;">
-    <div>Quitas <span class="butn" ng-click="quitar()">Calcular</span></div><hr>
-		<div  style="margin:5px;max-width:500px;">
-		<div >Pagos: 
-    	<select class="form-control butn" ng-model='quitas' ng-options='' ng-change="quitar()"></select>
-   		</div>
-   		<div >N° de gestión : {{numero_gestion}}</div>
-   		<div >Tasa del {{quita_tasa}} %</div>
-   		<div >Descuento del {{quita_descuento}} %</div>
-   		<div class="resaltado">RESULTADO: ${{quita_final | number:2}}</div>
-   	</div>
-   	</div>
-	<div style="padding:15px;border-radius:5px;border:1px solid #aaa;margin:15px;display:block;">
-    <div>Financiación</div><hr>
-		        <div style="display:inline-block;width:300px;">
-
-				<div >A financiar: $  <input type="number" ng-model="a_financiar" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"></div>
-				<div >Plazo (meses): <select type="number" ng-model="plazo" ng-options="cuota as cuota.cuotas for cuota in amortizacion" ng-change="calcular_cuotas()"></select>
-				</div>
-  				<div >Fecha de anticipo: <input type="date" ng-model="fecha_anticipo=fecha_actualizacion" ng-change="cambio_primer_cuota();calcular_cuotas()"></div>
-  				<div >1° cuota: {{fecha_primer_cuota | date: "dd/MM/yyyy"}}</div>
-  				</div>
-          <div style="width:250px;display:inline-block; ">
-  				<button class="butn" ng-click="calcular_cuotas()" style="margin:50px;">CALCULAR</button>
-  				</div>
-  				<div class="resaltado">CUOTA PROMEDIO: $ {{cuota_promedio | number:0}} </div>
-          <div class="resaltado">TOTAL PROMEDIO: $ {{total_total = (cuota_promedio * plazo | number:2)}} </div>
-   				<hr>
-				<table class="table table-condensed achicar">
-					<thead>
-						<th>N° Cuota</th>
-						<th>Saldo Inicial</th>
-						<th>Amortizacion</th>
-						<th>Interes</th>
-						<th>IVA Interes</th>
-						<th>Cuota total</th>
-						<th>Saldo de deuda</th>
-						<th>Fecha</th>
-					</thead>
-					<tbody>
-						<tr ng-repeat="cuota in cuotas">
-							<td>{{cuota.nro_cuota }}</td>
-							<td>$ {{cuota.saldo_inicial  | number:2 }}</td>
-							<td>$ {{cuota.amortizacion  | number:2 }}</td>
-							<td>$ {{cuota.interes | number:2 }}</td>
-							<td>$ {{cuota.iva_interes | number:2 }}</td>
-							<td>$ {{cuota.cuota_total | number:2 }}</td>
-							<td>$ {{cuota.saldo_deuda | number:2 }}</td>
-							<td>{{cuota.mes_actual | date: "dd/MM/yyyy" }}</td>	
-						</tr>
-						<tr class="resaltado">
-							<td>TOTAL</td>
-							<td></td>
-							<td>${{TOTAL_amortizacion | number:2 }}</td>
-							<td>${{TOTAL_interes | number:2 }}</td>
-							<td>${{TOTAL_iva_interes | number:2 }}</td>
-							<td>${{TOTAL_cuota_total | number:2 }}</td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-   			
-   	</div>
+      <div style="display:inline-block;">
+        <div style="font-size:23px;color:#478dff;" ng-show="pagos&&importexcuota">Total final: ${{total_total}}</div>
+        <div style="font-size:23px;color:#478dff;" ng-show="pagos&&importexcuota">{{pagos}} cuotas de ${{importexcuota}}</div><hr>
+        <div style="font-size:18px;color:#74c44c;" ng-show="pagos&&importexcuota"> HONORARIOS: ${{total_total - total_total/1.121 | number:2}}</div>
+        <div style="font-size:18px;color:#c43131;" ng-show="pagos&&importexcuota"> BANCO: ${{ total_total/1.121 | number:2}}</div>
+      </div>
       <div  style="padding:15px;border-radius:5px;border:1px solid #aaa;margin:15px;display:block;">
       <div>Propuesta</div><hr>
         <div class="input-group">
@@ -530,7 +473,7 @@ select{
       </div>
     </div>
 	</div>
-      <div style="display:none;position:fixed;top:0px;left:20px;width:300px;height:100%;background:white;border-right:1px solid #aaa;padding:15px;font-size:16px;" id="alerta">¿Seguro desea salir? Si no registró nada, perderá los datos.<div style="text-align:center;margin-top:15px;"><span class="butn" style="border-radius:5px 0px 0px 5px;font-size:13px;" onclick="window.close()">Cerrar</span><span class="butn"  style="border-radius:0px 5px 5px 0px;font-size:13px;" onclick="$('#alerta').css('display','none')">No cerrar</span></div></div>
+      <div style="display:none;position:fixed;top:0px;left:20px;width:300px;height:100%;background:white;border-right:1px solid #aaa;padding:15px;font-size:16px;z-index:5;" id="alerta">¿Seguro desea salir? Si no registró nada, perderá los datos.<div style="text-align:center;margin-top:15px;"><span class="butn" style="border-radius:5px 0px 0px 5px;font-size:13px;" onclick="window.close()">Cerrar</span><span class="butn"  style="border-radius:0px 5px 5px 0px;font-size:13px;" onclick="$('#alerta').css('display','none')">No cerrar</span></div></div>
     <script>
     var $_GET = {};
 var url = document.URL.split("/")[2];
@@ -657,94 +600,39 @@ app.controller('myCtrl', function($http, $scope) {
                           _.fecha_primer_cuota = sumar_mes(_.fecha_anticipo);
                         };
       
-                          // PAGO(A1 ; B1 ; C1) = (A1*(1+A1)^B1)*C1/(((1+A1)^B1)-1)  A1=TASA ; B1 = N° PERIODOS ; C1 = CAPITAL INICIAL ; 
-      _.calcular_cuotas = function ()     { 
-                          _.TOTAL_cuota_total=0;
-                          _.TOTAL_amortizacion=0;
-                          _.TOTAL_interes=0;
-                          _.TOTAL_iva_interes=0;
-                          var tasa= _.tasa_frances / 100;
-                          _.cuotas = [];                            
-                          for(var i=0;i<_.plazo;i++){
-                            if(_.cuotas.length == 0){
-                            saldo_inicial = _.a_financiar;
-                            diferencia_dias = tasa * calcularDiasDate(_.fecha_anticipo, _.fecha_primer_cuota) / 365;
-                            interes = saldo_inicial * ( diferencia_dias);
-                            iva_interes = 0.21 * interes;
-                            cuota_total = ( _.a_financiar * (( diferencia_dias * (Math.pow( (1+ diferencia_dias) , _.plazo )))/((Math.pow( (1+ diferencia_dias) , _.plazo )) -1 )));
-                            amortizacion = cuota_total - iva_interes - interes;
-                            saldo_deuda = saldo_inicial - amortizacion ;
-                            
-                            _.cuotas.push({
-                                    nro_cuota : 1,
-                                    mes_actual : _.fecha_primer_cuota,
-                                    mes_anterior : _.fecha_anticipo,
-                                    diferencia_dias : diferencia_dias,
-                                    interes : interes,
-                                    iva_interes : iva_interes,
-                                    saldo_inicial : saldo_inicial,
-                                    cuota_total : cuota_total,
-                                    amortizacion : amortizacion, 
-                                    saldo_deuda : saldo_deuda 
-                                    
-                                  });
-                            cuotas= _.cuotas;
-                            }else{
-                            anterior = _.cuotas[i-1];
-                            saldo_inicial = anterior.saldo_deuda;
-                            diferencia_dias = tasa * 30  / 365;
-                            interes = saldo_inicial * ( diferencia_dias);
-                            iva_interes = 0.21 * interes;
-                            cuota_total = ( _.a_financiar * (( diferencia_dias * (Math.pow( (1+ diferencia_dias) , _.plazo )))/((Math.pow( (1+ diferencia_dias) , _.plazo )) -1 )));
-                            amortizacion = cuota_total - iva_interes - interes;
-                            saldo_deuda = saldo_inicial - amortizacion ;
-                            
-                            _.cuotas.push({
-                                    nro_cuota : anterior.nro_cuota + 1,
-                                    mes_actual : sumar_mes_dias(anterior.mes_actual),
-                                    mes_anterior : anterior.mes_actual,
-                                    diferencia_dias : diferencia_dias,
-                                    interes : interes,
-                                    iva_interes : iva_interes,
-                                    saldo_inicial : saldo_inicial,
-                                    cuota_total : cuota_total,
-                                    amortizacion : amortizacion, 
-                                    saldo_deuda : saldo_deuda
-                                  });
-                             _.ultimo_saldo_deuda= saldo_deuda;
+                          // PAGO(A1 ; B1 ; C1) = (A1*(1+A1)^B1)*C1/(((1+A1)^B1)-1)*-1  A1=TASA ; B1 = N° PERIODOS ; C1 = CAPITAL INICIAL ; 
+      _.calcular_cuotas = function (){ 
+                          for(var i in _.amortizacion){
+                            if(_.amortizacion[i].cuotas==_.pagos){
+                              _.tna=parseFloat(_.amortizacion[i].tasa);
                             }
-                          _.TOTAL_cuota_total=_.TOTAL_cuota_total+cuota_total;
-                          _.TOTAL_amortizacion=_.TOTAL_amortizacion+amortizacion;
-                          _.TOTAL_interes=_.TOTAL_interes+interes;
-                          _.TOTAL_iva_interes=_.TOTAL_iva_interes+iva_interes;
                           }
-                          cuotas= _.cuotas;
-                          _.cuota_promedio = (_.TOTAL_cuota_total + _.ultimo_saldo_deuda) / _.plazo;
+                          _.tem=_.tna*0.0821917808219178/100;
+                          _.tea=(Math.pow((1+_.tem),(365/30)))-1;
+                          _.capital=_.capital_inicial-_.descuento;
+                          _.anticipo_frances=_.anticipo/1.121;
+                          _.tot_refi=Math.round(_.capital-_.anticipo_frances);
+                          _.importexcuota_banco=pago(_.tem,_.pagos,_.tot_refi);
+                          _.importexcuota=Math.round(pago(_.tem,_.pagos,_.tot_refi)*1.121);
+                          _.total_total=_.importexcuota*_.pagos;
                         };
       
       _.quitar = function () {
                   for (var i in _.quitas_hsbc){
                   if(_.numero_gestion == _.quitas_hsbc[i].numero_gestion){
-                    if (_.quitas == _.quitas_hsbc[i].cuotas){
-                        _.quita_tasa = _.quitas_hsbc[i].tasa;
-                        _.quita_descuento = _.quitas_hsbc[i].descuento;
-                        _.quita_maximo = _.quitas_hsbc[i].maximo;
-                        if(_.quitas_hsbc[i].tasa != 0 ){
-                          if(_.quitas_hsbc[i].descuento != 0 ){
-                            _.quita_final = parseFloat(_.capital_inicial)*(_.quitas_hsbc[i].tasa/100)-(parseFloat(_.capital_inicial)*(_.quitas_hsbc[i].tasa / 100) * (_.quitas_hsbc[i].descuento / 100));
-                        _.quita_cuotas =  _.quita_final /_.quitas_hsbc[i].cuotas;
-                        }else{
-                          _.quita_final = parseFloat(_.capital_inicial)*(_.quitas_hsbc[i].tasa/100);
-                        _.quita_cuotas = _.quita_final / _.quitas_hsbc[i].cuotas;
-                        }
-                      }else{
-                          _.quita_final = parseFloat(_.capital_inicial) - parseFloat(_.capital_inicial)*(_.quitas_hsbc[i].descuento/100);
-                      _.quita_cuotas = _.quita_final / _.quitas_hsbc[i].cuotas;
-                      }
-                      }
+                    if(_.pagos ==  _.quitas_hsbc[i].cuotas){
+                      if(parseFloat((_.quitas_hsbc[i].descuento)/100*parseFloat(_.capital_inicial))<parseFloat(_.quitas_hsbc[i].maximo))
+                        {_.descuento=Math.round(parseFloat((_.quitas_hsbc[i].descuento)/100*parseFloat(_.capital_inicial)));_.descuento_m=_.descuento;}
+                      else
+                        {_.descuento=parseFloat(_.quitas_hsbc[i].maximo);_.descuento_m=_.descuento;}
+                    }
                     }
                   }
       };
+
+      _.quitar_y_cuotas=function(){_.quitar();_.calcular_cuotas();};
+
+
       _.recargar = function (){
       $http.post('php/datos.php', datos)
              .then(function(res){
@@ -808,7 +696,7 @@ app.controller('myCtrl', function($http, $scope) {
                          _.supuesto_total=_.total*1.4;
                          _.a_financiar = parseFloat(parseFloat((100 - _.porcentaje)/ 100 *_.total).toFixed(2));
                         });
-        _.plazo=1; _.porcentaje=10; _.quitas='1'; _.cambio_primer_cuota(); _.calcular_cuotas; _.quitar();
+        _.plazo=1; _.porcentaje=10; _.quitas='1'; _.cambio_primer_cuota(); _.calcular_cuotas(); _.quitar();
 
         _.descargar = function (){
           $http.post('http://'+url+':3001/liquidacion',{  
@@ -870,6 +758,7 @@ app.controller('myCtrl', function($http, $scope) {
   } 
 });
 
+function pago(a,b,c){a=parseFloat(a);b=parseFloat(b);c=parseFloat(c);return Math.round((((a*(1+a)**b)*c/(((1+a)**b)-1)))); }
     </script> 
 </body>
 </html>

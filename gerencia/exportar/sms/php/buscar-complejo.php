@@ -22,10 +22,10 @@ if($telefono->calificacion){$mostrar=$mostrar." IF(telefonos.calificacion='0', '
 if($telefono->comentario){$mostrar=$mostrar." telefonos.comentario as 'Descripcion',";}
 $mostrar=rtrim($mostrar, ",");
 
-$consulta = "SELECT sms.documento, sms.telefono ".$mostrar." FROM  sms INNER JOIN deudores ON deudores.documento = sms.documento INNER JOIN (select * from productos group by documento) productos ON productos.documento=sms.documento INNER JOIN bancos ON bancos.cbanco = sms.banco INNER JOIN telefonos ON telefonos.numero = sms.telefono LEFT OUTER JOIN estados ON productos.estado = estados.id  LEFT OUTER JOIN sub_estados ON productos.sub_estado = sub_estados.id INNER JOIN calificacion_telefonos ON calificacion_telefonos.id = telefonos.calificacion ";
+$consulta = "SELECT sms.documento, sms.telefono ".$mostrar." FROM  sms INNER JOIN deudores ON deudores.documento = sms.documento INNER JOIN (select * from productos group by documento) productos ON productos.documento=sms.documento INNER JOIN bancos ON bancos.cbanco = productos.banco INNER JOIN telefonos ON telefonos.numero = sms.telefono LEFT OUTER JOIN estados ON productos.estado = estados.id  LEFT OUTER JOIN sub_estados ON productos.sub_estado = sub_estados.id INNER JOIN calificacion_telefonos ON calificacion_telefonos.id = telefonos.calificacion ";
 
 if($banco){
-$consulta = $consulta." WHERE sms.banco = '$banco' ";
+$consulta = $consulta." WHERE productos.banco = '$banco' ";
 }
 
 if($fecha1 && $fecha2){
