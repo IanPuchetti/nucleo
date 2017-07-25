@@ -7,7 +7,6 @@ header("Location: ../administracion/");
 if($_SESSION['puesto']=='ger'){
 }else{
 if($_SESSION['puesto']=='sup'){
-header("Location: ../supervision/");
 }else{
 if($_SESSION['puesto']=='gen'){
 }else{

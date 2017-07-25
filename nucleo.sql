@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-07-2017 a las 20:35:06
+-- Tiempo de generación: 25-07-2017 a las 20:28:43
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `agendas` (
 INSERT INTO `agendas` (`id`, `deudor`, `operador`, `fecha`, `gestion`) VALUES
 (1, 10183571, 25, '2017-07-19', 1),
 (2, 22424030, 25, '2017-07-20', 0),
-(3, 10183571, 25, '0000-00-00', 0);
+(3, 10183571, 25, '0000-00-00', 0),
+(5, 6167085, 25, '0000-00-00', 0);
 
 -- --------------------------------------------------------
 
@@ -347,7 +348,9 @@ CREATE TABLE `cambios_sub_estados` (
 
 INSERT INTO `cambios_sub_estados` (`id`, `documento`, `sub_estado`, `fecha`) VALUES
 (1, 10183571, 7, '2017-07-19'),
-(2, 10183571, 7, '0000-00-00');
+(2, 10183571, 7, '0000-00-00'),
+(3, 10183571, 7, '0000-00-00'),
+(4, 6167085, 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1306,7 +1309,7 @@ INSERT INTO `deudores` (`documento`, `tipo_documento`, `apellido`, `email`, `emp
 (6084114, '', 'ESTRIBOU OSCAR GILBERTO', '', '', 0),
 (6167085, '', 'LUCENA ENRIQUE ALBERTO', '', '', 0),
 (7640615, '', 'GENNARO ROBERTO', '', '', 0),
-(7670997, '', 'FORTE ALBERTO LUIS', '', '', 0),
+(7670997, '', 'FORTE ALBERTO LUIS', 'fortealbertoluis@gmail.com', '', 0),
 (7674499, '', 'FARIAS RAFAEL ALBERTO', '', '', 0),
 (7995061, '', 'DAHBAR JOSE ROMAN', '', '', 0),
 (8108274, '', 'RAMIREZ JULIO ALBERTO', '', '', 0),
@@ -2282,7 +2285,10 @@ INSERT INTO `gestiones` (`id`, `documento`, `telefono`, `comentario`, `fecha`, `
 (14, 0, '0', 'Se ha enviado un MAIL.', '2017-07-18', '00:00:00', 0, '00:00:00', 0, 3, 0),
 (15, 22424030, '0', 'Se ha enviado un MAIL.', '2017-07-18', '00:00:00', 0, '00:00:00', 0, 3, 0),
 (16, 0, '0', 'Se ha enviado un MAIL.', '2017-07-18', '00:00:00', 0, '00:00:00', 0, 3, 0),
-(17, 22424030, '0', 'Se ha enviado un MAIL.', '2017-07-18', '00:00:00', 0, '00:00:00', 0, 3, 0);
+(17, 22424030, '0', 'Se ha enviado un MAIL.', '2017-07-18', '00:00:00', 0, '00:00:00', 0, 3, 0),
+(18, 10183571, '', '3242sadfds', '2017-07-21', '17:56:07', 7, '00:05:02', 25, 3, 13),
+(19, 6167085, '', 'COMENTARIO', '2017-07-21', '18:00:23', 1, '00:02:54', 25, 3, 13),
+(20, 4459064, '', 'ok', '2017-07-25', '16:15:02', 7, '00:02:10', 25, 3, 13);
 
 -- --------------------------------------------------------
 
@@ -2323,7 +2329,7 @@ CREATE TABLE `grupos_casos` (
 
 INSERT INTO `grupos_casos` (`id_campania`, `id_grupo`, `deudor`, `gestionado`, `gestionando`) VALUES
 (1, 1, 4455666, 0, 0),
-(1, 1, 4459064, 0, 0),
+(1, 1, 4459064, 20, 1),
 (1, 1, 4553360, 0, 0),
 (1, 1, 4703957, 0, 0),
 (1, 1, 5665047, 0, 0),
@@ -2798,7 +2804,6 @@ INSERT INTO `grupos_usuarios` (`id_grupo`, `id_usuario`) VALUES
 CREATE TABLE `ivr` (
   `documento` int(15) NOT NULL,
   `telefono` int(20) NOT NULL,
-  `banco` int(4) NOT NULL,
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2806,8 +2811,8 @@ CREATE TABLE `ivr` (
 -- Volcado de datos para la tabla `ivr`
 --
 
-INSERT INTO `ivr` (`documento`, `telefono`, `banco`, `fecha`) VALUES
-(40770061, 1557076389, 13, '2017-07-06');
+INSERT INTO `ivr` (`documento`, `telefono`, `fecha`) VALUES
+(40770061, 1557076389, '2017-07-06');
 
 -- --------------------------------------------------------
 
@@ -2843,9 +2848,15 @@ INSERT INTO `liquidador_banco` (`id_banco`, `liquidador`, `link`) VALUES
 
 CREATE TABLE `mails` (
   `documento` int(30) NOT NULL,
-  `banco` int(4) NOT NULL,
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `mails`
+--
+
+INSERT INTO `mails` (`documento`, `fecha`) VALUES
+(7670997, '2017-07-21');
 
 -- --------------------------------------------------------
 
@@ -3105,7 +3116,7 @@ INSERT INTO `productos` (`numero_operacion`, `documento`, `producto`, `deuda`, `
 ('156396', 13964983, 'Préstamos Personales 080PPR', 50704.3, 0, '2016-12-26', '2014-09-16', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
 ('158006', 16228695, 'Préstamos Personales 080PPR', 18000.2, 0, '2016-11-21', '2014-03-06', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
 ('176500', 13433208, 'Préstamos Personales 080PPR', 2514.64, 0, '2017-03-06', '2016-04-25', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
-('30081283', 40770061, 'TARJETA', 300, 1, '2017-07-11', '2017-06-15', '0000-00-00', '3', '1', 13, 'TARJETA', 0, '0000-00-00'),
+('30081283', 40770061, 'TARJETA', 300, 1, '2017-07-11', '2017-06-15', '0000-00-00', '1', '1', 13, 'TARJETA', 0, '0000-00-00'),
 ('306324837400', 40726304, 'Descubierto Ctas Ctes 080 DCP', 1284.19, 0, '2017-01-02', '2016-02-01', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
 ('315323225000', 25281781, 'Descubierto Ctas Ctes 080 DCP', 1855.09, 0, '2016-12-19', '2016-04-01', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
 ('315806', 18521957, 'Préstamos Personales 080PPR', 4938.48, 0, '2016-12-19', '2016-06-08', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
@@ -3154,7 +3165,7 @@ INSERT INTO `productos` (`numero_operacion`, `documento`, `producto`, `deuda`, `
 ('687323741900', 5665047, 'Descubierto Ctas Ctes 080 DCP', 2045.6, 0, '2016-12-19', '2016-08-08', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
 ('690324500100', 30615558, 'Descubierto Ctas Ctes 080 DCP', 6012, 0, '2017-03-17', '2016-08-01', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
 ('690324765600', 38786473, 'Descubierto Ctas Ctes 080 DCP', 1547.21, 0, '2016-12-26', '2016-02-01', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
-('691320132900', 4459064, 'Descubierto Ctas Ctes 080 DCP', 10372.9, 0, '2016-09-19', '2016-04-01', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
+('691320132900', 4459064, 'Descubierto Ctas Ctes 080 DCP', 10372.9, 0, '2016-09-19', '2016-04-01', '0000-00-00', '3', '7', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
 ('691338850900', 27070114, 'Descubierto Ctas Ctes 080 DCP', 3033.87, 0, '2017-02-15', '2016-08-29', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
 ('691479', 22036043, 'Préstamos Personales 080PPR', 5621.78, 0, '2017-03-01', '2016-04-13', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
 ('695398', 12640202, 'Préstamos Personales 080PPR', 188530, 0, '2017-03-20', '2014-08-15', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
@@ -3766,7 +3777,7 @@ INSERT INTO `productos` (`numero_operacion`, `documento`, `producto`, `deuda`, `
 ('882681', 29664451, 'Préstamos Personales 080PPR', 2692.9, 0, '2017-04-03', '2016-01-04', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
 ('88290', 14612010, 'Préstamos Personales 080PPR', 10758.8, 0, '2017-01-27', '2013-01-15', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
 ('88325604400', 17096289, 'Descubierto Ctas Ctes 080 DCP', 3056.94, 0, '2016-12-19', '2016-01-20', '0000-00-00', '3', '1', 13, 'Descubierto Ctas Ctes 080 DCP', 0, '0000-00-00'),
-('889832648', 40770061, 'TARJETA', 300, 1, '0000-00-00', '2017-05-03', '0000-00-00', '3', '', 13, '', 0, '0000-00-00'),
+('889832648', 40770061, 'TARJETA', 300, 1, '0000-00-00', '2017-05-03', '0000-00-00', '1', '', 13, '', 0, '0000-00-00'),
 ('899525', 31432964, 'Préstamos Personales 080PPR', 12162.9, 0, '2017-03-01', '2016-04-20', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
 ('902193', 32773198, 'Préstamos Personales 080PPR', 9980.17, 0, '2016-12-26', '2016-04-24', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
 ('913832', 34592271, 'Préstamos Personales 080PPR', 32081.9, 0, '2017-01-23', '2016-03-12', '0000-00-00', '3', '1', 13, 'Préstamos Personales 080PPR', 0, '0000-00-00'),
@@ -19042,9 +19053,16 @@ CREATE TABLE `responsables` (
 CREATE TABLE `sms` (
   `documento` int(20) NOT NULL,
   `telefono` int(20) NOT NULL,
-  `banco` int(4) NOT NULL,
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `sms`
+--
+
+INSERT INTO `sms` (`documento`, `telefono`, `fecha`) VALUES
+(7670997, 45124512, '2017-07-21'),
+(7995061, 2147483647, '2017-07-21');
 
 -- --------------------------------------------------------
 
@@ -19858,10 +19876,11 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `user`, `pass`, `puesto`) VALUES
 (15, 'FLORENCIA', 'flor1876', 'ger'),
-(19, 'MAJEWICZ', 'elmaheavydelamoro', 'ger'),
-(20, 'GENERAL', '5446', 'ger'),
-(25, 'IAN', '5446', 'gen'),
-(26, 'DANIEL', '114DAN', 'gen');
+(19, 'MAJEWICZ', 'PABLO123', 'ger'),
+(20, 'GERENCIA', '5446', 'ger'),
+(25, 'LEANDRO', 'LEANDRO', 'gen'),
+(26, 'DANIEL', '114DAN', 'gen'),
+(27, 'SUPERVISION', '1234', 'sup');
 
 --
 -- Índices para tablas volcadas
@@ -19974,7 +19993,7 @@ ALTER TABLE `ivr`
 -- Indices de la tabla `mails`
 --
 ALTER TABLE `mails`
-  ADD PRIMARY KEY (`documento`,`banco`);
+  ADD PRIMARY KEY (`documento`);
 
 --
 -- Indices de la tabla `monedas`
@@ -20044,7 +20063,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `agendas`
 --
 ALTER TABLE `agendas`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `bajas`
 --
@@ -20069,7 +20088,7 @@ ALTER TABLE `cambios_estados`
 -- AUTO_INCREMENT de la tabla `cambios_sub_estados`
 --
 ALTER TABLE `cambios_sub_estados`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `campanias`
 --
@@ -20089,7 +20108,7 @@ ALTER TABLE `estados`
 -- AUTO_INCREMENT de la tabla `gestiones`
 --
 ALTER TABLE `gestiones`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `grupos`
 --
@@ -20124,7 +20143,7 @@ ALTER TABLE `tipo_gestion`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

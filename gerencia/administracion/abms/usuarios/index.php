@@ -620,7 +620,7 @@ function json_tabla (id_tabla, objeto){
 	    				var datos={ id: modifid,
                     user:$("#usuario-"+modifid).val(),
                     pass:$("#password-"+modifid).val(),
-                    puesto:'ger'
+                    puesto:'sup'
                     };
 	    				}else{
 	    					var datos={
