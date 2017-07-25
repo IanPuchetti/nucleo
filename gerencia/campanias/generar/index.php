@@ -1017,10 +1017,30 @@ angular.module('exporte',['infinite-scroll'])
   _.activar = function (){
     _.volver=1;
         _.largotabla=[1,2,3,4,5,6,7,8,9,10,11,12,13];
+        for(var i in _.tabla){
+      if(_.tabla[i].documento){_.id_casos.push(_.tabla[i].documento);}else{
+            if(_.tabla[i]['Documento']){_.id_casos.push(_.tabla[i]['Documento']);}else{
+            if(_.tabla[i]['DOCUMENTO']){_.id_casos.push(_.tabla[i]['DOCUMENTO']);}
+            }
+            }
+    }
   }
 
   _.leer_excel =function (){
-    $timeout(function (){_.tabla = excel;_.activar();});
+
+    $timeout(function (){_.tabla = excel;_.activar();
+      $timeout(function(){
+        _.id_casos=[];
+        for(var i in _.tabla){
+        if(_.tabla[i]['documento']){_.id_casos.push(_.tabla[i]['documento']);}
+        else{if(_.tabla[i]['Documento']){_.id_casos.push(_.tabla[i]['Documento']);}
+          else{if(_.tabla[i]['DOCUMENTO']){_.id_casos.push(_.tabla[i]['DOCUMENTO']);}
+              }
+            }
+    }
+  });});
+    
+
   }
 
 });

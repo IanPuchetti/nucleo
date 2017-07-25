@@ -26,16 +26,15 @@ angular.module('exporte',['infinite-scroll'])
 				
 				};
 
-	_.accion={generar:function (){
-						_.generar.id_casos=_.id_casos;
-						_.generar.fecha=hoy;
-						$http.post('php/nuevo.php', _.generar).then(function (res){
-							notificar('Campaña generada!','La campaña se ha generado correctamente.', '/.img/ok.png');
-						});},
-				 agregar:function (){
-				   _.agregar.id_casos=_.id_casos;
-				   $http.post('php/agregar_a_campania.php', _.agregar).then(function (res){
-							notificar('Agregados a campaña!','Los casos se han agregado correctamente.', '/.img/ok.png');
+	_.modificar={sub_estados:function (){
+				   _.modificar_sub_estado.id_casos=_.id_casos;
+				   $http.post('php/modificar_sub_estados.php', _.modificar_sub_estado).then(function (res){
+							notificar('Modificacion exitosa!','Los sub_estados de los casos se modificaron correctamente.', '/.img/ok.png');
+						},
+				 estados:function (){
+				   _.modificar_estado.id_casos=_.id_casos;
+				   $http.post('php/modificar_estados.php', _.modificar_estado).then(function (res){
+							notificar('Modificacion exitosa!','Los estados de los casos se modificaron correctamente.', '/.img/ok.png');
 						});
 		}};
 

@@ -411,16 +411,16 @@ select{
       <hr>
    		<div>
       <span style="padding-bottom:5px;">
-      Anticipo: $<input placeholder="Anticipo..." type="number" style="border:0px;padding-left:3px;width:100px;" ng-model="anticipo" ng-init="anticipo=0" ng-change="quitar_y_cuotas()">
+      Anticipo: $<input placeholder="Anticipo..." type="number" min="0"  style="border:0px;padding-left:3px;width:100px;" ng-model="anticipo" ng-init="anticipo=0" ng-change="quitar_y_cuotas()">
       </span>
       </div>
       <div>
       <span style="padding-bottom:5px;">
-      Cuotas: <input placeholder="Cuotas..." type="number" ng-model="pagos" style="border:0px;padding-left:3px;width:100px;" ng-change="quitar_y_cuotas()"  ng-init="pagos=1;quitar_y_cuotas()">
+      Cuotas: <input placeholder="Cuotas..." type="number" min="0"  ng-model="pagos" style="border:0px;padding-left:3px;width:100px;" ng-change="quitar_y_cuotas()"  ng-init="pagos=1;quitar_y_cuotas()">
       </span>
       </div>
       <div style="padding-bottom:5px;">
-      Descuento: $ <input type="number" style="border:0px;width:100px;" ng-model="descuento" placeholder="Descuento" ng-change="calcular_cuotas()" max="{{descuento_m}}">
+      Descuento: $ <input type="number" min="0"  style="border:0px;width:100px;" ng-model="descuento" placeholder="Descuento" ng-change="calcular_cuotas()" max="{{descuento_m}}">
       </div>
       </div>
    		</div>
