@@ -20,10 +20,12 @@ header("Location: ../../");
   <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script type="text/javascript" src="/.js/jquery.min.js"></script>
 	<script type="text/javascript" src="/.js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
-	<script src="js/xlsx.js" type="text/javascript"></script>
-	<script type="text/javascript" src="js/FileSaver.js"></script>
-	<script src="js/Export2Excel.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/.js/jszip.min.js"></script>
+  <script type="text/javascript" src="/.js/icg-json-to-xlsx.js"></script>
+	<script src="/.js/xlsx.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/.js/lodash.min.js"></script>
+	<script type="text/javascript" src="/.js/FileSaver.js"></script>
+	<script src="/.js/Export2Excel.js" type="text/javascript"></script>
 <style>
 .navbar-static-top{
 margin-top:-40px;
@@ -416,15 +418,23 @@ function json_tabla (id_tabla, objeto){
       <button id="comparar" style="display:none;" class="butn">Comparar</button><br>
       </p>
   </div>
-  <div style="padding:15px;">
+  <div style="padding:5px;">
   <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
   <span   data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
-  <select class="lista  btn-default" id="documento" name="deudores"><option>nulo</option></select>
+  <select class="lista  btn-default" id="documento" name="deudores"><option></option></select>
   </span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" data-toggle="tooltip" title="Banco" data-placement="bottom"><img src="/.img/bank.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" data-toggle="tooltip" title="Numero de operacion" data-placement="bottom"><img src="/.img/wallet.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
-  <select class="lista  btn-default" id="banco"></select>
+  <select class="lista " id="numero_operacion" name="deudores"><option></option></select>
+  </span>
+</span>
+</div>
+<div style="padding:5px;">
+<span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
+  <span style="padding:2px;margin-right:-2px;" data-toggle="tooltip" title="Banco" data-placement="bottom"><img src="/.img/bank.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+  <select class="lista  btn-default" id="banco" style="width:227px;"></select>
   </span>
 </span>
 </div>
@@ -452,28 +462,46 @@ function json_tabla (id_tabla, objeto){
      <label id="satisfaction" class="label label-success butn"></label></div>
      <div style="margin-top:15px;">
      <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button">
-        <span   data-toggle="tooltip" title="Para revisar" data-placement="bottom">Coincidentes</span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="coincidentes">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span   data-toggle="tooltip" title="Coincidentes" data-placement="bottom">Coincidentes</span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="coincidente">&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  class="descargas" style="display:none;" >
-          <span id="d_coincidentes"><img src="/.img/download.png" style="width:15px;height:15px;"></span><table style="display:none" id="t_coincidentes"></table>
+          <span id="d_coincidente"><img src="/.img/download.png" style="width:15px;height:15px;"></span>
+        </span>
+     </span>
+      </div>
+      <div style="margin-top:15px;">
+     <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button">
+        <span   data-toggle="tooltip" title="Para revisar" data-placement="bottom">No coincide el estado</span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="no_coincide_estado">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  class="descargas" style="display:none;" >
+          <span id="d_no_coincide_estado"><img src="/.img/download.png" style="width:15px;height:15px;"></span>
+        </span>
+     </span>
+      </div>
+   <div style="margin-top:15px;">
+   <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button">
+        <span   data-toggle="tooltip" title="Productos nuevos de deudores" data-placement="bottom">Productos nuevos</span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="producto_nuevo">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  class="descargas" style="display:none;" >
+          <span id="d_producto_nuevo"><img src="/.img/download.png" style="width:15px;height:15px;"></span>
         </span>
    </span>
  </div>
-   <div style="margin-top:15px;">
+ <div style="margin-top:15px;">
    <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button">
-        <span   data-toggle="tooltip" title="Para agregar" data-placement="bottom">No coincidentes</span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="no_coincidentes">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span   data-toggle="tooltip" title="Para agregar" data-placement="bottom">Casos nuevos</span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="agregar">&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  class="descargas" style="display:none;" >
-          <span id="d_no_coincidentes"><img src="/.img/download.png" style="width:15px;height:15px;"></span><table style="display:none" id="t_no_coincidentes"></table>
+          <span id="d_agregar"><img src="/.img/download.png" style="width:15px;height:15px;"></span>
         </span>
    </span>
  </div>
  <div style="margin-top:15px;">
    <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;width:200px;" class="button">
-        <span   data-toggle="tooltip" title="Para dar de baja" data-placement="bottom">No se encuentran</span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="not_found">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span   data-toggle="tooltip" title="Para dar de baja" data-placement="bottom">Para dar de baja</span>
+        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="baja">&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  class="descargas" style="display:none;" >
-        <span id="d_not_found"><img src="/.img/download.png" style="width:15px;height:15px;"></span><table style="display:none" id="t_not_found"></table>
+        <span id="d_baja"><img src="/.img/download.png" style="width:15px;height:15px;"></span>
         </span>
    </span>
  </div>
@@ -481,24 +509,42 @@ function json_tabla (id_tabla, objeto){
  </body>
 <script>
 
-var datos={}, vueltines, lookup;
+var datos={}, lookup;
 $("#comparar").click(function(){
+  if($("#banco").val()=="" && $("#documento").val()=="" && $("#numero_operacion").val()==""){
+    alert("Debe completar todos los campos.");
+  }else{
+resultados={};
 var i=0;
 while(i<document.getElementsByName('deudores').length){
 	var campo=document.getElementsByName('deudores')[i].id;
 	deudores[campo]=document.getElementsByName('deudores')[i].value;  
 i++;  
 }
-
 //datos={carpeta: JSON.stringify(carpeta), deudores:JSON.stringify(deudores), domicilios:JSON.stringify(domicilios), productos:JSON.stringify(productos), excel : JSON.stringify(exporte[workbook.Props.SheetNames[0]])};
-
-
 excel=exporte[workbook.Props.SheetNames[0]];
 datos['banco']=$("#banco").children(":selected").attr("id");
-			ajax_comparar(datos);
-			
-			$(".descargas").css("display","inline-block");
+datos['documento']=deudores['documento'];
+datos['numero_operacion']=deudores['numero_operacion'];
+$(".descargas").css("display","inline-block");
+comparar();
+}
 });
+
+var vu=0,documentos=[] , dar_de_baja, resultados={};
+function comparar (){
+    if(vu<excel.length){
+    documentos.push(excel[vu][datos['documento']]);
+    var d = {documento:excel[vu][datos['documento']],
+                   banco:datos['banco'],
+                   numero_operacion: transform_number(excel[vu][datos['numero_operacion']])
+                  };
+    ajax_comparar(d);
+    }else{
+      vu=0;
+      ajax_baja();
+    }
+}
 
 var removeByAttr = function(arr, attr, value){
     var i = arr.length;
@@ -515,36 +561,64 @@ var removeByAttr = function(arr, attr, value){
 }
 var reses;
 function ajax_comparar (datos){
-			$("#satisfaction").html("Consultando...");
-			$.ajax({
-					url:'php/comparar.php',
-					type:'post',
-					data:datos,
-					success: function (res){res=JSON.parse(res);reses=res;
-											lookup = {};
-											for (var i = 0, len = res.length; i < len; i++) {
-   											lookup[res[i].documento] = res[i];
-											}
-											for (var i in excel){
-												if(lookup[excel[i].documento]){
-													coincidentes.push(excel[i]);
-													$("#coincidentes").html(coincidentes.length);
-													removeByAttr(res, 'documento', excel[i].documento);
-												}else{
-														no_coincidentes.push(excel[i]);
-														$("#no_coincidentes").html(no_coincidentes.length);
-												}
-												}
-											not_found=res;
-											$("#not_found").html(not_found.length);	
-											$("#satisfaction").html(i+'/'+excel.length);
-											}			
-			
-			});
+
+      $("#satisfaction").html("Consultando...");
+      $.ajax({
+          url:'php/comparar.php',
+          type:'post',
+          data:datos,
+          success: function (res){
+                      res=res.replace(/\r?\n/g, "");
+                      if(resultados[res]){
+                      resultados[res].push(excel[vu]);
+                      }else{
+                        resultados[res]=[];
+                        resultados[res].push(excel[vu]);
+                      }
+                      $("#satisfaction").html((vu+1)+'/'+excel.length);
+                      vu=vu+1;
+                      setTimeout(function(){comparar(vu);});
+                      }
+      });
 }
-</script>
-<script>
-var carpeta={}, deudores={}, domicilios={}, productos={}, names, excel, coincidentes=[], no_coincidentes=[], not_found=[];
+
+function ajax_baja (){
+      $("#satisfaction").html("Consultando...");
+      $.ajax({
+          url:'php/baja.php',
+          type:'post',
+          data:{banco: datos['banco']},
+          success: function (res){
+                      
+                      res=JSON.parse(res);
+                      console.log(res);
+                      resultados['baja']=[];
+                      var esta=false;
+                      for(var i in res){
+                        for(var j in documentos){
+                          if(documentos[j]==res[i]['documento']){
+                           esta=true;
+                           break; 
+                          }else{
+                            esta=false;
+                          }
+                        }
+                        if(esta==false){
+                            resultados['baja'].push(res[i]);
+                        }
+                      }
+                       $("#satisfaction").html(excel.length+'/'+excel.length);
+                       if(resultados['coincidente']){$("#coincidente").html(resultados['coincidente'].length);}else{$("#coincidente").html("0")}
+                       if(resultados['no_coincide_estado']){$("#no_coincide_estado").html(resultados['no_coincide_estado'].length);}else{$("#no_coincide_estado").html("0")}
+                       if(resultados['producto_nuevo']){$("#producto_nuevo").html(resultados['producto_nuevo'].length);}else{$("#producto_nuevo").html("0")}
+                       if(resultados['agregar']){$("#agregar").html(resultados['agregar'].length);}else{$("#agregar").html("0")}
+                       if(resultados['baja']){$("#baja").html(resultados['baja'].length);}else{$("#baja").html("0")}
+
+                      }
+      });
+}
+
+var carpeta={}, deudores={}, domicilios={}, productos={}, names, excel;
 
 
 //CARGA DE EXCEL
@@ -574,7 +648,7 @@ function handleFile(e) {
 	for (var i in Object.keys(mostrar.sheet1[0])){
 		$(".lista").append("<option>"+Object.keys(mostrar.sheet1[0])[i]+"</option>");
 		}
-        }
+  }
     reader.readAsBinaryString(f);
   }
   $("#archivo").val("");
@@ -583,19 +657,33 @@ function handleFile(e) {
 document.getElementById('archivo').addEventListener('change', handleFile, false);
 
 
-$("#d_coincidentes").click(function(){
-json_tabla('t_coincidentes', coincidentes);
-export_table_to_excel('t_coincidentes', 'Coincidentes');
+$("#d_coincidente").click(function(){
+exportar(resultados.coincidente, 'coincidentes.xlsx');
 });
-$("#d_no_coincidentes").click(function(){
-json_tabla('t_no_coincidentes', no_coincidentes);
-export_table_to_excel('t_no_coincidentes', 'No_coincidentes');
+$("#d_no_coincide_estado").click(function(){
+exportar(resultados.no_coincide_estado, 'no_coincide_estado.xlsx');
 });
-$("#d_not_found").click(function(){
-json_tabla('t_not_found',not_found);
-export_table_to_excel('t_not_found', 'No_se_encuentran_en_el_archivo');
+$("#d_producto_nuevo").click(function(){
+exportar(resultados.producto_nuevo, 'productos_nuevos.xlsx');
+});
+$("#d_agregar").click(function(){
+exportar(resultados.agregar, 'agregar.xlsx');
 });
 
+$("#d_baja").click(function(){
+exportar(resultados.baja, 'baja.xlsx');
+});
+
+function transform_number (str){
+    
+    if(str != undefined){
+    
+    str = str.replace(/[^0-9]+/g, "");
+    return parseFloat(str);
+    }else{
+    return 0;
+    }
+}
 
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -610,7 +698,7 @@ document.addEventListener('dragover',function(event){
     return false;
   },false);
 
-  const remote = require('electron').remote;
+const remote = require('electron').remote;
 var resize = remote.require('./main').resize;
 resize(700,400);
 </script>

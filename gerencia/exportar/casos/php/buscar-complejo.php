@@ -3,6 +3,7 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $agenda1=$request->filtro ->agenda1;
 $agenda2=$request->filtro ->agenda2;
+$documento=$request->filtro ->documento;
 $documento1=$request->filtro ->documento1;
 $documento2=$request->filtro ->documento2;
 $apellido=$request->filtro ->apellido;
