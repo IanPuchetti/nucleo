@@ -453,7 +453,7 @@ label:hover:before {
     </div>
 <div class="header">
   <div style="position:absolute;width:1000px;">
-  <span class="dropdown boton">
+  <span class="dropdown boton logout">
     <a href="/">Inicio</a>
   </span>
   <span class="dropdown boton">
@@ -762,7 +762,7 @@ label:hover:before {
 
 </div>
 
-    <div style="position:fixed;bottom:5px;left:5px;">
+    <div style="position:fixed;bottom:5px;left:5px;z-index:5;">
       <span class="dropup">
           <span class="button dropdown-toggle" data-toggle="dropdown" style="margin-right:5px;">
           <span><img src="/.img/campos.png" style="width:17px;height:20px;margin-left:2px;margin-top:-3px" data-toggle="tooltip" title="Campos" data-placement="top"></span>
@@ -828,10 +828,10 @@ label:hover:before {
           <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:50px;width:200px;">
             <div style="margin-top:-30.5px;text-align:center;">
             <div class="button" style="height:20px;">
-              <span >Estado</span><select style="font-size:10px;border:0px;width:100px;" ng-options="estado as estado.estado for estado in estados"  ng-model="modificar_estado.estado" ></select>
+              <span >Estado</span><select style="font-size:10px;border:0px;width:100px;" ng-options="estado.id as estado.estado for estado in estados"  ng-model="modificar_estado.estado" ></select>
             </div>
             <div style="margin-top:10px;">
-              <span class="butn" style="font-size:10px;padding-left:45px;padding-right:45px;" ng-click="modificar.estado.()">Modificar</span>          </div>
+              <span class="butn" style="font-size:10px;padding-left:45px;padding-right:45px;" ng-click="modificar.estados()">Modificar</span><img src="/.img/loading.gif" style="width:15px;" ng-show="modificar_estado.modificando"><img src="/.img/yes.png" style="width:15px;"  ng-show="modificar_estado.modificado"></div>
             </div>
         </ul>
       </span>
@@ -840,10 +840,10 @@ label:hover:before {
           <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:50px;width:200px;">
             <div style="margin-top:-30.5px;text-align:center;">
             <div class="button" style="height:20px;">
-              <span >Sub estado</span><select style="font-size:10px;border:0px;width:70px;"  ng-options="sub_estado as sub_estado.sub_estado for sub_estado in sub_estados"   ng-model="modificar_sub_estado.sub_estado" ></select>
+              <span >Sub estado</span><select style="font-size:10px;border:0px;width:70px;"  ng-options="sub_estado.id as sub_estado.sub_estado for sub_estado in sub_estados"   ng-model="modificar_sub_estado.sub_estado" ></select>
             </div>
             <div style="margin-top:10px;">
-              <span class="butn" style="font-size:10px;padding-left:45px;padding-right:45px;" ng-click="modificar.sub_estados.()">Modificar</span>          </div>
+              <span class="butn" style="font-size:10px;padding-left:45px;padding-right:45px;" ng-click="modificar.sub_estados()" >Modificar</span><img src="/.img/loading.gif" style="width:15px;" ng-show="modificar_sub_estado.modificando"><img src="/.img/yes.png" style="width:15px;"  ng-show="modificar_sub_estado.modificado"></div>
             </div>
         </ul>
       </span>
@@ -864,7 +864,6 @@ angular.module('exporte',['infinite-scroll'])
     _.largotabla=[1,2,3,4,5,6,7,8,9,10,11,12,13];
   $http.post('php/bancos.php').then(function(res){_.bancos=res.data;});//Obtencion de los bancos
     $http.post('php/usuarios.php').then(function(res){_.usuarios=res.data;});//Obtencion de los usuarios
-    $http.post('php/proximas-acciones.php').then(function(res){_.proximas_acciones=res.data;});//Obtencion de las proximas acciones
     $http.post('php/estados.php').then(function(res){_.estados=res.data;});//Obtencion de los estados
     $http.post('php/dolar.php').then(function (res){ _.dolar = res.data;});
     $http.post('php/grupos.php').then(function(res){_.grupos=res.data;});//Obtencion de las calificaciones
@@ -883,16 +882,22 @@ angular.module('exporte',['infinite-scroll'])
         };
 
   _.modificar={sub_estados:function (){
+    if(_.modificar_sub_estado.sub_estado){
+           _.modificar_sub_estado.modificando=true;_.modificar_sub_estado.modificado=false;
            _.modificar_sub_estado.id_casos=_.id_casos;
-           $http.post('php/modificar_sub_estados.php', _.modificar_sub_estado).then(function (res){
-              alert('Modificacion exitosa!');
+           $http.post('php/modificar-subestado.php', _.modificar_sub_estado).then(function (res){
+              _.modificar_sub_estado.modificando=false;_.modificar_sub_estado.modificado=true;
             });
+         }else{top.alert("Debe seleccionar un sub estado.")}
           },
          estados:function (){
+          if(_.modificar_estado.estado){
+           _.modificar_estado.modificando=true;_.modificar_estado.modificado=false;
            _.modificar_estado.id_casos=_.id_casos;
-           $http.post('php/modificar_estados.php', _.modificar_estado).then(function (res){
-              notificar('Modificacion exitosa!');
+           $http.post('php/modificar-estado.php', _.modificar_estado).then(function (res){
+              _.modificar_estado.modificando=false;_.modificar_estado.modificado=true;
             });
+           }else{top.alert("Debe seleccionar un estado.")}
     }
   };
 
@@ -946,7 +951,20 @@ angular.module('exporte',['infinite-scroll'])
   }
 
   _.leer_excel =function (){
-    $timeout(function (){_.tabla = excel;_.activar();});
+
+    $timeout(function (){_.tabla = excel;_.activar();
+      $timeout(function(){
+        _.id_casos=[];
+        for(var i in _.tabla){
+        if(_.tabla[i]['documento']){_.id_casos.push(_.tabla[i]['documento']);}
+        else{if(_.tabla[i]['Documento']){_.id_casos.push(_.tabla[i]['Documento']);}
+          else{if(_.tabla[i]['DOCUMENTO']){_.id_casos.push(_.tabla[i]['DOCUMENTO']);}
+              }
+            }
+    }
+  });});
+    
+
   }
 
 });
@@ -986,22 +1004,6 @@ $(document).on('click', '.dont-go', function (e) {
   e.stopPropagation();
 });
 
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-});
-document.addEventListener('dragover',function(event){
-    event.preventDefault();
-    return false;
-  },false);
-
-  document.addEventListener('drop',function(event){
-    event.preventDefault();
-    return false;
-  },false);
-
-  const remote = require('electron').remote;
-var resize = remote.require('./main').resize;
-resize(800,400);
   </script>
   </body>
 </html>

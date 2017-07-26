@@ -402,7 +402,7 @@ angular
     _.d=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
     $(".dias").css({color:"#666", 'border-color':'#ddd'});
     $(".dias#dia"+(d.getDate()-1)).css({color:"#07963d", 'border-color':'#07963d'});
-    $http.post('php/agendas.php', {fecha:_.d}).then(function(res){
+    $http.post('php/agendas.php', {fecha:_.d, operador:id_usuario}).then(function(res){
       _.agenda=res.data;
     });
   };

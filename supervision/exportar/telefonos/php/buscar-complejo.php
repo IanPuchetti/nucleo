@@ -9,6 +9,7 @@ $fecha_contactado2=$request->filtro ->fecha_contactado2;
 $movimiento=$request->filtro->movimiento;
 $fecha_movimiento1=$request->filtro ->fecha_movimiento1;
 $fecha_movimiento2=$request->filtro ->fecha_movimiento2;
+$documento=$request->filtro ->documento;
 $documento1=$request->filtro ->documento1;
 $documento2=$request->filtro ->documento2;
 $apellido=$request->filtro ->apellido;
@@ -82,6 +83,10 @@ $consulta = $consulta." AND productos.banco = '$banco' ";
 
 if(isset($documento1) && isset($documento2)){
 $consulta = $consulta." AND (productos.documento BETWEEN '$documento1' AND '$documento2') ";
+}else{
+	if($documento){
+	$consulta = $consulta." AND productos.documento LIKE '%$documento%' ";	
+}
 }
 
 if(isset($agenda1) && isset($agenda2)){
