@@ -193,7 +193,8 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow:hidden;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
 
 #reload:hover{
@@ -398,6 +399,62 @@ label:hover:before {
 .inputs{
   width:100px !important;
 }
+
+.box{
+  border:1px solid #ddd;
+  border-radius:5px;
+  width:350px;
+  padding:20px;
+  font-size:13px;
+}
+
+table{
+  font-size:13px;
+}
+select{
+  border:0px;
+  border-bottom:1px solid #ddd;
+}
+
+select:hover, select:focus{
+  background:#fff !important;
+  border-bottom:1px solid #89bd25 !important;
+  outline: none;
+}
+
+.unbox::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.unbox::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+.unbox::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border: 1px solid #7cc030;
+  border-radius: 0px;
+}
+.unbox::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+.unbox::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-corner {
+  background: transparent;
+}
 </style>
   </head>
 
@@ -501,36 +558,37 @@ label:hover:before {
   </span>
 </div>
 </div>
-    <div class="container">
-<div class="row">
-<div class="col-md-6">
-	<div class="">
-  		<h2>Modificación masiva de productos</h2>
-  		<p>Ingrese el archivo .xlsx para obtener los campos <button onclick="$('#archivo').click();$('#cargar-div').css('display','block');" id="boton" class="btn btn-danger btn-lg" role="button">Subir</button>
+    <div style="margin-top:10px;">
+<div style="padding:0px 25px 0px 25px;width:350px;">
+  <div>
+      <h3>Modificación masiva de productos</h3>
+      <p>Ingrese el archivo <span class="color-gr">.xlsx</span> <span onclick="$('#archivo').click();$('#cargar-div').css('display','block');" id="boton" class="butn" role="button">Subir</span>
 <input type="file" id="archivo" style="display:none;">
       </div></p>
-
-	</div>
-    
-<div class="col-md-6">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#carpeta').css('display','inline-block');">Carpeta</a></li>
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#productos').css('display','inline-block');">Productos</a></li>
-      </ul>
-	<table id="carpeta" class="ocultar"></table>
-	<table id="productos" class="ocultar" style="display:none;"></table>
-	
-</div>
-</div>
-      <div style="text-align:center;display:none;" class="lead" id="cargar-div">
+      <div style="display:none;" id="cargar-div">
       Una vez elegido los campos
-     <button class="btn btn-danger"  style="font-size:20px;" id="cargar" onclick="$('#barra').css('display','block')">Cargar</button>
+     <button class="butn" id="cargar" onclick="$('#barra').css('display','block')">Comparar</button>
      </div>
-      <div class="progress"  id="barra" style="display:none;">
-      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span></div>
+      
+      <div class="progress"  id="barra" style="display:none;margin-top:20px;">
+      <div class="progress-bar progress-bar-danger back-gr" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span><span class="satisfaction" style="margin:auto;color:#fff;"></span></div>
      </div>
-     <div class="satisfaction lead" style="text-align:center;"></div>
-     <div id="comparacion" style="position:absolute;width:600px;margin:auto;text-align:center;"></div>
+  </div>
+</div>
+<div style="position:absolute;left:350px;top:50px;">
+  <div class="box" >
+      <div style="margin:0px 5px 5px 5px;margin-top:-10px;border-radius:5px;border:1px solid #ddd;padding:5px;text-align:center;">
+        <span role="presentation" class="color-gr" style="cursor:pointer;margin:5px;" onclick="$('.ocultar').css('display','none');$('#carpeta').css('display','inline-block');">Carpeta</span>
+        <span role="presentation" class="color-gr" style="cursor:pointer;margin:5px;" onclick="$('.ocultar').css('display','none');$('#productos').css('display','inline-block');">Productos</span>
+      </div>
+  <div style="height:130px;overflow-y:auto;">
+  <table id="carpeta" class="ocultar"></table>
+  <table id="productos" class="ocultar" style="display:none;"></table>
+</div>
+  </div>
+</div>
+</div>
+     <div id="comparacion" style="position:absolute;width:700px;height:190px;overflow-y:auto;top:250px;border:1px solid #ddd;border-radius:5px;padding:15px;margin:15px;"></div>
   </body>
 <script>
 var datos={}, carpetas={}, producto={};
@@ -641,7 +699,7 @@ $.ajax({
 	res=JSON.parse(res);
 	for (i in res){
 	if(res[i]=='documento'  || res[i]=='numero_operacion' ){}else{
-	$("#carpeta").append('<tr><td>'+res[i]+'</td><td><select class="lista btn-default" id="'+res[i]+'" name="carpeta"><option>nulo</option></select></td></tr>');}}
+	$("#carpeta").append('<tr><td>'+res[i]+'</td><td><select class="lista btn-default" id="'+res[i]+'" name="carpeta"><option></option></select></td></tr>');}}
 	}
 });
 
@@ -652,21 +710,10 @@ $.ajax({
 	success:function(res){
 	res=JSON.parse(res);
 	for (i in res){
-	$("#deudores").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="deudores"><option>nulo</option></select></td></tr>');}
+	$("#deudores").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="deudores"><option></option></select></td></tr>');}
 	}
 });
 
-$.ajax({
-	url:"php/campos.php",
-	data:{'tabla':'domicilios'},
-	type:'post',
-	success:function(res){
-	res=JSON.parse(res);
-	for (i in res){
-	if(res[i]=='documento'){}else{
-	$("#domicilios").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="domicilios"><option>nulo</option></select></td></tr>');}}
-	}
-});
 
 $.ajax({
 	url:"php/campos.php",
@@ -676,7 +723,7 @@ $.ajax({
 	res=JSON.parse(res);
 	for (i in res){
 	if(res[i]=='documento' || res[i]=='id'){}else{
-	$("#productos").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="productos"><option>nulo</option></select></td></tr>');}}
+	$("#productos").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="productos"><option></option></select></td></tr>');}}
 	}
 });
 
@@ -772,6 +819,10 @@ function transform_fecha (str){
 		return '';
 		}
 }
+
+const remote = require('electron').remote;
+var resize = remote.require('./main').resize;
+  resize(800,500);
 
 </script>
 </html>

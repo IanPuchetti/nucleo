@@ -193,7 +193,8 @@ body{
 
 body{
   border:1px solid #ccc;
-  overflow:hidden;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
 
 #reload:hover{
@@ -398,6 +399,62 @@ label:hover:before {
 .inputs{
   width:100px !important;
 }
+
+.box{
+  border:1px solid #ddd;
+  border-radius:5px;
+  width:350px;
+  padding:20px;
+  font-size:13px;
+}
+
+table{
+  font-size:13px;
+}
+select{
+  border:0px;
+  border-bottom:1px solid #ddd;
+}
+
+select:hover, select:focus{
+  background:#fff !important;
+  border-bottom:1px solid #89bd25 !important;
+  outline: none;
+}
+
+.unbox::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.unbox::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+.unbox::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border: 1px solid #7cc030;
+  border-radius: 0px;
+}
+.unbox::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+.unbox::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+.unbox::-webkit-scrollbar-corner {
+  background: transparent;
+}
 </style>
   </head>
 
@@ -503,38 +560,35 @@ label:hover:before {
   </span>
 </div>
 </div>
-    <div style="margin-top:60px;">
-<div class="row">
-<div class="col-md-6">
+    <div style="margin-top:10px;">
+<div style="padding:0px 25px 0px 25px;width:350px;">
 	<div>
-  		<h2>Modificación masiva de deudores</h2>
-  		<p>Ingrese el archivo .xlsx para obtener los campos <span onclick="$('#archivo').click();$('#cargar-div').css('display','block');" id="boton" class="butn" role="button">Subir</span>
+  		<h3>Modificación masiva de deudores</h3>
+  		<p>Ingrese el archivo <span class="color-gr">.xlsx</span> <span onclick="$('#archivo').click();$('#cargar-div').css('display','block');" id="boton" class="butn" role="button">Subir</span>
 <input type="file" id="archivo" style="display:none;">
       </div></p>
-
+      <div style="display:none;" id="cargar-div">
+      Una vez elegido los campos
+     <button class="butn" id="cargar" onclick="$('#barra').css('display','block')">Comparar</button>
+     </div>
+      
+      <div class="progress"  id="barra" style="display:none;margin-top:20px;">
+      <div class="progress-bar progress-bar-danger back-gr" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span><span class="satisfaction" style="margin:auto;color:#fff;"></span></div>
+     </div>
 	</div>
-    
-<div class="col-md-6">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#deudores').css('display','inline-block');">Deudor</a></li>
-        <li role="presentation"><a onclick="$('.ocultar').css('display','none');$('#domicilios').css('display','inline-block');">Domicilios</a></li>
-      </ul>
+</div>
+<div style="position:absolute;left:350px;top:50px;">
+  <div class="box">
+      <div style="margin:0px 5px 5px 5px;margin-top:-10px;border-radius:5px;border:1px solid #ddd;padding:5px;text-align:center;">
+        <span role="presentation" class="color-gr" style="cursor:pointer;margin:5px;" onclick="$('.ocultar').css('display','none');$('#deudores').css('display','inline-block');">Deudor</span>
+        <span role="presentation" class="color-gr" style="cursor:pointer;margin:5px;" onclick="$('.ocultar').css('display','none');$('#domicilios').css('display','inline-block');">Domicilios</span>
+      </div>
 	<table id="deudores" class="ocultar"></table>
 	<table id="domicilios" class="ocultar" style="display:none;"></table>
-	
+	</div>
 </div>
 </div>
-      <div style="text-align:center;display:none;" class="lead" id="cargar-div">
-      Una vez elegido los campos
-     <button class="btn btn-danger"  style="font-size:20px;" id="cargar" onclick="$('#barra').css('display','block')">Cargar</button>
-     </div>
-      
-      <div class="progress"  id="barra" style="display:none;">
-      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progreso"><span class="sr-only">80%</span></div>
-      
-     </div>
-     <div class="satisfaction lead" style="text-align:center;"></div>
-     <div id="comparacion" style="position:absolute;width:600px;margin:auto;text-align:center;"></div>
+     <div id="comparacion" style="position:absolute;width:700px;height:190px;overflow-y:auto;top:250px;border:1px solid #ddd;border-radius:5px;padding:15px;margin:15px;"></div>
   </body>
 <script>
 var datos={}, domicilio={}
@@ -614,7 +668,7 @@ function comparar (deudor, i){
                       || (actual.localidad != domicilio.localidad && domicilio.localidad !='') 
                       || (actual.codigo_postal != domicilio.codigo_postal && domicilio.codigo_postal != '')
                       ){
-                      $("#comparacion").append('<table class="table table-condensed" style="overflow-x:scroll;font-size:12px;margin:auto;" id="'+i+'"><tr style="background:grey;color:white;"><td>Campos</td><td>Tipo documento</td><td>Apellido y nombre</td><td>Email</td><td>Empresa</td><td>Direccion laboral</td><td>Direccion particular</td><td>Direccion laboral 2</td><td>Direccion particular 2</td><td>Direccion particular 3</td><td>Provincia</td><td>Localidad</td><td>Código postal</td></tr><tr style="background:white;"><td style="background:grey;color:white;">Actual</td><td>'+res[0].tipo_documento+'</td><td>'+res[0].apellido+'</td><td>'+res[0].email+'</td><td>'+res[0].empresa+'</td><td>'+res[0].direccion_laboral+'</td><td>'+res[0].direccion_particular+'</td><td>'+res[0].direccion_laboral2+'</td><td>'+res[0].direccion_particular2+'</td><td>'+res[0].direccion_particular3+'</td><td>'+res[0].provincia+'</td><td>'+res[0].localidad+'</td><td>'+res[0].codigo_postal+'</td></tr><tr><td style="color:white;background:lightgrey;"> A modificar</td><td>'+deudor.tipo_documento+'</td><td>'+deudor.apellido+'</td><td>'+deudor.email+'</td><td>'+deudor.empresa+'</td><td>'+domicilio.direccion_laboral+'</td><td>'+domicilio.direccion_particular+'</td><td>'+domicilio.direccion_laboral2+'</td><td>'+domicilio.direccion_particular2+'</td><td>'+domicilio.direccion_particular3+'</td><td>'+domicilio.provincia+'</td><td>'+domicilio.localidad+'</td><td>'+domicilio.codigo_postal+'</td></tr><tr><td style="text-align:center" colspan="13"><div style="text-align:center;"><button class="btn btn-success" style="border-radius:5px 0px 0px 5px;" onclick="modificar('+deudor.documento+','+i+')">Modificar</span><button class="btn btn-danger" style="border-radius:0px 5px 5px 0px;" onclick=$("#'+i+'").remove()>Omitir</span></div></td></tr></table>');
+                      $("#comparacion").append('<div id="'+i+'" style="border:1px solid #ddd; border-radius:5px;margin:5px;padding:5px;"><div>Tipo documento: <span style="color:#b35;">'+res[0].tipo_documento+'</span>  <span class="color-gr">'+deudor.tipo_documento+'</span></div><div>Apellido: <span style="color:#b35;">'+res[0].apellido+'</span>  <span class="color-gr">'+deudor.apellido+'</span></div><div>Email: <span style="color:#b35;">'+res[0].email+'</span>  <span class="color-gr">'+deudor.email+'</span></div><div>Empresa:<span style="color:#b35;">'+res[0].empresa+'</span>  <span class="color-gr">'+deudor.empresa+'</span></div><div>Direccion laboral: <span style="color:#b35;">'+res[0].direccion_laboral+'</span>  <span class="color-gr">'+deudor.direccion_laboral+'</span></div><div>Direccion particular: <span style="color:#b35;">'+res[0].direccion_particular+'</span>  <span class="color-gr">'+deudor.direccion_particular+'</span></div><div>Direccion laboral 2 <span style="color:#b35;">'+res[0].direccion_laboral2+'</span>  <span class="color-gr">'+deudor.direccion_laboral2+'</span></div><div>Direccion particular 2: <span style="color:#b35;">'+res[0].direccion_particular2+'</span>  <span class="color-gr">'+deudor.direccion_particular2+'</span></div><div>Direccion particular 3: <span style="color:#b35;">'+res[0].direccion_particular3+'</span>  <span class="color-gr">'+deudor.direccion_particular3+'</span></div><div>Provincia: <span style="color:#b35;">'+res[0].provincia+'</span>  <span class="color-gr">'+deudor.provincia+'</span></div><div>Localidad: <span style="color:#b35;">'+res[0].localidad+'</span>  <span class="color-gr">'+deudor.localidad+'</span></div><div>Código postal <span style="color:#b35;">'+res[0].codigo_postal+'</span>  <span class="color-gr">'+deudor.codigo_postal+'</span></div><div style="text-align:center;"><button class="butn" onclick="modificar('+deudor.documento+','+i+')"><img src="/.img/write.png" style="width:15px"></span><button class="butn" onclick=$("#'+i+'").remove()><img src="/.img/borrar.png" style="width:15px"></span></div></div>');
                       }
                       var progress= (parseInt(i)+1) * 100 / excel.length;
                       $("#progreso").css('width', progress+'%');
@@ -632,6 +686,7 @@ function modificar (documento, a){
           type:'post',
           data:datos,
           success: function (res){
+            $("#"+a).remove();
             alert(res);
           }
   });
@@ -647,7 +702,7 @@ $.ajax({
 	success:function(res){
 	res=JSON.parse(res);
 	for (i in res){
-	$("#deudores").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="deudores"><option>nulo</option></select></td></tr>');}
+	$("#deudores").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="deudores"><option></option></select></td></tr>');}
 	}
 });
 
@@ -659,7 +714,7 @@ $.ajax({
 	res=JSON.parse(res);
 	for (i in res){
 	if(res[i]=='documento'){}else{
-	$("#domicilios").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="domicilios"><option>nulo</option></select></td></tr>');}}
+	$("#domicilios").append('<tr><td>'+res[i]+'</td><td><select class="lista  btn-default" id="'+res[i]+'" name="domicilios"><option></option></select></td></tr>');}}
 	}
 });
 
@@ -714,6 +769,11 @@ function transform_fecha (str){
 		return 0;
 		}
 }
+
+const remote = require('electron').remote;
+  var resize = remote.require('./main').resize;
+  resize(800,500);
+
 
 </script>
 </html>
