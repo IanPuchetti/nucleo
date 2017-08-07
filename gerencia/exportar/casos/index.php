@@ -715,6 +715,11 @@ label:hover:before {
    </ul>
       </span>
     </span>
+    <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Productos" data-placement="bottom"><img src="/.img/productos.png" style="width:17px;height:15px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+        <span ng-show="complejo.productos=='total'" ng-click="complejo.productos='particular'">Total por caso</span>
+        <span ng-show="complejo.productos=='particular'" ng-init="complejo.productos='particular'" ng-click="complejo.productos='total'">Particular por caso</span>
+    </span>
     <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Movimiento" data-placement="bottom"><img src="/.img/change.png" style="width:15px;height:15px;margin-left:2px;margin-top:-3px;"></span>
      <span ng-show="complejo.movimiento=='todos'" ng-init="complejo.movimiento='todos'" ng-click="complejo.movimiento='con'">Con o sin movimiento</span>
       <span class="dropdown" ng-show="complejo.movimiento=='con'" ng-dblclick="complejo.movimiento='sin'">
@@ -751,7 +756,7 @@ label:hover:before {
           </div>
         </ul>
       </span>
-        <span data-toggle="tooltip" title="Borrar" data-placement="bottom"  ng-click="complejo={};complejo.reportes='todos';complejo.movimiento='todos'" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/borrar.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+        <span data-toggle="tooltip" title="Borrar" data-placement="bottom"  ng-click="complejo={};complejo.reportes='todos';complejo.movimiento='todos';complejo.productos='particular';" style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><img src="/.img/borrar.png" style="width:13px;height:13px;margin-left:2px;margin-top:-3px;"></span>
     </span> 
   </span>
 </div>

@@ -21,6 +21,7 @@ $deuda2=$request->filtro ->deuda2;
 $estado=$request->filtro ->estado -> id;
 $sub_estado=$request->filtro ->sub_estado -> id;
 $reporte=$request->filtro ->reportes;
+$productos=$request->filtro->productos;
 
 $deudor=$request->campos->deudor;
 $producto=$request->campos->producto;
@@ -41,8 +42,12 @@ if($producto->banco){$mostrar=$mostrar.' bancos.dbanco,';}
 if($producto->producto){$mostrar=$mostrar.' productos.producto,';}
 if($producto->numero_operacion){$mostrar=$mostrar.' productos.numero_operacion,';}
 if($producto->nombre_producto){$mostrar=$mostrar.' productos.nombre_producto,';}
+if($productos=='particular'){
 if($producto->deuda){$mostrar=$mostrar.' productos.deuda,';}
 if($producto->moneda){$mostrar=$mostrar.' IF(productos.dolar = 1, "US$", "$") as moneda,';}
+}else{
+	$mostrar=$mostrar.' products.deuda_total,';
+}
 if($producto->fecha_deuda){$mostrar=$mostrar.' productos.fecha_deuda,';}
 if($producto->fecha_mora){$mostrar=$mostrar.' productos.fecha_mora,';}
 if($producto->fecha_ult_cobro){$mostrar=$mostrar.' productos.fecha_ult_cobro,';}
@@ -73,12 +78,18 @@ $mysqli = new mysqli("localhost", "ian", "p", "nucleo");
 $mysqli->set_charset("utf8");
 
 if($reporte=='sin' || $reporte=='con'){
-	$reports='LEFT OUTER JOIN reportes ON reportes.documento = deudores.documento ';
+	$reports=' LEFT OUTER JOIN reportes ON reportes.documento = deudores.documento ';
 }else{
 	$reports='';
 }
 
-$consulta = "SELECT deudores.documento ".$mostrar." FROM deudores INNER JOIN productos ON deudores.documento = productos.documento INNER JOIN carpeta ON carpeta.numero_operacion = productos.numero_operacion INNER JOIN domicilios ON deudores.documento = domicilios.documento INNER JOIN bancos ON bancos.cbanco = productos.banco INNER JOIN estados ON estados.id = productos.estado INNER JOIN sub_estados ON sub_estados.id = productos.sub_estado LEFT OUTER JOIN usuarios ON usuarios.id=deudores.responsable ".$reports." WHERE 1 ";
+if($productos=='total'){
+	$productitos=' INNER JOIN (SELECT *, round(sum(if(dolar=1, deuda*monedas.valor, deuda)),2) as deuda_total FROM  monedas, productos GROUP BY banco) productos ON deudores.documento = productos.documento ';
+}else{
+	$productitos=" INNER JOIN productos ON deudores.documento = productos.documento  ";
+}
+
+$consulta = "SELECT deudores.documento ".$mostrar." FROM deudores ".$productitos." INNER JOIN carpeta ON carpeta.numero_operacion = productos.numero_operacion INNER JOIN domicilios ON deudores.documento = domicilios.documento INNER JOIN bancos ON bancos.cbanco = productos.banco INNER JOIN estados ON estados.id = productos.estado INNER JOIN sub_estados ON sub_estados.id = productos.sub_estado LEFT OUTER JOIN usuarios ON usuarios.id=deudores.responsable ".$reports." WHERE 1 ";
 
 if($apellido1 && $apellido2){
 	$consulta = $consulta." AND (deudores.apellido >= '$apellido1' AND deudores.apellido <= '$apellido2') ";

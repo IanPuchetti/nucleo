@@ -2,9 +2,10 @@
 $user=$_POST['user'];
 $pass=$_POST['pass'];
 $mysqli = new mysqli("localhost", "ian", "p", "nucleo");
-if ($result = $mysqli->query("SELECT * FROM usuarios WHERE user='$user' AND pass='$pass' LIMIT 1")) {
+if ($result = $mysqli->query("SELECT * FROM usuarios WHERE user='$user' AND pass='$pass' AND log='0' LIMIT 1")) {
 $rows = $result->num_rows;
 if($rows!=0){
+$result2 = $mysqli->query("UPDATE usuarios SET log='1' WHERE user='$user' AND pass='$pass' AND log='0' LIMIT 1");
 session_start();
 $_SESSION['user']=$user;
 $_SESSION['pass']=$pass;
