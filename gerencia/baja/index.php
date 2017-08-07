@@ -860,6 +860,9 @@ label:hover:before {
             <div class="button" style="height:20px;">
               <span >Estado</span><select style="font-size:10px;border:0px;width:100px;" ng-options="estado.id as estado.estado for estado in estados"  ng-model="modificar_estado.estado" ></select>
             </div>
+            <div class="button" style="height:20px">
+              <span >Banco</span><select style="font-size:10px;border:0px;width:100px;" ng-options="banco.id as banco.banco for banco in bancos"  ng-model="modificar_estado.banco" ng-init="modificar_estado.banco=0"><option></option></select>
+            </div>
             <div style="margin-top:10px;">
               <span class="butn" style="font-size:10px;padding-left:45px;padding-right:45px;" ng-click="modificar.estados()">Modificar</span><img src="/.img/loading.gif" style="width:15px;" ng-show="modificar_estado.modificando"><img src="/.img/yes.png" style="width:15px;"  ng-show="modificar_estado.modificado"></div>
             </div>
@@ -870,7 +873,10 @@ label:hover:before {
           <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px;padding:20px;padding-top:50px;width:200px;">
             <div style="margin-top:-30.5px;text-align:center;">
             <div class="button" style="height:20px;">
-              <span >Sub estado</span><select style="font-size:10px;border:0px;width:70px;"  ng-options="sub_estado.id as sub_estado.sub_estado for sub_estado in sub_estados"   ng-model="modificar_sub_estado.sub_estado" ></select>
+              <span >Sub estado</span><select style="font-size:10px;border:0px;width:70px;"  ng-options="sub_estado.id as sub_estado.sub_estado for sub_estado in sub_estados"   ng-model="modificar_sub_estado.sub_estado" ng-init="modificar_sub_estado.banco=0"></select>
+            </div>
+            <div class="button" style="height:20px">
+              <span >Banco</span><select style="font-size:10px;border:0px;width:100px;" ng-options="banco.id as banco.banco for banco in bancos"  ng-model="modificar_sub_estado.banco"><option></option></select>
             </div>
             <div style="margin-top:10px;">
               <span class="butn" style="font-size:10px;padding-left:45px;padding-right:45px;" ng-click="modificar.sub_estados()" >Modificar</span><img src="/.img/loading.gif" style="width:15px;" ng-show="modificar_sub_estado.modificando"><img src="/.img/yes.png" style="width:15px;"  ng-show="modificar_sub_estado.modificado"></div>
@@ -1033,7 +1039,9 @@ document.getElementById('xlsx').addEventListener('change', handleFile, false);
 $(document).on('click', '.dont-go', function (e) {
   e.stopPropagation();
 });
-
+  const remote = require('electron').remote;
+var resize = remote.require('./main').resize;
+resize(800,400);
   </script>
   </body>
 </html>

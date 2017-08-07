@@ -46,7 +46,7 @@ if($productos=='particular'){
 if($producto->deuda){$mostrar=$mostrar.' productos.deuda,';}
 if($producto->moneda){$mostrar=$mostrar.' IF(productos.dolar = 1, "US$", "$") as moneda,';}
 }else{
-	$mostrar=$mostrar.' products.deuda_total,';
+	$mostrar=$mostrar.' productos.deuda_total,';
 }
 if($producto->fecha_deuda){$mostrar=$mostrar.' productos.fecha_deuda,';}
 if($producto->fecha_mora){$mostrar=$mostrar.' productos.fecha_mora,';}
@@ -84,7 +84,7 @@ if($reporte=='sin' || $reporte=='con'){
 }
 
 if($productos=='total'){
-	$productitos=' INNER JOIN (SELECT *, round(sum(if(dolar=1, deuda*monedas.valor, deuda)),2) as deuda_total FROM  monedas, productos GROUP BY banco) productos ON deudores.documento = productos.documento ';
+	$productitos=' INNER JOIN (SELECT *, round(sum(if(dolar=1, deuda*monedas.valor, deuda)),2) as deuda_total FROM  monedas, productos GROUP BY documento, banco) productos ON deudores.documento = productos.documento ';
 }else{
 	$productitos=" INNER JOIN productos ON deudores.documento = productos.documento  ";
 }

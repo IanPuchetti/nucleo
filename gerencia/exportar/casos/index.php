@@ -717,8 +717,8 @@ label:hover:before {
     </span>
     <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Productos" data-placement="bottom"><img src="/.img/productos.png" style="width:17px;height:15px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
-        <span ng-show="complejo.productos=='total'" ng-click="complejo.productos='particular'">Total por caso</span>
-        <span ng-show="complejo.productos=='particular'" ng-init="complejo.productos='particular'" ng-click="complejo.productos='total'">Particular por caso</span>
+        <span ng-show="complejo.productos=='total'" ng-click="complejo.productos='particular'" ng-init="complejo.productos='total'">Total por caso</span>
+        <span ng-show="complejo.productos=='particular'" ng-click="complejo.productos='total'">Particular por caso</span>
     </span>
     <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Movimiento" data-placement="bottom"><img src="/.img/change.png" style="width:15px;height:15px;margin-left:2px;margin-top:-3px;"></span>
      <span ng-show="complejo.movimiento=='todos'" ng-init="complejo.movimiento='todos'" ng-click="complejo.movimiento='con'">Con o sin movimiento</span>
@@ -855,9 +855,13 @@ label:hover:before {
           <span style="padding:8px;">Resultados</span>
           <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;">{{tabla.length}}</span>
         </span> 
-        <span class="button">
+        <span class="button" ng-hide="complejo.productos=='total'">
           <span style="padding:8px;">Total en pesos</span>
           <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;">${{total_pesos | number:2}}</span>
+        </span>  
+        <span class="button" ng-show="complejo.productos=='total'">
+          <span style="padding:8px;">Total en pesos</span>
+          <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;">${{total_totales | number:2}}</span>
         </span>    
   </div>
  <script>
@@ -905,13 +909,20 @@ angular.module('exporte',['infinite-scroll'])
             dateTransform(_.tabla, 'fecha_ult_cobro');
             dateTransform(_.tabla, 'agenda');
             _.total_pesos=0;
+            _.total_totales=0;
+            if(_.complejo.productos!='total'){
             for (var i in _.tabla){
             if(_.tabla[i].moneda=='US$'){
-            _.total_pesos = parseFloat(_.total_pesos)+(parseFloat(_.tabla[i].deuda)*parseFloat(_.dolar)); 
+            _.total_pesos = parseFloat(_.total_pesos)+(parseFloat(_.tabla[i].deuda)*parseFloat(_.dolar));
             }else{
             _.total_pesos = parseFloat(_.total_pesos)+parseFloat(_.tabla[i].deuda); 
-          }
-          }
+            }
+            }
+            }else{
+              for(var i in _.tabla){
+                            _.total_totales = parseFloat(_.total_totales)+parseFloat(_.tabla[i].deuda_total); 
+              }
+            }
           $timeout(function (){_.activar()});
           });
         }
