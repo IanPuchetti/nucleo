@@ -632,38 +632,7 @@ app.controller('myCtrl', function($http, $scope) {
 
       _.quitar_y_cuotas=function(){_.quitar();_.calcular_cuotas();};
 
-
-      _.recargar = function (){
-      $http.post('php/datos.php', datos)
-             .then(function(res){
-                       res=res.data[0];
-                       _.email=res.email;
-                         _.banco=res.banco;
-                         _.titular=res.titular;
-                         _.documento=res.documento;
-                         _.numero_gestion = res.numero_gestion;
-                         _.fecha_mora=res.fecha_mora;
-                         _.tasa=res.tasa;
-                         _.tasa_frances=res.tasa_frances;
-                         _.porcentaje_honorarios=res.porcentaje_honorarios;
-                         _.gastos=res.gastos; // CENCOSUD VARIA POR PRE Y JUD
-                         _.dias_atraso=calcularDate(_.fecha_actualizacion, _.fecha_mora);
-                         _.estado=res.estado;
-                         //_.capital_inicial=res.capital_inicial;
-                         _.monto_atraso=_.dias_atraso/30;
-                         //_.interes=(_.tasa/100)*_.capital_inicial*_.monto_atraso;
-                         //_.iva_sobre_interes=_.interes*0.21;
-                         _.supuesto_sub_total=parseFloat(_.capital_inicial)+parseFloat(_.interes)+parseFloat(_.iva_sobre_interes);
-                         _.sub_total=parseFloat(_.capital_inicial);
-                         _.honorarios=_.sub_total*(_.porcentaje_honorarios/100);
-                         _.iva_sobre_honorarios=_.honorarios*0.21;
-                         _.supuesto_honorarios=_.sub_total*0.121;
-                         _.supuesto_iva_sobre_honorarios=_.honorarios*0.21;
-                         _.total=parseFloat(_.sub_total)+parseFloat(_.honorarios)+parseFloat(_.iva_sobre_honorarios);
-                         _.supuesto_total=parseFloat(_.supuesto_sub_total)+parseFloat(_.supuesto_honorarios)+parseFloat(_.supuesto_iva_sobre_honorarios);
-                         _.a_financiar = parseFloat(parseFloat((100 - _.porcentaje)/ 100 *_.total).toFixed(2));
-                        });
-};
+_.recargar=function(){
 
       $http.post('php/datos.php', datos)
              .then(function(res){
@@ -696,7 +665,8 @@ app.controller('myCtrl', function($http, $scope) {
                          _.supuesto_total=_.total*1.4;
                          _.a_financiar = parseFloat(parseFloat((100 - _.porcentaje)/ 100 *_.total).toFixed(2));
                         });
-        _.plazo=1; _.porcentaje=10; _.quitas='1'; _.cambio_primer_cuota(); _.calcular_cuotas(); _.quitar();
+        }
+        _.plazo=1; _.porcentaje=10; _.quitas='1'; _.cambio_primer_cuota(); _.calcular_cuotas(); _.quitar();_.recargar();
 
         _.descargar = function (){
           $http.post('http://'+url+':3001/liquidacion',{  

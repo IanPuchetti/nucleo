@@ -24,7 +24,7 @@ $result2 = $mysqli->query("UPDATE deudores SET responsable = '$operador', email 
 	$result2 = $mysqli->query("UPDATE deudores SET responsable = '$operador' WHERE documento = '$deudor'");
 
 }
-$result3 = $mysqli->query("INSERT INTO gestiones VALUES(NULL, '$deudor', 0, 'Se ha registrado una propuesta.', '$fecha_propuesta', 0, 0, 0, '$operador', 3, '$banco')");
+$result3 = $mysqli->query("INSERT INTO gestiones VALUES(NULL, '$deudor', 0, 'Se ha registrado una propuesta.', '$fecha_propuesta', current_time(), 0, 0, '$operador', 3, '$banco')");
 $mysqli->close();
 echo 'Registrado correctamente';
 ?>

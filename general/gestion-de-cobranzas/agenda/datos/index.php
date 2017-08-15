@@ -587,45 +587,110 @@ table.with-ellipsis td {
       </div>
 </div>
       </div>
-      <div ng-show="ver=='productos'">
-        <div>
-        <table ng-repeat="banco in caso.productos | groupBy: 'banco'" style="width:700px;float:left;margin-top:-2px;">
+       <div ng-show="ver=='productos'">
+        <div style="padding:2px;">
+          <span class="button" style="margin-left::5px;">
+            <span><img src="/.img/bank.png" style="width:15px;height:15px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select ng-model="productos_banco" ng-options="banco[0].dbanco as banco[0].dbanco for banco in caso.productos | groupBy: 'banco'" style="border:none;"></select></span>
+          </span>
+        </div>
+        <div style="width:100%;overflow-x:auto;height:300px;">
+        <table style="width:700px;float:left;margin-top:-2px;">
           <thead>
-      <tr style="background:white;font-size:10px;"><td style="height:18px;width:25%;font-size:12px;">{{banco[0].dbanco}} </td><td data-toggle="tooltip" title="Sub estado" data-placement="bottom"  style="height:18px;width:25%;font-size:12px;background:#eee;">{{banco[0].subestado}}</td><td data-toggle="tooltip" title="Legajo" data-placement="bottom"  style="height:18px;width:25%;font-size:12px;background:#eee;">{{banco[0].legajo}}</td><td style="height:18px;width:25%;font-size:12px;background:#eee;" data-toggle="tooltip" title="N° Gestion" data-placement="bottom" >{{banco[0].numero_gestion}}° Gestión</td>
+          <tr style="background:white;font-size:12px;">
+            <td style="width:100px">Sub estado</td>
+            <td style="width:100px">Legajo</td>
+            <td style="width:100px">N° Gestión</td>
+            <td style="width:100px">Producto</td>
+            <td style="width:100px">Deuda</td>
+            <td style="width:100px">Fecha de ingreso</td>
+            <td style="width:100px">Fecha de mora</td>
           </thead>
           <tbody>
-      <tr ng-repeat="producto in banco" class="table-body producto" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.producto}}</td>
-        <td ng-if="producto.dolar==0" style="height:18px;width:30%;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">${{producto.deuda}}</td>
-        <td  style="height:18px;width:30%;" data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" ng-if="producto.dolar==1">US${{producto.deuda}}</td>
-        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
-        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{producto.fecha_mora | date: "dd/MM/yyyy"}}</td>
+      <tr ng-if="productos_banco" ng-repeat="producto in caso.productos | filter: {dbanco:productos_banco}" class="table-body" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.subestado}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.legajo}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.numero_gestion}}°</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.producto}}</td>
+        <td ng-if="producto.dolar==0" style="height:18px;width:100px;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">${{producto.deuda}}</td>
+        <td  style="height:18px;width:100px;" data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" ng-if="producto.dolar==1">US${{producto.deuda}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{producto.fecha_mora | date: "dd/MM/yyyy"}}</td>
       </tr>
           </tbody>
+          <tbody style="z-index:-1;width:700px;">
+      <tr>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+      </tr>
+      <tr ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+      </tr>
+    </tbody>
     </table>
   </div>
       </div>
       <div ng-show="ver=='propuesta'">
-        <div>
-        <table style="width:700px;float:left;margin-top:-2px;" ng-repeat="(i, propuesta) in caso.propuestas">
+        <div style="padding:2px;">
+          <span class="button" style="margin-left::5px;">
+            <span><img src="/.img/bank.png" style="width:15px;height:15px;"></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select ng-model="productos_banco" ng-options="banco[0].dbanco as banco[0].dbanco for banco in caso.productos | groupBy: 'banco'" style="border:none;"></select></span>
+          </span>
+        </div>
+        <div style="width:100%;overflow-x:auto;height:300px;">
+        <table style="width:700px;float:left;margin-top:-2px;">
           <thead>
-            <tr>
-              <td style="width:100%;">PROPUESTA {{i+1}}</td>
-            </tr>
+          <tr style="background:white;font-size:12px;">
+            <td style="width:100px">Fecha de propuesta</td>
+            <td style="width:100px">Monto</td>
+            <td style="width:100px">Anticipo</td>
+            <td style="width:100px">Cuotas</td>
+            <td style="width:100px">Fecha de pago</td>
+            <td style="width:100px">Aprobado</td>
+            <td style="width:100px">Cuota cero</td>
           </thead>
           <tbody>
-      <tr class="table-body producto" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Fecha propuesta" data-placement="bottom">{{propuesta.fecha_propuesta | date: 'dd/MM/yyyy'}}</td>
-        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Monto total" data-placement="bottom">${{propuesta.monto}}</td>
-        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Anticipo" data-placement="bottom">${{propuesta.anticipo}}</td>
-        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Cuotas" data-placement="bottom">{{propuesta.cuotas}} cuotas</td>
-      </tr>
-      <tr class="table-body producto" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Fecha propuesta" data-placement="bottom">{{propuesta.fecha_pago | date: 'dd/MM/yyyy'}}</td>
-        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Aprobacion" data-placement="bottom">{{propuesta.aprobado==0 ? 'NO APROBADO' : 'APROBADO'}}</td>
-        <td style="height:18px;width:33.3%;" data-toggle="tooltip" title="Cuota cero" data-placement="bottom">{{propuesta.cuota_cero==0 ? '' : 'CUOTA CERO'}}</td>
+      <tr ng-if="productos_banco" ng-repeat="propuesta in caso.propuestas | filter: {banco:productos_banco}" class="table-body" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.fecha_propuesta | date: 'dd/MM/yyyy'}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">${{propuesta.monto}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">${{propuesta.anticipo}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.cuotas}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">{{propuesta.fecha_pago | date: 'dd/MM/yyyy'}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{propuesta.aprobado==0 ? 'NO APROBADO' : 'APROBADO'}}</td>
+        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{propuesta.cuota_cero==0 ? '' : 'CUOTA CERO'}}</td>
       </tr>
           </tbody>
+          <tbody style="z-index:-1;width:700px;">
+      <tr>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+      </tr>
+      <tr ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
+      </tr>
+    </tbody>
     </table>
   </div>
       </div>
