@@ -502,34 +502,38 @@ table.with-ellipsis td {
     <table style="width:636px;margin-left:1px;" class="width-ellipsis">
     <tbody ng-if="refresh==0" ng-init="refresh=0;" class="casos" id="myTable">
       <tr>
+        <td style="width:70px"></td>
+        <td style="width:55px"></td>
         <td style="width:80px"></td>
-        <td style="width:60px"></td>
-        <td style="width:300px"></td>
-        <td style="width:100px"></td>
+        <td style="width:250px"></td>
+        <td style="width:85px"></td>
         <td style="width:94px"></td>
       </tr>
       <tr ng-repeat="(i, gestion) in ::caso.historia" class="caso" id="{{gestion.documento}}" ng-click="elegir(gestion)">
-        <td style="width:80px;">{{gestion.fecha | date:'dd/MM/yyyy'}}{{gestion.fecha.length > 25 ? "..." : ""}}</td>
-        <td style="width:60px;">{{gestion.hora |limitTo: 27}}{{gestion.hora.length > 25 ? "..." : ""}}</td>
-        <td style="width:300px;" ><span style="width:100%;" data-toggle="tooltip" title="{{gestion.comentario}}" data-placement="bottom">{{gestion.comentario |limitTo: 50}}{{gestion.comentario.length > 25 ? "..." : ""}}</span></td>
-        <td style="width:100px;" >{{gestion.tipo_gestion |limitTo: 30}}{{gestion.tipo_gestion.length > 25 ? "..." : ""}}</td>
+        <td style="width:70px;">{{gestion.fecha | date:'dd/MM/yyyy'}}{{gestion.fecha.length > 25 ? "..." : ""}}</td>
+        <td style="width:55px;">{{gestion.hora |limitTo: 27}}{{gestion.hora.length > 25 ? "..." : ""}}</td>
+        <td style="width:80px;">{{gestion.telefono}}{{gestion.fecha.length > 25 ? "..." : ""}}</td>
+        <td style="width:250px;" ><span style="width:100%;" data-toggle="tooltip" title="{{gestion.comentario}}" data-placement="bottom">{{gestion.comentario |limitTo: 50}}{{gestion.comentario.length > 25 ? "..." : ""}}</span></td>
+        <td style="width:85px;" >{{gestion.tipo_gestion |limitTo: 30}}{{gestion.tipo_gestion.length > 25 ? "..." : ""}}</td>
         <td style="width:94px;" >{{gestion.operador |limitTo: 30}}{{gestion.operador.length > 25 ? "..." : ""}}</td>
       </tr>
       <tr infinite-scroll="bajar()" infinite-scroll-container='".caso"' infinite-scroll-distance="5" infinite-scroll-disabled="!listado || limite>=listado.length"></tr>
     </tbody>
     <tbody>
       <tr ng-if="caso.historia.length==0">
+        <td style="width:70px"></td>
+        <td style="width:55px"></td>
         <td style="width:80px"></td>
-        <td style="width:60px"></td>
-        <td style="width:300px"></td>
+        <td style="width:250px"></td>
         <td style="width:100px"></td>
         <td style="width:94px"></td>
       </tr>
       <tr ng-if="caso.historia.length<i" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+        <td style="width:70px"></td>
+        <td style="width:55px"></td>
         <td style="width:80px"></td>
-        <td style="width:60px"></td>
-        <td style="width:300px"></td>
-        <td style="width:100px"></td>
+        <td style="width:250px"></td>
+        <td style="width:85px"></td>
         <td style="width:94px"></td>
       </tr>
     </tbody>
@@ -537,22 +541,23 @@ table.with-ellipsis td {
   <table style="right:15px;position:absolute;width:636px;" class="width-ellipsis">
       <thead>
         <tr>
-          <td style="width:80px">Fecha</td>
-          <td style="width:60px">Hora</td>
-          <td style="width:300px">Descripcion</td>
-          <td style="width:100px">Tipo</td>
+          <td style="width:70px">Fecha</td>
+          <td style="width:55px">Hora</td>
+          <td style="width:80px">Teléfono</td>
+          <td style="width:250px">Descripcion</td>
+          <td style="width:85px">Tipo</td>
           <td style="width:94px">Operador</td>
         </tr>
     </table>
   </div>
   <div style="margin:15px;height:100px;overflow-y:auto;border-radius:5px;border:1px solid #ddd;background:#fafafa">
     <div style="padding:10px;">{{visualizar.comentario}}</div>
-    <div style="padding:10px;float:right;color:#aaa;">{{visualizar.fecha | date:'dd/MM/yyyy'}} - {{visualizar.hora | date: 'HH:mm'}}</div>
+    <div style="padding:10px;float:right;color:#aaa;">{{visualizar.telefono}} - {{visualizar.fecha | date:'dd/MM/yyyy'}} - {{visualizar.hora | date: 'HH:mm'}}</div>
   </div>
 </div>
   <div style="bottom:5px;left:5px;position:fixed;">
   <span class="dropup">
-    <span class="dropdown-toggle  button noselect" data-toggle="dropdown"> <span><img src="/.img/gestor.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
+    <span class="dropdown-toggle  button noselect" data-toggle="dropdown"> <span><img src="/.img/gestor.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="top"></span>
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Gestionar</span></span>
     <ul class="dropdown-menu noshadow" style="border-radius:5px;padding:10px;">
       <li >Gestionar por su deuda con</li>

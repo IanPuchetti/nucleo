@@ -325,6 +325,10 @@ tbody tr:hover{
   border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;
   cursor:pointer;
 }
+
+.button:hover{
+  border-color:#abdf47;
+}
 .button:hover>#change{
   background:#eafada;
 }
@@ -409,6 +413,9 @@ table.with-ellipsis td {
   min-width: 300px !important;
   text-align: center;
 }
+input{
+  background: none;
+}
 </style>
   </head>
 
@@ -416,200 +423,74 @@ table.with-ellipsis td {
 <div class="noselect">
 <span class="drag"></span><span class="close" onclick="quit=true;window.close()" ng-show="quit==true" ng-init="quit=true">×</span>
 </div>
-<div class="options noselect">
-<span class="button" ng-click="ver='deudor'">
+<div style="padding:20px;">
+  <div style="margin-top:15px;">
+  <span class="button">
   <span><img src="/.img/deudor.png" style="width:17px;height:15px;margin-left:2px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">Deudor</span>
-</span>
-
-<span class="button" ng-click="ver='historia'">
-  <span><img src="/.img/historia.png" style="width:20px;height:17px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">Historia</span>
-</span>
-<span class="button" ng-click="ver='telefonos'">
-  <span><img src="/.img/telefono.png" style="width:17px;height:17px;margin:1px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">Telefonos</span>
-</span>
-<span class="button" ng-click="ver='productos'">
-  <span><img src="/.img/productos.png" style="width:20px;height:15px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">Productos</span>
-</span>
-<span class="button" ng-click="ver='propuesta'">
-  <span><img src="/.img/propuesta.png" style="width:20px;height:15px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">Propuesta</span>
-</span>
-<span class="button" ng-show="caso.deudor.link" ng-click="reporte()">
-  <span><img src="/.img/reporte.png" style="width:12px;height:15px;margin:4px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" id="change">Reporte</span>
-</span>
-  </div>
-  <div class="content">
-    <div ng-show="ver=='deudor'" style="padding:20px;">
-      <div>
-        <span class="button">
-          <span data-toggle="tooltip" title="Titular" data-placement="bottom"><img src="/.img/deudor.png" style="width:17px;height:15px;margin-left:2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{caso.deudor.apellido}}</span>
-        </span>
-      </div>
-      <div style="margin-top:10px;">
-        <span class="button">
-          <span><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Documento" data-placement="bottom"></span>
-          <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{caso.deudor.tipo_documento}}</span>
-          <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;">{{caso.deudor.documento}}</span>
-        </span>
-      </div>
-      <div style="margin-top:10px;">
-        <span class="button noselect">
-          <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Correo electronico" data-placement="bottom">@</span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.email" placeholder="Correo electronico..."></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.email()"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.email()"  data-toggle="tooltip" title="Enviar Email" data-placement="bottom"><img src="/.img/mail.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        </span>
-      </div>
-      <div style="margin-top:10px;">
-        <span class="button">
-          <span><img src="/.img/home.png" style="width:17px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Direccion particular 1" data-placement="bottom"></span>
-          <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.direccion_particular" placeholder="Direccion particular..."></span>
-        </span>
-      </div>
-      <div style="margin-top:10px;">
-        <span class="button">
-          <span><img src="/.img/home.png" style="width:17px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Direccion particular 2" data-placement="bottom"></span>
-<span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.direccion_particular2" placeholder="Direccion particular..."></span>        </span>
-      </div>
-      <div style="margin-top:10px;">
-        <span class="button">
-          <span><img src="/.img/home.png" style="width:17px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Direccion particular 3" data-placement="bottom"></span>
-<span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.direccion_particular3" placeholder="Direccion particular..."></span>        </span>
-      </div>
-      <div style="margin-top:10px;">
-        <span class="button">
-          <span><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Direccion laboral 1" data-placement="bottom"></span>
-<span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.direccion_laboral" placeholder="Direccion laboral..."></span>        </span>
-      </div>
-      <div style="margin-top:10px;">
-        <span class="button">
-          <span><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Direccion laboral 2" data-placement="bottom"></span>
-<span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.direccion_laboral2" placeholder="Direccion laboral..."></span>        </span>
-      </div>
-  </div>
-
-  <div ng-show="ver=='historia'">
-  <div style="height:205px;overflow-y:scroll;overflow-x:hidden;border-bottom:1px solid #ddd;">
-    <table style="width:636px;margin-left:1px;" class="width-ellipsis">
-    <tbody ng-if="refresh==0" ng-init="refresh=0;" class="casos" id="myTable">
-      <tr>
-        <td style="width:80px"></td>
-        <td style="width:60px"></td>
-        <td style="width:300px"></td>
-        <td style="width:100px"></td>
-        <td style="width:94px"></td>
-      </tr>
-      <tr ng-repeat="(i, gestion) in ::caso.historia" class="caso" id="{{gestion.documento}}" ng-click="elegir(gestion)">
-        <td style="width:80px;">{{gestion.fecha | date:'dd/MM/yyyy'}}{{gestion.fecha.length > 25 ? "..." : ""}}</td>
-        <td style="width:60px;">{{gestion.hora |limitTo: 27}}{{gestion.hora.length > 25 ? "..." : ""}}</td>
-        <td style="width:300px;" ><span style="width:100%;" data-toggle="tooltip" title="{{gestion.comentario}}" data-placement="bottom">{{gestion.comentario |limitTo: 50}}{{gestion.comentario.length > 25 ? "..." : ""}}</span></td>
-        <td style="width:100px;" >{{gestion.tipo_gestion |limitTo: 30}}{{gestion.tipo_gestion.length > 25 ? "..." : ""}}</td>
-        <td style="width:94px;" >{{gestion.operador |limitTo: 30}}{{gestion.operador.length > 25 ? "..." : ""}}</td>
-      </tr>
-      <tr infinite-scroll="bajar()" infinite-scroll-container='".caso"' infinite-scroll-distance="5" infinite-scroll-disabled="!listado || limite>=listado.length"></tr>
-    </tbody>
-    <tbody>
-      <tr ng-if="caso.historia.length==0">
-        <td style="width:80px"></td>
-        <td style="width:60px"></td>
-        <td style="width:300px"></td>
-        <td style="width:100px"></td>
-        <td style="width:94px"></td>
-      </tr>
-      <tr ng-if="caso.historia.length<i" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
-        <td style="width:80px"></td>
-        <td style="width:60px"></td>
-        <td style="width:300px"></td>
-        <td style="width:100px"></td>
-        <td style="width:94px"></td>
-      </tr>
-    </tbody>
-  </table>
-  <table style="right:15px;position:absolute;width:636px;" class="width-ellipsis">
-      <thead>
-        <tr>
-          <td style="width:80px">Fecha</td>
-          <td style="width:60px">Hora</td>
-          <td style="width:300px">Descripcion</td>
-          <td style="width:100px">Tipo</td>
-          <td style="width:94px">Operador</td>
-        </tr>
-    </table>
-  </div>
-  <div style="margin:15px;height:100px;overflow-y:auto;border-radius:5px;border:1px solid #ddd;background:#fafafa">
-    <div style="padding:10px;">{{visualizar.comentario}}</div>
-    <div style="padding:10px;float:right;color:#aaa;">{{visualizar.fecha | date:'dd/MM/yyyy'}} - {{visualizar.hora | date: 'HH:mm'}}</div>
-  </div>
-</div>
-  <div style="bottom:5px;left:5px;position:fixed;">
-  <span class="dropup">
-    <span class="dropdown-toggle  button noselect" data-toggle="dropdown"> <span><img src="/.img/gestor.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
-          <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Gestionar</span></span>
-    <ul class="dropdown-menu noshadow" style="border-radius:5px;padding:10px;">
-      <li >Gestionar por su deuda con</li>
-      <li style="margin-top:10px;" ng-repeat="banco in caso.productos  | groupBy: 'banco'"  ng-click="gestionar(banco[0].banco)"><span class="button noselect"><span><img src="/.img/bank.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
-          <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{banco[0].dbanco}}</span></span></li>
-    </ul>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >{{propuesta.apellido}}</span>
+  <span style="border-left:1px solid #ddd;padding:2px;"><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >{{propuesta.documento}}</span>
+  </span>
+  <span class="button" style="margin-left:20px;">
+  <span><img src="/.img/gestor.png" style="width:17px;height:15px;margin-left:2px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >{{propuesta.asignacion}}° Gestión</span>
   </span>
   </div>
-  <div ng-show="ver=='telefonos'" style="padding:20px;">
-      <div style="text-align:center;">
-        <span class="button noselect">
-          <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Nuevo numero" data-placement="bottom"><img src="/.img/phone.png" style="width:15px;height:15px;margin-left:2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;width:150px;" ng-model="nuevo.telefono.numero" placeholder="Nuevo numero..."></span>
-        <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;width:170px;" ng-model="nuevo.telefono.comentario" placeholder="Comentario..."></span>
-        <span style="border-left:1px solid #ddd;padding:0px 5px 2px 5px;font-size:17px;" class="color-gr" ng-click="agregar.telefono()"  data-toggle="tooltip" title="Agregar" data-placement="bottom"><b>+</b></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" class="color-gr" ng-show="nuevo.telefono.modificando==1"  data-toggle="tooltip" title="Agregando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="nuevo.telefono.modificado==1"  data-toggle="tooltip" title="Agregado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        </span>
-      </div>
-      <div style="text-align:center;padding:6px;margin-top:10px;" class="alert-gr">
-        <span ng-show="nuevo.telefono.alert"><img src="/.img/alert.png" style="width:12px;margin-top:-4px;">&nbsp; La cantidad de dígitos no es suficiente para ser un telefono.</span>
-      </div>
-      <div style="height:240px;overflow-y:auto;width:103%;border-top:1px solid #ddd;">
-      <div style="margin-top:10px;" ng-repeat="(i, telefono) in caso.telefonos">
-        <span class="button noselect">
-          <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Telefono {{i+1}}" data-placement="bottom"><img src="/.img/phone.png" style="width:15px;height:15px;margin-left:2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px 10px 2px 10px;margin-right:-2px;">{{telefono.numero}}</span>
-        <span style="border-left:1px solid #ddd;padding:2px 2px 2px 10px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;" ng-model="telefono.comentario" placeholder="Comentario..."></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.telefono(telefono.numero, telefono.comentario, i)"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.sms(telefono.numero)"  data-toggle="tooltip" title="Enviar SMS" data-placement="bottom"><img src="/.img/mail.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.ivr(telefono.numero)"  data-toggle="tooltip" title="Enviar IVR" data-placement="bottom"><img src="/.img/ivr.png" style="width:17px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
-        </span>
-      </div>
+  <div style="margin-top:15px;">
+  <span class="button">
+  <span><img src="/.img/estado.png" style="width:17px;height:15px;margin-left:2px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >{{propuesta.estado}}</span>
+  <span style="border-left:1px solid #ddd;padding:2px;"><img src="/.img/sub_estado.png" style="width:17px;height:15px;margin-left:2px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >{{propuesta.sub_estado}}</span>
+  </span>
+  <span class="button" style="margin-left:20px;">
+  <span><img src="/.img/bank.png" style="width:17px;height:15px;margin-left:2px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >{{propuesta.banco}}</span>
+  </span>
+  </div>
+  <hr>
+  <div style="margin-top:15px;">
+  <span class="button" >
+  <span><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Fecha de generación:</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" ><input type="date" ng-model="propuesta.fecha_propuesta" style="width:120px;border:0px;font-size:12px;"></span>
+  </span>
+  <span class="button" style="margin-left:25px;">
+  <span><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Fecha de pago:</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" ><input type="date" ng-model="propuesta.fecha_pago" style="width:120px;border:0px;font-size:12px;"></span>
+  </span>
+  </div>
+  <div style="margin-top:15px;">
+  <span class="button">
+  <span><img src="/.img/productos.png" style="width:17px;height:15px;margin-left:2px;">Anticipo</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >$<input type="number" style="border:0px;font-size:14px;width:90px;" ng-model="propuesta.monto_primer_pago"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;"><img src="/.img/productos.png" style="width:17px;height:15px;margin-left:2px;">Monto total</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" >$<input type="number" style="border:0px;font-size:14px;width:90px;" ng-model="propuesta.monto_total"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;"><img src="/.img/wallet.png" style="width:15px;height:13px;margin-left:2px;">Cuotas</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" ><input type="number" style="border:0px;font-size:14px;width:50px;" ng-model="propuesta.cuotas"></span>
+  </span>
+  </div>
+  <div style="margin-top:15px;">
+  <span class="button">
+  <span><img src="/.img/telefono.png" style="width:15px;height:15px;margin-left:2px;"></span>
+  <div style="display:inline-block;border-left:1px solid #ddd;padding:2px;margin-right:-2px;width:150px;" >{{propuesta.telefono1==0?'&nbsp;': propuesta.telefono1}}</div>
+  <div style="display:inline-block;border-left:1px solid #ddd;padding:2px;margin-right:-2px;width:150px;" >{{propuesta.telefono2==0?'&nbsp;': propuesta.telefono2}}</div>
+  <div style="display:inline-block;border-left:1px solid #ddd;padding:2px;margin-right:-2px;width:150px;" >{{propuesta.telefono3==0?'&nbsp;': propuesta.telefono3}}</div>
+  </span>
+  </div>
+  <div style="margin-top:15px;">
+   <span class="button" >
+  <span><img src="/.img/reporte.png" style="width:13px;height:15px;margin-left:2px;"> Cuota cero</span>
+  <span style="border-left:1px solid #ddd;padding:5px;margin-right:-2px;" ng-show="propuesta.cuota_cero" ng-click="propuesta.cuota_cero=0" >SI</span><span style="border-left:1px solid #ddd;padding:5px;margin-right:-2px;" ng-click="propuesta.cuota_cero=1" ng-hide="propuesta.cuota_cero">NO</span>
+  </span>
+  <span class="button" style="margin-left:100px;">
+  <span><img src="/.img/calificacion.png" style="width:13px;height:15px;margin-left:2px;"> Aprobado</span>
+  <span style="border-left:1px solid #ddd;padding:5px;margin-right:-2px;" class="color-gr" ng-show="propuesta.aprobado" ng-click="propuesta.aprobado=0" >SI</span><span style="border-left:1px solid #ddd;padding:5px;margin-right:-2px;color:red;" ng-click="propuesta.aprobado=1" ng-hide="propuesta.aprobado">NO</span>
+  </span>
 </div>
-      </div>
-      <div ng-show="ver=='productos'">
-        <div>
-        <table ng-repeat="banco in caso.productos | groupBy: 'banco'" style="width:700px;float:left;margin-top:-2px;">
-          <thead>
-      <tr style="background:white;font-size:10px;"><td style="height:18px;width:25%;font-size:12px;">{{banco[0].dbanco}} </td><td data-toggle="tooltip" title="Sub estado" data-placement="bottom"  style="height:18px;width:25%;font-size:12px;background:#eee;">{{banco[0].subestado}}</td><td data-toggle="tooltip" title="Legajo" data-placement="bottom"  style="height:18px;width:25%;font-size:12px;background:#eee;">{{banco[0].legajo}}</td><td style="height:18px;width:25%;font-size:12px;background:#eee;" data-toggle="tooltip" title="N° Gestion" data-placement="bottom" >{{banco[0].numero_gestion}}° Gestión</td>
-          </thead>
-          <tbody>
-      <tr ng-repeat="producto in banco" class="table-body producto" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.producto}}</td>
-        <td ng-if="producto.dolar==0" style="height:18px;width:30%;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">${{producto.deuda}}</td>
-        <td  style="height:18px;width:30%;" data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" ng-if="producto.dolar==1">US${{producto.deuda}}</td>
-        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
-        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{producto.fecha_mora | date: "dd/MM/yyyy"}}</td>
-      </tr>
-          </tbody>
-    </table>
-  </div>
-      </div>
-  </div>
-
-
+</div>
+<div style="position:fixed;right:15px;bottom:15px;padding:5px;" class="button">
+  <img src="/.img/write.png" style="width:15px;height:15px;">
+</div>
   <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="propuesta">
     <img src="/.img/loading.gif" style="position:absolute;top:45%;left:45%;width:30px;opacity:0.3;">
   </div>
@@ -626,7 +507,7 @@ angular
   })
   .controller("manual", function ($scope, $http, $timeout, socket) {
     var _ = $scope;
-    $http.post('../php/propuesta.php',{id:p}).then(function (res){_.propuesta=res.data;});
+    $http.post('../php/propuesta.php',{id:p}).then(function (res){_.propuesta=res.data;_.propuesta.fecha_pago=new Date(_.propuesta.fecha_pago);_.propuesta.fecha_propuesta=new Date(_.propuesta.fecha_propuesta);_.propuesta.monto_total=parseFloat(_.propuesta.monto_total);_.propuesta.monto_primer_pago=parseFloat(_.propuesta.monto_primer_pago);_.propuesta.cuotas=parseFloat(_.propuesta.cuotas);});
     _.modificar=function(){};
 });
 var hoy = new Date(), quit=false;

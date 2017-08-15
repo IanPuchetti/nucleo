@@ -841,7 +841,7 @@ angular.module('exporte',['infinite-scroll',"chart.js"])
         };
   _.aprobar=function (p){$("tr").css('background','white');
                             $("#"+p).css('background','#dfc');
-                                window.open('datos/?p='+p, p,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
+                                window.open('datos/?p='+p, p,'height=300, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
                           };
   _.buscar={  rapido: function (){
           $http.post('php/buscar-rapido.php', {campos : _.campo, filtro:_.rapido}).then(function(res){
