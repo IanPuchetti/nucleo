@@ -724,7 +724,7 @@ label:hover:before {
       </tr>
     </thead>
     <tbody class="casos" ng-if="volver==1" infinite-scroll="bajar()" infinite-scroll-container='".tablon"' infinite-scroll-distance="1" infinite-scroll-disabled="!tabla || limite>=tabla.length">
-      <tr ng-repeat="(i, fila) in ::tabla  | orderBy: orden" ng-if="i<limite" ng-dblclick="aprobar(fila.id)">
+      <tr ng-repeat="(i, fila) in ::tabla  | orderBy: orden" ng-if="i<limite" ng-dblclick="aprobar(fila.id, fila.aprobado, i)">
       <td ng-repeat="(i, valor) in fila" ng-if="fila[i]!=fila['id']"  style="width:100px;">{{valor}}</td>
     </tr>
     </tbody>
@@ -802,7 +802,6 @@ label:hover:before {
   </div>
 
   <script type="text/javascript">
-
     function dateTransform(a,b){if(a===Array){a=a.split('-');a=a[2]+'/'+a[1]+'/'+a[0];}else{if(a[0][b]){for(var i in a){a[i][b]=a[i][b].split('-');a[i][b]=a[i][b][2]+'/'+a[i][b][1]+'/'+a[i][b][0];}}}return a;}
 var produtos, producto;var counted;
 var date= new Date();
@@ -839,10 +838,18 @@ angular.module('exporte',['infinite-scroll',"chart.js"])
           }
         
         };
-  _.aprobar=function (p){$("tr").css('background','white');
-                            $("#"+p).css('background','#dfc');
-                                window.open('datos/?p='+p, p,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
-                          };
+
+  _.aprobar=function (i,a,f){
+    _.volver=0;
+    $http.post('php/aprobar.php', {id:i , aprobado:a}).then(function(res){
+      if(res.data=='SI'){
+      }else{
+      }
+      _.tabla[f].aprobado=res.data;
+      $timeout(function (){_.activar();});
+    });
+
+  };
   _.buscar={  rapido: function (){
           $http.post('php/buscar-rapido.php', {campos : _.campo, filtro:_.rapido}).then(function(res){
             _.tabla=res.data;

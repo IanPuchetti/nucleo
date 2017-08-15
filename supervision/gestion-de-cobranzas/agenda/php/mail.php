@@ -5,7 +5,7 @@ $hoy=$request->hoy;
 $documento=$request->documento;
 $banco=$request->banco;
 $mysqli = new mysqli("localhost", "ian", "p", "nucleo");
-$result = $mysqli->query("INSERT INTO mails VALUES('$documento', '$banco', '$hoy')");
+$result = $mysqli->query("INSERT INTO mails VALUES('$documento', CURDATE())");
 $mysqli->close();
 echo 'Mail puesto en cola.';
 ?>

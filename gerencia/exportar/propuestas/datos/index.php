@@ -7,6 +7,7 @@ header("Location: ../administracion/");
 if($_SESSION['puesto']=='ger'){
 }else{
 if($_SESSION['puesto']=='sup'){
+header("Location: ../supervision/");
 }else{
 if($_SESSION['puesto']=='gen'){
 }else{
@@ -462,6 +463,7 @@ table.with-ellipsis td {
           <span class="color-gr " style="font-size:15px;padding:4px;" data-toggle="tooltip" title="Correo electronico" data-placement="bottom">@</span>
         <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><input style="border:0px;font-size:13px;" ng-model="caso.deudor.email" placeholder="Correo electronico..."></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.email()"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.email()"  data-toggle="tooltip" title="Enviar Email" data-placement="bottom"><img src="/.img/mail.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.deudor.modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
@@ -553,7 +555,7 @@ table.with-ellipsis td {
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Gestionar</span></span>
     <ul class="dropdown-menu noshadow" style="border-radius:5px;padding:10px;">
       <li >Gestionar por su deuda con</li>
-      <li style="margin-top:10px;" ng-repeat="banco in caso.productos  | groupBy: 'banco'"  ng-click="gestionar(banco.banco)"><span class="button noselect"><span><img src="/.img/bank.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
+      <li style="margin-top:10px;" ng-repeat="banco in caso.productos  | groupBy: 'banco'"  ng-click="gestionar(banco[0].banco)"><span class="button noselect"><span><img src="/.img/bank.png" style="width:14px;height:15px;margin-left:2px;" data-toggle="tooltip" title="Gestionar" data-placement="bottom"></span>
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{banco[0].dbanco}}</span></span></li>
     </ul>
   </span>
@@ -579,6 +581,8 @@ table.with-ellipsis td {
         <span style="border-left:1px solid #ddd;padding:2px 10px 2px 10px;margin-right:-2px;">{{telefono.numero}}</span>
         <span style="border-left:1px solid #ddd;padding:2px 2px 2px 10px;margin-right:-2px;"><input style="border:0px;font-size:13px;color:#666;" ng-model="telefono.comentario" placeholder="Comentario..."></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-click="modificar.telefono(telefono.numero, telefono.comentario, i)"  data-toggle="tooltip" title="Modificar" data-placement="bottom"><img src="/.img/write.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.sms(telefono.numero)"  data-toggle="tooltip" title="Enviar SMS" data-placement="bottom"><img src="/.img/mail.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
+        <span style="border-left:1px solid #ddd;padding:2px;" ng-click="enviar.ivr(telefono.numero)"  data-toggle="tooltip" title="Enviar IVR" data-placement="bottom"><img src="/.img/ivr.png" style="width:17px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificando==1"  data-toggle="tooltip" title="Modificando..." data-placement="bottom"><img src="/.img/loading.gif" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         <span style="border-left:1px solid #ddd;padding:2px;" ng-show="caso.telefonos[i].modificado==1"  data-toggle="tooltip" title="Modificado correctamente." data-placement="bottom"><img src="/.img/yes.png" style="width:15px;height:15px;margin-left:2px;margin-top:-2px;"></span>
         </span>
@@ -586,120 +590,32 @@ table.with-ellipsis td {
 </div>
       </div>
       <div ng-show="ver=='productos'">
-        <div style="padding:2px;">
-          <span class="button" style="margin-left::5px;">
-            <span><img src="/.img/bank.png" style="width:15px;height:15px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select ng-model="productos_banco" ng-options="banco[0].dbanco as banco[0].dbanco for banco in caso.productos | groupBy: 'banco'" style="border:none;"></select></span>
-          </span>
-        </div>
-        <div style="width:100%;overflow-x:auto;height:300px;">
-        <table style="width:700px;float:left;margin-top:-2px;">
+        <div>
+        <table ng-repeat="banco in caso.productos | groupBy: 'banco'" style="width:700px;float:left;margin-top:-2px;">
           <thead>
-          <tr style="background:white;font-size:12px;">
-            <td style="width:100px">Sub estado</td>
-            <td style="width:100px">Legajo</td>
-            <td style="width:100px">N° Gestión</td>
-            <td style="width:100px">Producto</td>
-            <td style="width:100px">Deuda</td>
-            <td style="width:100px">Fecha de ingreso</td>
-            <td style="width:100px">Fecha de mora</td>
+      <tr style="background:white;font-size:10px;"><td style="height:18px;width:25%;font-size:12px;">{{banco[0].dbanco}} </td><td data-toggle="tooltip" title="Sub estado" data-placement="bottom"  style="height:18px;width:25%;font-size:12px;background:#eee;">{{banco[0].subestado}}</td><td data-toggle="tooltip" title="Legajo" data-placement="bottom"  style="height:18px;width:25%;font-size:12px;background:#eee;">{{banco[0].legajo}}</td><td style="height:18px;width:25%;font-size:12px;background:#eee;" data-toggle="tooltip" title="N° Gestion" data-placement="bottom" >{{banco[0].numero_gestion}}° Gestión</td>
           </thead>
           <tbody>
-      <tr ng-if="productos_banco" ng-repeat="producto in caso.productos | filter: {dbanco:productos_banco}" class="table-body" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.subestado}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.legajo}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.numero_gestion}}°</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.producto}}</td>
-        <td ng-if="producto.dolar==0" style="height:18px;width:100px;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">${{producto.deuda}}</td>
-        <td  style="height:18px;width:100px;" data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" ng-if="producto.dolar==1">US${{producto.deuda}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{producto.fecha_mora | date: "dd/MM/yyyy"}}</td>
+      <tr ng-repeat="producto in banco" class="table-body producto" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
+        <td style="height:18px;width:30%;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.producto}}</td>
+        <td ng-if="producto.dolar==0" style="height:18px;width:30%;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">${{producto.deuda}}</td>
+        <td  style="height:18px;width:30%;" data-toggle="tooltip" title="Deuda en dolares" data-placement="bottom" ng-if="producto.dolar==1">US${{producto.deuda}}</td>
+        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{producto.fecha_deuda | date: "dd/MM/yyyy"}}</td>
+        <td style="height:18px;width:17.5%;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{producto.fecha_mora | date: "dd/MM/yyyy"}}</td>
       </tr>
           </tbody>
-          <tbody style="z-index:-1;width:700px;">
-      <tr>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-      </tr>
-      <tr ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-      </tr>
-    </tbody>
     </table>
   </div>
       </div>
-      <div ng-show="ver=='propuesta'">
-        <div style="padding:2px;">
-          <span class="button" style="margin-left::5px;">
-            <span><img src="/.img/bank.png" style="width:15px;height:15px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select ng-model="productos_banco" ng-options="banco[0].dbanco as banco[0].dbanco for banco in caso.productos | groupBy: 'banco'" style="border:none;"></select></span>
-          </span>
-        </div>
-        <div style="width:100%;overflow-x:auto;height:300px;">
-        <table style="width:700px;float:left;margin-top:-2px;">
-          <thead>
-          <tr style="background:white;font-size:12px;">
-            <td style="width:100px">Fecha de propuesta</td>
-            <td style="width:100px">Monto</td>
-            <td style="width:100px">Anticipo</td>
-            <td style="width:100px">Cuotas</td>
-            <td style="width:100px">Fecha de pago</td>
-            <td style="width:100px">Aprobado</td>
-            <td style="width:100px">Cuota cero</td>
-          </thead>
-          <tbody>
-      <tr ng-if="productos_banco" ng-repeat="propuesta in caso.propuestas | filter: {banco:productos_banco}" class="table-body" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.fecha_propuesta | date: 'dd/MM/yyyy'}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">${{propuesta.monto}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">${{propuesta.anticipo}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.cuotas}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">{{propuesta.fecha_pago | date: 'dd/MM/yyyy'}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{propuesta.aprobado==0 ? 'NO APROBADO' : 'APROBADO'}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{propuesta.cuota_cero==0 ? '' : 'CUOTA CERO'}}</td>
-      </tr>
-          </tbody>
-          <tbody style="z-index:-1;width:700px;">
-      <tr>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-      </tr>
-      <tr ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
   </div>
 
 
-  <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
+  <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="propuesta">
     <img src="/.img/loading.gif" style="position:absolute;top:45%;left:45%;width:30px;opacity:0.3;">
   </div>
 <script>
 var $_GET={};var url=document.URL.split("/")[2];document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g,function(){function decode(s) {return decodeURIComponent(s.split("+").join(" "));}$_GET[decode(arguments[1])] = decode(arguments[2]);});
-var d=$_GET['d'], window2, window3;
+var p=$_GET['p'], window2, window3;
 angular
   .module("gestion", ['infinite-scroll','btford.socket-io','angular.filter'])
   .factory('socket', function (socketFactory) {
@@ -710,36 +626,8 @@ angular
   })
   .controller("manual", function ($scope, $http, $timeout, socket) {
     var _ = $scope;
-    _.d=d;
-    _.i=$_GET['i'];
-    _.listado=[];
-    _.caso={};
-    _.limite=5;
-    _.ver='deudor';
-    _.getNumber=function(n){return new Array(n);};
-    _.gestionar= function (b){
-    window2=window.open('gestion/?d='+d+'&b='+b+'&i='+_.i, 'call'+d,'height=330, width=300, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
-    };
-    _.reporte=function(){window3 = window.open('reporte/?u='+_.caso.deudor.link, 'reporte'+d,'height=600, width=400, left=100, top=0, resizable=yes, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
-};
-    _.bajar=function(){_.limite=_.limite+1;};
-    _.elegir=function (c){_.visualizar=c};
-    _.tooltip= function (){$timeout(function(){$('[data-toggle="tooltip"]').tooltip();});};
-    _.obtener={ telefonos:function(){$http.post('../php/telefonos.php',{documento:_.d}).then(function(res){_.caso.telefonos=res.data;})},
-               deudor:function (){$http.post('../php/deudor-domicilios.php',{documento:_.d}).then(function(res){_.caso.deudor=res.data[0];})},
-               historia:function(){$http.post('../php/gestion.php',{documento:_.d}).then(function(res){_.caso.historia=res.data;$timeout(function(){_.refresh=0;_.tooltip();});});},
-               propuestas:function(){$http.post('../php/propuestas.php',{documento:_.d}).then(function (res){_.caso.propuestas=res.data;});}
-             };
-    _.refrescar=function (){_.obtener.telefonos();_.obtener.deudor();_.obtener.historia();_.obtener.productos();_.obtener.propuestas();_.tooltip()};
-    _.agregar={telefono:function(){if(_.nuevo.telefono.numero.length<6){_.nuevo.telefono.alert=1;}else{_.nuevo.telefono.alert=0;_.nuevo.telefono.modificado=0;_.nuevo.telefono.modificando=1;_.nuevo.telefono['documento']=_.d;_.nuevo.telefono.numero=sacar011(_.nuevo.telefono.numero.replace(/[^0-9.]/g, ""));$http.post('../php/agregar-telefono.php',_.nuevo.telefono).then(function(){_.nuevo.telefono={modificado:1};_.obtener.telefonos();_.tooltip();socket.emit('telefonos');});}}};
-    _.refrescar();
-    _.modificar={email:function (){_.caso.deudor.modificado=0;_.caso.deudor.modificando=1;$http.post('../php/modificar-deudor.php',_.caso.deudor).then(function(res){_.caso.deudor.modificando=0;_.caso.deudor.modificado=1;});},
-                 telefono: function (n,c,i){_.caso.telefonos[i].modificado=0;_.caso.telefonos[i].modificando=1;$http.post('../php/modificar-telefono.php',{numero:n,comentario:c}).then(function(){_.caso.telefonos[i].modificando=0;_.caso.telefonos[i].modificado=1;})}
-               };
-    socket.on('abrir-gestion',function(){_.quit=false;});
-    socket.on('cerrar-gestion',function(){_.quit=true;_.obtener.productos();});
-    socket.on('gestionado',function(){_.refresh=1;_.obtener.historia();});
-    socket.on('telefonos',function(){_.obtener.telefonos();});
+    $http.post('../php/propuesta.php',{id:p}).then(function (res){_.propuesta=res.data;});
+    _.modificar=function(){};
 });
 var hoy = new Date(), quit=false;
 $(document).ready(function(){

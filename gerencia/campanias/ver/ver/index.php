@@ -414,7 +414,7 @@ select{
           <div class="panel-body" style="text-align:left;font-weight:200;font-size:18px;">
             <canvas id="line" class="chart chart-line" chart-data="data2" chart-labels="labels2" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" height="100"></canvas>
           </div>
-      </div>
+      </div><!--
     <div class="panel panel-default"  style="background:rgba(255,255,255,0.5);">
             <div class="panel-heading">Gestiones</div>
             <div class="panel-body" style="text-align:left;font-weight:200;font-size:18px;">
@@ -429,7 +429,7 @@ select{
             <table class="table-condensed table" style="font-size:13px;">
         <tr ng-repeat="gestion in gestiones | filter: search" style="color:{{gestion.gestionado!=0 ? 'green' : 'red'}}"><td>{{gestion.apellido}}</td><td>{{gestion.documento}}</td><td>{{gestion.sub_estado}}</td><td>{{gestion.operador}}</td><td>{{gestion.fecha | date:'dd/MM/yyyy'}}</td><td><button class="btn btn-default" ng-click="ver_gestion(gestion.documento)">Gestion</label></td></tr>
       </table>            </div>
-    </div>
+    </div> -->
 </div>
 </div>
 	</div>

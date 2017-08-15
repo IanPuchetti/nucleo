@@ -631,6 +631,11 @@ angular
     _.caso={};
     _.limite=5;
     _.ver='deudor';
+    _.enviar={
+      sms:function(t){$http.post("../php/sms.php", {documento:_.d, telefono:t}).then(function(res){alert(res.data)});},
+      email:function(){$http.post("../php/mail.php", {documento:_.d}).then(function(res){alert(res.data)});},
+      ivr:function(t){$http.post("../php/ivr.php", {documento:_.d, telefono:t}).then(function(res){alert(res.data)});}
+    };
     _.getNumber=function(n){return new Array(n);};
     _.gestionar= function (b){
     window2=window.open('gestion/?d='+d+'&b='+b, 'call'+d,'height=330, width=300, left=400, top=0, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
