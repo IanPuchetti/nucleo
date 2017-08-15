@@ -723,8 +723,8 @@ app.controller('myCtrl', function($http, $scope) {
                     quita_descripcion: _.quita_descripcion,
                     quita_final: _.quita_final,
                     fecha_propuesta: _.fecha_propuesta,
-                    total: parseFloat(_.total_total.replace(',','')),
-                    anticipo: parseFloat(_.anticipo.replace(',','')),
+                    total: parseFloat(_.total_total),
+                    anticipo: parseFloat(_.anticipo),
                     cuotas: _.plazo,
                     fecha_anticipo: _.fecha_anticipo,
                     operador: _.operador.nombre,
@@ -739,8 +739,8 @@ app.controller('myCtrl', function($http, $scope) {
   _.registrar = function () {
     $http.post('php/registrar.php',{
                     fecha_propuesta: _.fecha_propuesta,
-                    total: parseFloat(_.total_total.replace(',','')),
-                    anticipo: parseFloat(_.anticipo.replace(',','')),
+                    total: parseFloat(_.total_total),
+                    anticipo: parseFloat(_.anticipo),
                     cuotas: _.plazo,
                     fecha_anticipo: _.fecha_anticipo,
                     operador: _.operador.nombre,
