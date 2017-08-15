@@ -717,7 +717,7 @@ label:hover:before {
 
 <div style="top:95px;position:absolute;width:100%;overflow-x:scroll;height:275px;" class="tablon">
   <div style="width:1700px;">
-  <table class="with-ellipsis"  ng-init="limite=20;orden='documento';" style="z-index:1;position:absolute;width:1700px;" >
+  <table class="noselect with-ellipsis"  ng-init="limite=20;orden='documento';" style="z-index:1;position:absolute;width:1700px;" >
     <thead>
       <tr ng-repeat="campo in tabla| limitTo: 1">
         <td style="width:100px;" ng-repeat="(key, value) in campo" ng-click="ordenar(key)" id="{{key}}"  ng-if="key!='id'">{{::key}}</td>
@@ -729,7 +729,7 @@ label:hover:before {
     </tr>
     </tbody>
   </table>
-  <table class="with-ellipsis" style="position:absolute;z-index:0;width:1700px;">
+  <table class="noselect with-ellipsis" style="position:absolute;z-index:0;width:1700px;">
       <thead>
       <tr>
         <td ng-repeat="s in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]" style="width:100px;"></td>
@@ -849,7 +849,6 @@ angular.module('exporte',['infinite-scroll',"chart.js"])
             dateTransform(_.tabla, 'fecha_mora');
             dateTransform(_.tabla, 'fecha_deuda');
             dateTransform(_.tabla, 'fecha_ult_cobro');
-            
           });
         },
         complejo: function (){
