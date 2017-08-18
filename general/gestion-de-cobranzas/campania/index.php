@@ -475,7 +475,8 @@ angular
       $scope.campanias=res.data;_.asignar(_.last);
       });
     }};
-
+    _.visualizar_producto=function(d){_.modificar_producto=d;};
+    _.visualizar_propuesta=function(d){_.modificar_propuesta=d;};
     _.traer.campanias();
     socket.on('campania', function(){$timeout(function(){_.traer.campanias();}); });
     _.enter =function(e){if(e.which === 13){_.buscar();}};

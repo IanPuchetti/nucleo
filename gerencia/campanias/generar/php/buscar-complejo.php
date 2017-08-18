@@ -8,6 +8,7 @@ $documento2=$request->filtro ->documento2;
 $apellido=$request->filtro ->apellido;
 $apellido1=$request->filtro ->apellido1;
 $apellido2=$request->filtro ->apellido2;
+$asignacion=$request->filtro ->asignacion;
 $banco=$request->filtro ->banco -> id;
 $responsable=$request->filtro ->responsable -> id;
 $tipo_gesion=$request->filtro ->tipo_gestion;
@@ -90,6 +91,10 @@ if($apellido1 && $apellido2){
 
 if(isset($banco)){
 $consulta = $consulta." AND productos.banco = '$banco' ";
+}
+
+if(isset($asignacion)){
+$consulta = $consulta." AND carpeta.numero_gestion = '$asignacion' ";
 }
 
 if(isset($documento1) && isset($documento2)){

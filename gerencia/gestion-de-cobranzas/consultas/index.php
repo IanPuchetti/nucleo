@@ -699,58 +699,16 @@ label:hover:before {
         <span ng-show="complejo.reportes=='sin'" ng-click="complejo.reportes='todos'">Sin reportes</span>
         <span ng-show="complejo.reportes=='todos'" ng-init="complejo.reportes='todos'" ng-click="complejo.reportes='con'">Con o sin reportes</span>
       <span class=" dropdown" style="border-radius:0px;height:24px;font-size:11px;" ng-show="complejo.reportes=='con'" ng-dblclick="complejo.reportes='sin'">
-        <span class="dropdown-toggle" data-toggle="dropdown">Con reportes &#x25BE;</span>
-        <ul class="dropdown-menu noshadow dont-go inputs" style="position:absolute;left:-106px;margin-top:2px;">
-            <div style="margin-top:5px;">
-            <span class="button" style="margin:5px;">
-              <span style="padding:2px;color:#aaa;">Desde</span>
-              <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input type="date"  ng-model="complejo.agenda1" style="width:95px;font-size:10px;background:none;"></span>
-            </span>  
-          </div>
-            <div style="margin-top:5px;">
-            <span class="button"  style="margin:5px;">
-              <span style="padding:2px;color:#aaa;">Hasta</span>
-              <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input type="date"  ng-model="complejo.agenda2"  style="width:97px;font-size:10px;background:none;"></span>
-            </span>  
-          </div>
-   </ul>
+        <span class="dropdown-toggle" data-toggle="dropdown">Con reportes</span>
       </span>
     </span>
     <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"  data-toggle="tooltip" title="Movimiento" data-placement="bottom"><img src="/.img/change.png" style="width:15px;height:15px;margin-left:2px;margin-top:-3px;"></span>
      <span ng-show="complejo.movimiento=='todos'" ng-init="complejo.movimiento='todos'" ng-click="complejo.movimiento='con'">Con o sin movimiento</span>
       <span class="dropdown" ng-show="complejo.movimiento=='con'" ng-dblclick="complejo.movimiento='sin'">
-        <span class="dropdown-toggle" data-toggle="dropdown">Con movimiento &#x25BE;</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px">
-          <div style="margin-top:5px;">
-            <span class="button" style="margin:5px;">
-              <span style="padding:2px;color:#aaa;">Desde</span>
-              <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input type="date"  ng-model="complejo.movimiento1" style="width:95px;font-size:10px;background:none;"></span>
-            </span>  
-          </div>
-            <div style="margin-top:5px;">
-            <span class="button"  style="margin:5px;">
-              <span style="padding:2px;color:#aaa;">Hasta</span>
-              <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input type="date"  ng-model="complejo.movimiento2"  style="width:97px;font-size:10px;background:none;"></span>
-            </span>  
-          </div>
-        </ul>
+        <span class="dropdown-toggle" data-toggle="dropdown">Con movimiento </span>
       </span>
       <span class=" dropdown" ng-show="complejo.movimiento=='sin'" ng-dblclick="complejo.movimiento='todos'">
-        <span class="dropdown-toggle" data-toggle="dropdown">Sin movimiento &#x25BE;</span>
-        <ul class="dropdown-menu dropdown-menu-right dont-go" style="border-radius:0px">
-          <div style="margin-top:5px;">
-            <span class="button" style="margin:5px;">
-              <span style="padding:2px;color:#aaa;">Desde</span>
-              <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input type="date"  ng-model="complejo.movimiento1" style="width:95px;font-size:10px;background:none;"></span>
-            </span>  
-          </div>
-            <div style="margin-top:5px;">
-            <span class="button"  style="margin:5px;">
-              <span style="padding:2px;color:#aaa;">Hasta</span>
-              <span style="border-left:1px solid #ddd;padding:2px 5px 2px 5px;margin-right:-2px;"><input type="date"  ng-model="complejo.movimiento2"  style="width:97px;font-size:10px;background:none;"></span>
-            </span>  
-          </div>
-        </ul>
+        <span class="dropdown-toggle" data-toggle="dropdown">Sin movimiento</span>
       </span>
     </span>
     </div>

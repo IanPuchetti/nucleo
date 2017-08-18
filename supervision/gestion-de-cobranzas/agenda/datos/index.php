@@ -592,7 +592,7 @@ table.with-ellipsis td {
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select ng-model="productos_banco" ng-options="banco[0].dbanco as banco[0].dbanco for banco in caso.productos | groupBy: 'banco'" style="border:none;"></select></span>
           </span>
         </div>
-        <div style="width:100%;overflow-x:auto;height:300px;">
+        <div style="width:100%;overflow-x:auto;height:150px;">
         <table style="width:700px;float:left;margin-top:-2px;">
           <thead>
           <tr style="background:white;font-size:12px;">
@@ -604,8 +604,8 @@ table.with-ellipsis td {
             <td style="width:100px">Fecha de ingreso</td>
             <td style="width:100px">Fecha de mora</td>
           </thead>
-          <tbody>
-      <tr ng-if="productos_banco" ng-repeat="producto in caso.productos | filter: {dbanco:productos_banco}" class="table-body" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
+          <tbody class="noselect">
+      <tr ng-if="productos_banco" ng-repeat="producto in caso.productos | filter: {dbanco:productos_banco}" class="table-body" ng-click="visualizar_producto(producto)" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
         <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.subestado}}</td>
         <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.legajo}}</td>
         <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{producto.numero_gestion}}°</td>
@@ -638,60 +638,125 @@ table.with-ellipsis td {
     </tbody>
     </table>
   </div>
+  <div ng-if="modificar_producto">
+  <div style="padding:10px;">
+  <span class="button">
+  <span><img src="/.img/sub_estado.png" style="width:17px;height:15px;margin-left:2px;">Subestado</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_producto.subestado}}</span>
+</span>
+<span class="button">
+  <span><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;">Legajo</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_producto.legajo}}</span>
+</span>
+<span class="button">
+  <span><img src="/.img/reporte.png" style="width:17px;height:15px;margin-left:2px;">Asignacion</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_producto.numero_gestion}}°</span>
+</span>
+</div>
+<div style="padding:10px;">
+  <span class="button">
+  <span><img src="/.img/reporte.png" style="width:17px;height:15px;margin-left:2px;">Asignacion</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_producto.producto}}</span>
+</span>
+  </div>
+  <div style="padding:10px;">
+  <span class="button">
+  <span><img src="/.img/productos.png" style="width:17px;height:15px;margin-left:2px;">Deuda</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><span ng-if="modificar_producto.dolar==1">US$</span><span ng-if="modificar_producto.dolar==0">$</span><input style="font-size:12px;border:0px;width:70px;" ng-model="modificar_producto.deuda" type="text"></span>
+</span>
+<span class="button">
+  <span><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;">ingreso</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_producto.fecha_deuda | date:'dd/MM/yyyy'}}</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Mora</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_producto.fecha_mora | date:'dd/MM/yyyy'}}</span>
+</span>
+</div>
+  </div>
       </div>
       <div ng-show="ver=='propuesta'">
-        <div style="padding:2px;">
+        <div style="padding:5px;">
           <span class="button" style="margin-left::5px;">
             <span><img src="/.img/bank.png" style="width:15px;height:15px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select ng-model="productos_banco" ng-options="banco[0].dbanco as banco[0].dbanco for banco in caso.productos | groupBy: 'banco'" style="border:none;"></select></span>
           </span>
         </div>
-        <div style="width:100%;overflow-x:auto;height:300px;">
-        <table style="width:700px;float:left;margin-top:-2px;">
+        <div style="width:100%;height:150px;overflow-y:auto;overflow-x:hidden;padding-top:2px;border-bottom:1px solid #ddd;">
+        <table style="width:650px;float:left;margin-top:-2px;">
           <thead>
           <tr style="background:white;font-size:12px;">
-            <td style="width:100px">Fecha de propuesta</td>
+            <td style="width:130px">Fecha de generación</td>
             <td style="width:100px">Monto</td>
             <td style="width:100px">Anticipo</td>
-            <td style="width:100px">Cuotas</td>
+            <td style="width:58px">Cuotas</td>
             <td style="width:100px">Fecha de pago</td>
-            <td style="width:100px">Aprobado</td>
-            <td style="width:100px">Cuota cero</td>
+            <td style="width:80px">Aprobado</td>
+            <td style="width:80px">Cuota cero</td>
           </thead>
           <tbody>
-      <tr ng-if="productos_banco" ng-repeat="propuesta in caso.propuestas | filter: {banco:productos_banco}" class="table-body" ng-click="seleccionar(producto.numero_operacion);data.datos='producto'" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.fecha_propuesta | date: 'dd/MM/yyyy'}}</td>
+      <tr ng-if="productos_banco" ng-repeat="propuesta in caso.propuestas | filter: {banco:productos_banco}" class="table-body noselect" ng-click="visualizar_propuesta(propuesta)"   ng-dblclick="aprobar(propuesta.id)" id="{{producto.numero_operacion}}" style="font-size:10px;padding:5px;cursor:pointer;">
+        <td style="height:18px;width:130px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.fecha_propuesta | date: 'dd/MM/yyyy'}}</td>
         <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">${{propuesta.monto}}</td>
         <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">${{propuesta.anticipo}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.cuotas}}</td>
+        <td style="height:18px;width:58px;" data-toggle="tooltip" title="Producto" data-placement="bottom">{{propuesta.cuotas}}</td>
         <td style="height:18px;width:100px;" data-toggle="tooltip" title="Deuda en pesos" data-placement="bottom">{{propuesta.fecha_pago | date: 'dd/MM/yyyy'}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{propuesta.aprobado==0 ? 'NO APROBADO' : 'APROBADO'}}</td>
-        <td style="height:18px;width:100px;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{propuesta.cuota_cero==0 ? '' : 'CUOTA CERO'}}</td>
+        <td style="height:18px;width:80px;" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">{{propuesta.aprobado==0 ? 'NO' : 'SI'}}</td>
+        <td style="height:18px;width:80px;" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">{{propuesta.cuota_cero==0 ? 'NO' : 'SI'}}</td>
       </tr>
           </tbody>
-          <tbody style="z-index:-1;width:700px;">
+          <tbody style="z-index:-1;width:650px;">
       <tr>
+        <td style="width:130px"></td>
         <td style="width:100px"></td>
         <td style="width:100px"></td>
+        <td style="width:58px"></td>
         <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
+        <td style="width:80px"></td>
+        <td style="width:80px"></td>
       </tr>
-      <tr ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+      <tr ng-repeat="i in [1,2,3,4,5,6,7]">
+        <td style="width:130px"></td>
         <td style="width:100px"></td>
         <td style="width:100px"></td>
+        <td style="width:58px"></td>
         <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
-        <td style="width:100px"></td>
+        <td style="width:80px"></td>
+        <td style="width:80px"></td>
       </tr>
     </tbody>
     </table>
   </div>
+  <div ng-if="modificar_propuesta">
+  <div style="padding:10px;">
+  <span class="button">
+  <span><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;">Fecha generacion</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_propuesta.fecha_propuesta | date:'dd/MM/yyyy'}}</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">pago</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_propuesta.fecha_pago | date:'dd/MM/yyyy'}}</span>
+</span>
+</div>
+  <div style="padding:10px;">
+  <span class="button">
+  <span><img src="/.img/productos.png" style="width:17px;height:15px;margin-left:2px;">Total</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">${{modificar_propuesta.monto}}</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Anticipo</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">${{modificar_propuesta.anticipo}}</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Cuotas</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_propuesta.cuotas}}</span>
+</span>
+<span class="button">
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">Cuota cero</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_propuesta.cuota_cero==0 ? 'NO' : 'SI'}}</span>
+</span>
+<span class="button">
+  <span><img src="/.img/calificacion.png" style="width:17px;height:15px;margin-left:2px;">Aprobado</span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{modificar_propuesta.aprobado==0 ? 'NO' : 'SI'}}</span>
+</span>
+
+</div>
   </div>
+      </div>
+  </div>
+
 
 
   <div style="position:fixed;top:19px;left:0px;width:100%;height:100%;background:white;border:(0px 1px 1px 1px) solid #ddd;" ng-hide="caso">
@@ -741,6 +806,8 @@ angular
     socket.on('gestionado',function(){_.refresh=1;_.obtener.historia();});
     socket.on('telefonos',function(){_.obtener.telefonos();});
 });
+_.visualizar_producto=function(d){_.modificar_producto=d;};
+    _.visualizar_propuesta=function(d){_.modificar_propuesta=d;};
 var hoy = new Date(), quit=false;
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
