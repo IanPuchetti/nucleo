@@ -559,6 +559,7 @@ table.with-ellipsis td {
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{banco[0].dbanco}}</span></span></li>
     </ul>
   </span>
+    <span class="button noselect"><span style="padding:1px 5px 1px 5px;"><img src="/.img/sub_estado.png" style="width:15px;">Subestado</span><span style="border-left:1px solid #ddd;padding:1px 5px 1px 5px;">{{caso.productos[0].subestado}}</span></span>
   </div>
   <div ng-show="ver=='telefonos'" style="padding:20px;">
       <div style="text-align:center;">

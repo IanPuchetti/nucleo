@@ -562,6 +562,10 @@ table.with-ellipsis td {
           <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">{{banco[0].dbanco}}</span></span></li>
     </ul>
   </span>
+    <span class="button noselect"><span style="padding:1px 5px 1px 5px;"><img src="/.img/sub_estado.png" style="width:15px;">Subestado</span><span style="border-left:1px solid #ddd;padding:1px 5px 1px 5px;">{{caso.productos[0].subestado}}</span></span>
+    <span class="button noselect" style="position:fixed;right:2px;bottom:2px;">
+    <img src="/.img/flag.png" style="width:17px;"><span style="padding-right:5px;"> {{campania.nombre}}</span> <span ng-click="desgestionando()" class="close" ng-show="quit==true" ng-init="quit=true" style="margin:-2px;">×</span>
+  </span>
   </div>
   <div ng-show="ver=='telefonos'" style="padding:20px;">
       <div style="text-align:center;">

@@ -398,7 +398,7 @@ angular
   _.gestionar=function (d, i){
                                 window.open('gestion-de-cobranzas/agenda/datos/?d='+d+'&i='+i, d,'height=400, width=650, left=300, top=100, resizable=no, scrollbars=yes, toolbar=yes, menubar=no, location=no, directories=no, status=yes');
                               };
-  _.agendas=function (d){
+  _.agendas=function (d,o){
     _.d=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
     $(".dias").css({color:"#666", 'border-color':'#ddd'});
     $(".dias#dia"+(d.getDate()-1)).css({color:"#07963d", 'border-color':'#07963d'});

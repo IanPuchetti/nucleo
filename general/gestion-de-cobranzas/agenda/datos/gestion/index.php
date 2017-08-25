@@ -625,6 +625,7 @@ angular
                            $http.post('../../php/registrar-gestion.php',
                             {hora: _.obtener.hora(),
                              documento:$_GET['d'],
+                             id_agenda:$_GET['i'],
                              telefono:_.gestion.telefono.numero,
                              comentario:_.gestion.descripcion,
                              calificacion:_.gestion.calificacion,

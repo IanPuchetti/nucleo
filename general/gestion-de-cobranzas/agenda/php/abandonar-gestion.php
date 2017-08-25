@@ -16,7 +16,9 @@ $operador=$request->operador;
 $mysqli = new mysqli("localhost", "ian", "p", "nucleo");
 $result2= $mysqli->query("UPDATE productos SET sub_estado = '$sub_estado', agenda = '$agenda' WHERE documento = '$documento'");
 $result = $mysqli->query("INSERT INTO cambios_sub_estados VALUES(NULL,'$documento', '$sub_estado', '$agenda')");
+if($agenda){
 $result = $mysqli->query("INSERT INTO agendas VALUES(NULL,'$documento', '$operador', '$agenda', 0)");
+}
 $mysqli->close();
 echo 'Registrado correctamente';
 ?>
