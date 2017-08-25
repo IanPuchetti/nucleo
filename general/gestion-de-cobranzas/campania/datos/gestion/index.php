@@ -635,7 +635,7 @@ angular
                              sub_estado:_.caso.productos[0].sub_estado,
                              hoy:hoy})
                            .then(function(){socket.emit('gestionado');_.gestionando=false;_.color='#07963d';
-                           _.registrar.sub_estado=_.caso.sub_estado;_.refrescar();});
+                           _.registrar.sub_estado=_.caso.sub_estado; _.registrar.a_sub_estado=_.caso.sub_estado;_.refrescar();});
                          };
     _.abandonar_gestion=function(){
                            $http.post('../../php/abandonar.php',
@@ -645,11 +645,22 @@ angular
                              id_campania:$_GET['i'],
                              operador:id_usuario,
                              sub_estado:_.registrar.sub_estado,
-                             fecha:hoy
+                             a_sub_estado:_.find(_.sub_estados,_.registrar.a_sub_estado,'id'),
+                             b_sub_estado:_.find(_.sub_estados,_.registrar.sub_estado,'id'),
+                             fecha:hoy,
+                             banco:$_GET['b']
                            })
-                           .then(function(){_.cerrar()});
+                           .then(function(){socket.emit('gestionado');_.cerrar()});
                          };
     _.refrescar();_.obtener.tipo_gestion();
+    _.find=function(a,b,c){
+      for (var i in a){
+        if(a[i][c]==b){
+          return a[i];
+          break;
+        }
+      }
+    };
     socket.on('telefonos',function(){_.obtener.telefonos();});
     _.avanzar = function(){if (_.gestionando == true){if(_.tiempo.segundos==59){_.tiempo.segundos=0;if(_.tiempo.minutos == 59){_.tiempo.minutos=0;_.tiempo.horas=_.tiempo.horas+1;}else{_.tiempo.minutos=_.tiempo.minutos+1;}}else{_.tiempo.segundos=_.tiempo.segundos+1;}
     time.emit('tiempo', {usuario:_.usuario, apellido: _.caso.deudor.apellido, documento: _.caso.deudor.documento, telefono: _.gestion.telefono,  tiempo: _.tiempo.horas+':'+_.tiempo.minutos+':'+_.tiempo.segundos , tipo_gestion : _.gestion.tipo_gestion, color: _.color });

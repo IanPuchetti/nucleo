@@ -383,7 +383,7 @@ select{
         </div>
       </div>
       </div>
-      <div style="position:absolute;left:300px;width:300px;top:50px;font-size:12px;height:300px;overflow-y:auto;">
+      <div style="position:absolute;left:300px;width:300px;top:0px;font-size:12px;height:300px;overflow-y:auto;">
         <div ng-repeat="caso in agenda">
           <span style="color:#{{caso.gestion!=1 ? 934 : 394}};cursor:pointer;" ng-dblclick="gestionar(caso.documento, caso.id)">{{caso.apellido}} </span><img src="/.img/yes.png" style="width:15px;margin-top:-3px;" ng-if="caso.gestion!=0">
         </div>
