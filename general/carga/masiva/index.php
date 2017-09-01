@@ -489,64 +489,64 @@ function json_tabla (id_tabla, objeto){
   </div>
 	<div id="carpeta" class="ocultar">
     <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Caratula" data-placement="bottom"><img src="/.img/reporte.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Caratula" data-placement="bottom">
+              <span ><img src="/.img/reporte.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="caratula" class="lista"><option></option></select></span>
           </span>
     </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Comentario" data-placement="bottom"><img src="/.img/comentario.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Comentario" data-placement="bottom">
+              <span><img src="/.img/comentario.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="comentario" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Sucursal" data-placement="bottom"><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Sucursal" data-placement="bottom">
+              <span><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="sucursal" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Legajo" data-placement="bottom"><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Legajo" data-placement="bottom">
+              <span><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="legajo" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Numero de gestión" data-placement="bottom"><img src="/.img/gestor.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Numero de gestión" data-placement="bottom">
+              <span><img src="/.img/gestor.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="carpeta" id="numero_gestion" class="lista"><option></option></select></span>
           </span>
       </div>
   </div>
 	<div id="deudores" class="ocultar" style="display:none;">
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Documento" data-placement="bottom">
+              <span><img src="/.img/id-card.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="documento" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Tipo de documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Tipo de documento" data-placement="bottom">
+              <span><img src="/.img/id-card.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="tipo_documento" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Apellido y nombre" data-placement="bottom"><img src="/.img/deudor.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Apellido y nombre" data-placement="bottom">
+              <span><img src="/.img/deudor.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="apellido" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Correo electrónico" data-placement="bottom" class="color-gr" style="padding:0px 4px 0px 4px">@</span>
+          <span class="button noselect" data-toggle="tooltip" title="Correo electrónico" data-placement="bottom">
+              <span class="color-gr" style="padding:0px 4px 0px 4px">@</span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="email" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Empresa" data-placement="bottom"><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Empresa" data-placement="bottom">
+              <span><img src="/.img/empresa.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="deudores" id="empresa" class="lista"><option></option></select></span>
           </span>
       </div>
@@ -554,53 +554,53 @@ function json_tabla (id_tabla, objeto){
   <div id="domicilios" class="ocultar" style="display:none;">
 <div style="position:absolute;left:0px;width:250px;">
 <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Dirección particular" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Dirección particular" data-placement="bottom">
+              <span><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular" class="lista"><option></option></select></span>
           </span>
       </div>
 
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Dirección particular 2" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Dirección particular 2" data-placement="bottom">
+              <span><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular2" class="lista"><option></option></select></span>
           </span>
       </div>
 
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Dirección particular 3" data-placement="bottom"><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Dirección particular 3" data-placement="bottom">
+              <span><img src="/.img/home.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_particular3" class="lista"><option></option></select></span>
           </span>
       </div> 
 
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Dirección laboral" data-placement="bottom"><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Dirección laboral" data-placement="bottom">
+              <span><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_laboral" class="lista"><option></option></select></span>
           </span>
       </div> 
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Dirección laboral 2" data-placement="bottom"><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Dirección laboral 2" data-placement="bottom">
+              <span><img src="/.img/empresa.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="direccion_laboral2" class="lista"><option></option></select></span>
           </span>
       </div> 
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Provincia" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Provincia" data-placement="bottom" class="color-gr">
+              <span><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="provincia" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Localidad" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Localidad" data-placement="bottom" class="color-gr">
+              <span><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="localidad" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Codigo postal" data-placement="bottom" class="color-gr"><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Codigo postal" data-placement="bottom" class="color-gr">
+              <span><img src="/.img/ubicacion.png" style="width:15px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="codigo_postal" class="lista"><option></option></select></span>
           </span>
       </div>
@@ -608,19 +608,19 @@ function json_tabla (id_tabla, objeto){
     </div>
     <div style="position:absolute;left:250px;width:250px;margin-top:3px;">
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Telefono 1" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Telefono 1" data-placement="bottom">
+              <span><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono1" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Telefono 2" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Telefono 2" data-placement="bottom">
+              <span><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono2" class="lista"><option></option></select></span>
           </span>
       </div><div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Telefono 3" data-placement="bottom"><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Telefono 3" data-placement="bottom">
+              <span><img src="/.img/phone.png" style="width:14px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="domicilios" id="telefono3" class="lista"><option></option></select></span>
           </span>
       </div>
@@ -631,14 +631,14 @@ function json_tabla (id_tabla, objeto){
       
   <div id="productos" class="ocultar" style="display:none;">
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Numero de operación" data-placement="bottom" class="color-gr"><img src="/.img/reporte.png" style="width:13px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Numero de operación" data-placement="bottom" class="color-gr">
+              <span><img src="/.img/reporte.png" style="width:13px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="numero_operacion" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Producto" data-placement="bottom" class="color-gr"><img src="/.img/productos.png" style="width:17px;height:12px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Producto" data-placement="bottom" class="color-gr">
+              <span><img src="/.img/productos.png" style="width:17px;height:12px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="producto" class="lista"><option></option></select></span>
           </span>
       </div>
@@ -652,26 +652,26 @@ function json_tabla (id_tabla, objeto){
           <span id="moneda" style="display:none;position:absolute;margin-top:3px;font-size:10px;margin-left:5px;" class="color-gr">¿<a href="#" onclick="cambiar('pesos','dolares')">Dólares</a> o <a href="#"  onclick="cambiar('dolares','pesos')">pesos</a>?</span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Ingreso</span>
+          <span class="button noselect" data-toggle="tooltip" title="Fecha de ingreso" data-placement="bottom">
+              <span class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Ingreso</span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="fecha_deuda" style="width:140px !important;" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Fecha de mora" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Mora</span>
+          <span class="button noselect" data-toggle="tooltip" title="Fecha de mora" data-placement="bottom">
+              <span style="font-size:10px;" class="color-gr"><img src="/.img/agenda.png" style="width:17px;height:15px;margin-left:2px;"> Mora</span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select name="productos" id="fecha_mora" style="width:150px !important;" class="lista"><option></option></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Estado" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/estado.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Estado" data-placement="bottom">
+              <span class="color-gr" style="font-size:10px;"><img src="/.img/estado.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select id="estado"></select></span>
           </span>
       </div>
       <div style="margin-top:10px;">
-          <span class="button noselect">
-              <span data-toggle="tooltip" title="Banco" data-placement="bottom" class="color-gr" style="font-size:10px;"><img src="/.img/bank.png" style="width:17px;height:15px;margin-left:2px;"></span>
+          <span class="button noselect" data-toggle="tooltip" title="Banco" data-placement="bottom">
+              <span class="color-gr" style="font-size:10px;"><img src="/.img/bank.png" style="width:17px;height:15px;margin-left:2px;"></span>
             <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select id="banco" > </select></span>
           </span>
       </div>
@@ -858,9 +858,42 @@ $.ajax({
 });
 
   $("#archivo").val("");
+  setTimeout(function(){asignar();});
 }
 
 document.getElementById('archivo').addEventListener('change', handleFile, false);
+
+function asignar(){
+  $("#caratula").val("CARATULA");
+  $("#comentario").val("COMENTARIO");
+  $("#sucursal").val("SUCURSAL");
+  $("#legajo").val("LEGAJO");
+  $("#numero_gestion").val("GESTION");
+
+  $("#documento").val("DOCUMENTO");
+  $("#tipo_documento").val("TIPO_DOCUMENTO");
+  $("#apellido").val("APELLIDO");
+  $("#email").val("EMAIL");
+  $("#empresa").val("EMPRESA");
+
+  $("#direccion_particular").val("DIR_PARTICULAR1");
+  $("#direccion_particular2").val("DIR_PARTICULAR2");
+  $("#direccion_particular3").val("DIR_PARTICULAR3");
+  $("#direccion_laboral").val("DIR_LABORAL");
+  $("#direccion_laboral2").val("DIR_LABORAL2");
+  $("#provincia").val("PROVINCIA");
+  $("#localidad").val("LOCALIDAD");
+  $("#codigo_postal").val("CODIGO_POSTAL");
+  $("#telefono1").val("TELEFONO1");
+  $("#telefono2").val("TELEFONO2");
+  $("#telefono3").val("TELEFONO3");
+
+  $("#numero_operacion").val("OPERACION");
+  $("#producto").val("PRODUCTO");
+  $("#deuda").val("DEUDA");
+  $("#fecha_ingreso").val("INGRESO");
+  $("#fecha_mora").val("MORA");
+}
 
 function transform_fecha (str){
     
