@@ -306,7 +306,7 @@ select{
     <div class="boton-menu" ng-click="show='estadisticas'">Estadisticas</div>
    <!--<div class="boton-menu" ng-click="show='campanias'">Campañas</div>
     <div class="boton-menu" ng-click="show='casos'">Mis casos</div>-->
-    <div class="boton-menu"><a href="#">Ayuda</a></div>
+    <div class="boton-menu"><a href="/manual/gestor.pdf">Ayuda</a></div>
   </div>
   <div class="side" ng-show="show=='estadisticas'">
     <h2 class="color-gr" style="margin-top:-5px;padding-left:20px;">Estadisticas</h2>

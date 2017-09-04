@@ -672,7 +672,7 @@ function json_tabla (id_tabla, objeto){
       <div style="margin-top:10px;">
           <span class="button noselect" data-toggle="tooltip" title="Banco" data-placement="bottom">
               <span class="color-gr" style="font-size:10px;"><img src="/.img/bank.png" style="width:17px;height:15px;margin-left:2px;"></span>
-            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select id="banco" > </select></span>
+            <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;"><select id="banco" ></select></span>
           </span>
       </div>
     </div>
@@ -684,6 +684,7 @@ var date = new Date();
 var hoy = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
 var datos={};
 $("#cargar").click(function(){
+if($("#banco").val()!=''){
 var i=0;
 while(i<document.getElementsByName('carpeta').length){
 	var campo = document.getElementsByName('carpeta')[i].id;
@@ -769,6 +770,7 @@ datos['deudor']=JSON.stringify({
 											}			
 			});
 			}
+    }
 });
 var carpeta={}, deudores={}, domicilios={}, productos={}, names, excel;
 
@@ -816,9 +818,9 @@ function handleFile(e) {
 		url:'php/bancos.php',
 		type:'post',
 		success: function (res){res=JSON.parse(res);
-								$("#banco").html('');
+								$("#banco").html('<option></option>');
 								for (var i in res){
-								$("#banco").append("<option id='"+res[i].cbanco+"'>"+res[i].dbanco+"</option>");
+                $("#banco").append("<option id='"+res[i].cbanco+"'>"+res[i].dbanco+"</option>");
 								}
 		}
 });
@@ -891,7 +893,7 @@ function asignar(){
   $("#numero_operacion").val("OPERACION");
   $("#producto").val("PRODUCTO");
   $("#deuda").val("DEUDA");
-  $("#fecha_ingreso").val("INGRESO");
+  $("#fecha_deuda").val("INGRESO");
   $("#fecha_mora").val("MORA");
 }
 

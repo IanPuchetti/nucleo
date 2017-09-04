@@ -419,13 +419,13 @@ function json_tabla (id_tabla, objeto){
       </p>
   </div>
   <div style="padding:5px;">
-  <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
-  <span   data-toggle="tooltip" title="Documento" data-placement="bottom"><img src="/.img/id-card.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+  <span  style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
+  <span data-toggle="tooltip" title="Documento" data-placement="bottom" ><img src="/.img/id-card.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" data-toggle="tooltip" title="Documento" data-placement="bottom">
   <select class="lista  btn-default" id="documento" name="deudores"><option></option></select>
   </span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" data-toggle="tooltip" title="Numero de operacion" data-placement="bottom"><img src="/.img/wallet.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
-  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
+  <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;" data-toggle="tooltip" title="Numero de operacion" data-placement="bottom">
   <select class="lista " id="numero_operacion" name="deudores"><option></option></select>
   </span>
 </span>
@@ -434,7 +434,7 @@ function json_tabla (id_tabla, objeto){
 <span style="border-radius:5px;margin:2px;border:1px solid #ddd;padding:2px;" class="button" ng-click="ver='deudor'">
   <span style="padding:2px;margin-right:-2px;" data-toggle="tooltip" title="Banco" data-placement="bottom"><img src="/.img/bank.png" style="width:15px;height:13px;margin-left:2px;margin-top:-3px;"></span>
   <span style="border-left:1px solid #ddd;padding:2px;margin-right:-2px;">
-  <select class="lista  btn-default" id="banco" style="width:227px;"></select>
+  <select class="btn-default"  data-toggle="tooltip" title="Banco" data-placement="bottom" id="banco" style="width:227px;"></select>
   </span>
 </span>
 </div>
@@ -652,10 +652,15 @@ function handleFile(e) {
     reader.readAsBinaryString(f);
   }
   $("#archivo").val("");
+  setTimeout(function(){asignar()});
 }
 
 document.getElementById('archivo').addEventListener('change', handleFile, false);
 
+function asignar(){
+  $("#documento").val("DOCUMENTO");
+  $("#numero_operacion").val("OPERACION");  
+}
 
 $("#d_coincidente").click(function(){
 exportar(resultados.coincidente, 'coincidentes.xlsx');
